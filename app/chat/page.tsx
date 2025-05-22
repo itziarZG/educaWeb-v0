@@ -70,7 +70,7 @@ export default function ChatPage() {
       const element = renderAreaRef.current;
       const opt = {
         margin: 10,
-        filename: `${agentDetails.name
+        filename: `${agentDetails?.name
           .toLowerCase()
           .replace(/\s+/g, "-")}-contenido.pdf`,
         image: { type: "jpeg", quality: 0.98 },
@@ -90,7 +90,7 @@ export default function ChatPage() {
         printWindow.document.write(`
           <html>
             <head>
-              <title>${agentDetails.name} - Contenido Educativo</title>
+              <title>${agentDetails?.name} - Contenido Educativo</title>
               <style>
                 body { font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; }
                 .content { padding: 20px; }
@@ -98,7 +98,7 @@ export default function ChatPage() {
               </style>
             </head>
             <body>
-              <h1>${agentDetails.emoji} ${agentDetails.name}</h1>
+              <h1>${agentDetails?.emoji} ${agentDetails?.name}</h1>
               <div class="content">
                 ${renderAreaRef.current.innerHTML}
               </div>
@@ -121,7 +121,7 @@ export default function ChatPage() {
       purple: "bg-gradient-to-b from-purple-50 to-purple-100",
       indigo: "bg-gradient-to-b from-indigo-50 to-indigo-100",
     };
-    return colors[agentDetails.color as keyof typeof colors] || colors.indigo;
+    return colors[agentDetails?.color as keyof typeof colors] || colors.indigo;
   };
 
   // Get button color based on agent
@@ -132,7 +132,7 @@ export default function ChatPage() {
       purple: "bg-purple-500 hover:bg-purple-600",
       indigo: "bg-indigo-500 hover:bg-indigo-600",
     };
-    return colors[agentDetails.color as keyof typeof colors] || colors.indigo;
+    return colors[agentDetails?.color as keyof typeof colors] || colors.indigo;
   };
 
   return (
@@ -149,7 +149,7 @@ export default function ChatPage() {
             </Button>
           </Link>
           <h1 className="text-3xl font-bold text-center">
-            {agentDetails.emoji} {agentDetails.name}
+            {agentDetails?.emoji} {agentDetails?.name}
           </h1>
           <div className="w-[100px]"></div> {/* Spacer for centering */}
         </div>
@@ -172,7 +172,9 @@ export default function ChatPage() {
                 style={{ borderColor: `var(--${agentDetails?.color}-400)` }}
               >
                 <AgentChat
-                  agentType={agent as 'junior' | 'middle' | 'senior' | 'default'}
+                  agentType={
+                    agent as "junior" | "middle" | "senior" | "default"
+                  }
                   onHtmlContentUpdate={handleHtmlContentUpdate}
                 />
               </Card>
@@ -200,27 +202,27 @@ export default function ChatPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
             <Card
               className="p-4 h-[70vh] rounded-3xl border-4"
-              style={{ borderColor: `var(--${agentDetails.color}-400)` }}
+              style={{ borderColor: `var(--${agentDetails?.color}-400)` }}
             >
               <h2
                 className="text-xl font-semibold mb-2 text-center"
-                style={{ color: `var(--${agentDetails.color}-600)` }}
+                style={{ color: `var(--${agentDetails?.color}-600)` }}
               >
-                Chat con {agentDetails.name}
+                Chat con {agentDetails?.name}
               </h2>
               <AgentChat
-                agentType={agent as 'junior' | 'middle' | 'senior' | 'default'}
+                agentType={agent as "junior" | "middle" | "senior" | "default"}
                 onHtmlContentUpdate={handleHtmlContentUpdate}
               />
             </Card>
 
             <Card
               className="p-4 h-[70vh] overflow-auto rounded-3xl border-4"
-              style={{ borderColor: `var(--${agentDetails.color}-400)` }}
+              style={{ borderColor: `var(--${agentDetails?.color}-400)` }}
             >
               <h2
                 className="text-xl font-semibold mb-2 text-center"
-                style={{ color: `var(--${agentDetails.color}-600)` }}
+                style={{ color: `var(--${agentDetails?.color}-600)` }}
               >
                 Visualización
               </h2>
