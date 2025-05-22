@@ -12,7 +12,7 @@ const comicNeue = Comic_Neue({
 export const metadata: Metadata = {
   title: "Asistente Educativo Infantil con IA",
   description: "Aplicación educativa con agentes de IA Pickaxe para niños",
-    generator: 'v0.dev'
+  generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -21,9 +21,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es">
-      <body className={comicNeue.className}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+    <html lang="es" suppressHydrationWarning>
+      <head />
+      <body className={comicNeue.className} suppressHydrationWarning>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
           {children}
         </ThemeProvider>
       </body>
