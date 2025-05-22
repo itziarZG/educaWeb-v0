@@ -19,7 +19,7 @@ export default function ChatPage() {
   // Determine agent details based on URL parameter
   const agentDetails = {
     junior: {
-      name: "Pequeños Exploradores",
+      name: "Agente de Andrea",
       color: "green",
       emoji: "🌈",
     },

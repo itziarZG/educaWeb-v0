@@ -2,7 +2,7 @@
 
 interface AgentMessage {
   content: string;
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   timestamp: number;
 }
 
@@ -15,14 +15,15 @@ interface AgentResponse {
 
 // Agent types and their IDs in the external API
 const AGENT_API_IDS = {
-  junior: 'AGENT_JUNIOR_ID', // Replace with actual API ID
-  middle: 'AGENT_MIDDLE_ID', // Replace with actual API ID
-  senior: 'AGENT_SENIOR_ID', // Replace with actual API ID
-  default: 'AGENT_DEFAULT_ID', // Replace with actual API ID
+  junior: "AGENT_JUNIOR_ID", // Replace with actual API ID
+  middle: "AGENT_MIDDLE_ID", // Replace with actual API ID
+  senior: "AGENT_SENIOR_ID", // Replace with actual API ID
+  default: "AGENT_DEFAULT_ID", // Replace with actual API ID
 };
 
 // API base URL
-const API_BASE_URL = process.env.NEXT_PUBLIC_AGENT_API_URL || 'https://api.example.com';
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_AGENT_API_URL || "https://api.example.com";
 
 /**
  * Send message to educational agent via API
@@ -31,26 +32,23 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_AGENT_API_URL || 'https://api.examp
  * @param conversationId Optional conversation ID for continuing conversations
  */
 export async function sendMessageToAgent(
-  message: string, 
-  agentType: 'junior' | 'middle' | 'senior' | 'default', 
+  message: string,
+  agentType: "junior" | "middle" | "senior" | "default",
   conversationId?: string
 ): Promise<AgentResponse> {
   try {
     const agentId = AGENT_API_IDS[agentType];
-    
-    const response = await fetch(`${API_BASE_URL}/agents/${agentId}/chat`, {
-      method: 'POST',
+
+    // Instead of calling external API directly
+    const response = await fetch("/api/andrea-agent", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        // Add any authentication headers as needed
-        // 'Authorization': `Bearer ${API_KEY}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         message,
+        agentType,
         conversationId,
-        options: {
-          includeHtmlContent: true, // Request HTML formatted content
-        }
       }),
     });
 
@@ -65,10 +63,10 @@ export async function sendMessageToAgent(
       conversationId: data.conversationId,
     };
   } catch (error) {
-    console.error('Error communicating with agent API:', error);
+    console.error("Error communicating with agent API:", error);
     return {
-      message: '',
-      error: error instanceof Error ? error.message : 'Unknown error occurred',
+      message: "",
+      error: error instanceof Error ? error.message : "Unknown error occurred",
     };
   }
 }
@@ -80,18 +78,21 @@ export async function sendMessageToAgent(
  */
 export async function getConversationHistory(
   conversationId: string,
-  agentType: 'junior' | 'middle' | 'senior' | 'default'
+  agentType: "junior" | "middle" | "senior" | "default"
 ): Promise<AgentMessage[]> {
   try {
     const agentId = AGENT_API_IDS[agentType];
-    
-    const response = await fetch(`${API_BASE_URL}/agents/${agentId}/conversations/${conversationId}`, {
-      method: 'GET',
+
+    // Instead of calling external API directly
+    const response = await fetch("/api/andrea-agent", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        // Add any authentication headers as needed
-        // 'Authorization': `Bearer ${API_KEY}`,
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        agentType,
+        conversationId,
+      }),
     });
 
     if (!response.ok) {
@@ -101,7 +102,7 @@ export async function getConversationHistory(
     const data = await response.json();
     return data.messages || [];
   } catch (error) {
-    console.error('Error fetching conversation history:', error);
+    console.error("Error fetching conversation history:", error);
     return [];
   }
 }
