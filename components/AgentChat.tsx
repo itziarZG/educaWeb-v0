@@ -1,23 +1,23 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Send, Bot, User } from "lucide-react";
-import { sendMessageToAgent } from '@/services/agentService';
+import { sendMessageToAgent } from "@/services/agentService";
 
 interface AgentChatProps {
-  agentType: 'junior' | 'middle' | 'senior' | 'default';
+  agentType: "andrea" | "middle" | "senior" | "default";
   onHtmlContentUpdate: (content: string) => void;
 }
 
 interface ChatMessage {
   content: string;
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   timestamp: number;
 }
 
 const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | undefined>();
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -25,27 +25,27 @@ const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
   // Scroll to bottom on new messages
   useEffect(() => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
 
   // Handle message submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!input.trim() || loading) return;
-    
+
     // Add user message to chat
     const userMessage: ChatMessage = {
       content: input,
-      role: 'user',
-      timestamp: Date.now()
+      role: "user",
+      timestamp: Date.now(),
     };
-    
-    setMessages(prev => [...prev, userMessage]);
-    setInput('');
+
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
     setLoading(true);
-    
+
     try {
       // Call agent API
       const response = await sendMessageToAgent(
@@ -53,40 +53,41 @@ const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
         agentType,
         conversationId
       );
-      
+
       if (response.error) {
         throw new Error(response.error);
       }
-      
+
       // Save conversation ID for continuity
       if (response.conversationId) {
         setConversationId(response.conversationId);
       }
-      
+
       // Add agent response to chat
       const agentMessage: ChatMessage = {
         content: response.message,
-        role: 'assistant',
-        timestamp: Date.now()
+        role: "assistant",
+        timestamp: Date.now(),
       };
-      
-      setMessages(prev => [...prev, agentMessage]);
-      
+
+      setMessages((prev) => [...prev, agentMessage]);
+
       // Update HTML content for rendering if available
       if (response.htmlContent) {
         onHtmlContentUpdate(response.htmlContent);
       }
     } catch (error) {
-      console.error('Error sending message:', error);
-      
+      console.error("Error sending message:", error);
+
       // Add error message to chat
       const errorMessage: ChatMessage = {
-        content: 'Lo siento, ocurrió un error al procesar tu mensaje. Por favor, intenta de nuevo.',
-        role: 'assistant',
-        timestamp: Date.now()
+        content:
+          "Lo siento, ocurrió un error al procesar tu mensaje. Por favor, intenta de nuevo.",
+        role: "assistant",
+        timestamp: Date.now(),
       };
-      
-      setMessages(prev => [...prev, errorMessage]);
+
+      setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setLoading(false);
     }
@@ -108,24 +109,24 @@ const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
               <div
                 key={index}
                 className={`flex ${
-                  msg.role === 'user' ? 'justify-end' : 'justify-start'
+                  msg.role === "user" ? "justify-end" : "justify-start"
                 }`}
               >
                 <div
                   className={`max-w-[80%] px-4 py-2 rounded-2xl ${
-                    msg.role === 'user'
-                      ? 'bg-blue-500 text-white rounded-tr-none'
-                      : 'bg-gray-200 text-gray-800 rounded-tl-none'
+                    msg.role === "user"
+                      ? "bg-blue-500 text-white rounded-tr-none"
+                      : "bg-gray-200 text-gray-800 rounded-tl-none"
                   }`}
                 >
                   <div className="flex items-center gap-2 mb-1">
-                    {msg.role === 'assistant' ? (
+                    {msg.role === "assistant" ? (
                       <Bot size={16} />
                     ) : (
                       <User size={16} />
                     )}
                     <span className="text-xs font-semibold">
-                      {msg.role === 'assistant' ? 'Agente' : 'Tú'}
+                      {msg.role === "assistant" ? "Agente" : "Tú"}
                     </span>
                   </div>
                   <p>{msg.content}</p>
