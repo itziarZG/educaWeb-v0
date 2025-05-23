@@ -7,7 +7,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Printer, FileDown, Smartphone, Laptop, Home } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import AgentChat from "@/components/AgentChat";
 
 export default function ChatPage() {
@@ -20,7 +19,7 @@ export default function ChatPage() {
   // Determine agent details based on URL parameter
   const agentDetails = {
     junior: {
-      name: "Pequeños Exploradores",
+      name: "Agente de Andrea",
       color: "green",
       emoji: "🌈",
     },
