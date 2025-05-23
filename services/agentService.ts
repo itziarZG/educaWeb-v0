@@ -13,14 +13,6 @@ interface AgentResponse {
   error?: string;
 }
 
-// Agent types and their IDs in the external API
-const AGENT_API_IDS = {
-  junior: "AGENT_JUNIOR_ID", // Replace with actual API ID
-  middle: "AGENT_MIDDLE_ID", // Replace with actual API ID
-  senior: "AGENT_SENIOR_ID", // Replace with actual API ID
-  default: "AGENT_DEFAULT_ID", // Replace with actual API ID
-};
-
 // API base URL
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_AGENT_API_URL || "https://api.example.com";
@@ -37,8 +29,6 @@ export async function sendMessageToAgent(
   conversationId?: string
 ): Promise<AgentResponse> {
   try {
-    const agentId = AGENT_API_IDS[agentType];
-
     // Instead of calling external API directly
     const response = await fetch("/api/andrea-agent", {
       method: "POST",
@@ -81,8 +71,6 @@ export async function getConversationHistory(
   agentType: "junior" | "middle" | "senior" | "default"
 ): Promise<AgentMessage[]> {
   try {
-    const agentId = AGENT_API_IDS[agentType];
-
     // Instead of calling external API directly
     const response = await fetch("/api/andrea-agent", {
       method: "POST",
