@@ -17,12 +17,9 @@ export async function POST(req: NextRequest) {
 
     // Parse the request body
     const body = await req.json();
-    console.log("Request body:", body);
-
     const { message, agentType, conversationId } = body;
 
     // Map agent type to appropriate prompt style
-    let tema = message || "";
     let nivel: AgentType = (agentType as AgentType) || "andrea";
 
     // Ensure the agentType is valid, default to 'andrea' if not
@@ -55,18 +52,27 @@ export async function POST(req: NextRequest) {
         { status: 500 }
       );
     }
-
-    console.log("Making request to Deepseek API...");
+    const reqBody = JSON.stringify({
+      model: "deepseek-chat",
+      messages: [
+        {
+          role: "system",
+          content: prompt,
+        },
+        {
+          role: "user",
+          content: message,
+        },
+      ],
+    });
+    console.log("Making request to Deepseek API with body: ", reqBody);
     const response = await fetch(DEEPSEEK_API_URL, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${process.env.DEEPSEEK_API_KEY}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        model: "deepseek-chat",
-        messages: [{ role: "user", content: prompt }],
-      }),
+      body: reqBody,
     });
 
     if (!response.ok) {
@@ -82,7 +88,7 @@ export async function POST(req: NextRequest) {
     }
 
     const data = await response.json();
-    console.log("Deepseek API response:", data);
+    console.log("Deepseek API response:", data.choices?.[0]?.message?.content);
 
     const responseContent = data.choices?.[0]?.message?.content || "";
 
