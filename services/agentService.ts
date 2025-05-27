@@ -24,9 +24,8 @@ const API_BASE_URL =
  * @param conversationId Optional conversation ID for continuing conversations
  */
 export async function sendMessageToAgent(
-  message: string,
-  agentType: "junior" | "middle" | "senior" | "default",
-  conversationId?: string
+  messages: { role: string; content: string }[],
+  agentType: "andrea" | "junior" | "middle" | "senior" | "default"
 ): Promise<AgentResponse> {
   try {
     // Instead of calling external API directly
@@ -36,9 +35,8 @@ export async function sendMessageToAgent(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        message,
+        messages,
         agentType,
-        conversationId,
       }),
     });
 
@@ -68,7 +66,7 @@ export async function sendMessageToAgent(
  */
 export async function getConversationHistory(
   conversationId: string,
-  agentType: "junior" | "middle" | "senior" | "default"
+  agentType: "andrea" | "junior" | "middle" | "senior" | "default"
 ): Promise<AgentMessage[]> {
   try {
     // Instead of calling external API directly

@@ -11,7 +11,7 @@ interface AgentChatProps {
 
 interface ChatMessage {
   content: string;
-  role: "user" | "assistant";
+  role: "user" | "assistant" | "system";
   timestamp: number;
 }
 
@@ -19,7 +19,6 @@ const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [conversationId, setConversationId] = useState<string | undefined>();
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   // Scroll to bottom on new messages
@@ -35,35 +34,36 @@ const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
 
     if (!input.trim() || loading) return;
 
-    // Add user message to chat
     const userMessage: ChatMessage = {
       content: input,
       role: "user",
       timestamp: Date.now(),
     };
 
+    // Prepara el array de mensajes para la API (system + histórico + mensaje actual)
+    const messagesForApi = [
+      ...messages.map((msg) => ({
+        role: msg.role,
+        content: msg.content,
+      })),
+      {
+        role: "user",
+        content: input,
+      },
+    ];
+
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setLoading(true);
 
     try {
-      // Call agent API
-      const response = await sendMessageToAgent(
-        userMessage.content,
-        agentType,
-        conversationId
-      );
+      // Llama a la API con el array de mensajes
+      const response = await sendMessageToAgent(messagesForApi, agentType);
 
       if (response.error) {
         throw new Error(response.error);
       }
 
-      // Save conversation ID for continuity
-      if (response.conversationId) {
-        setConversationId(response.conversationId);
-      }
-
-      // Add agent response to chat
       const agentMessage: ChatMessage = {
         content: response.message,
         role: "assistant",
@@ -72,7 +72,6 @@ const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
 
       setMessages((prev) => [...prev, agentMessage]);
 
-      // Update HTML content for rendering if available
       if (response.htmlContent) {
         onHtmlContentUpdate(response.htmlContent);
       }
@@ -113,7 +112,7 @@ const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
                 }`}
               >
                 <div
-                  className={`max-w-[80%] px-4 py-2 rounded-2xl ${
+                  className={`max-w-[95%] px-4 py-2 rounded-2xl ${
                     msg.role === "user"
                       ? "bg-blue-500 text-white rounded-tr-none"
                       : "bg-gray-200 text-gray-800 rounded-tl-none"
@@ -133,6 +132,34 @@ const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
                 </div>
               </div>
             ))}
+            {loading && (
+              <div className="flex justify-start">
+                <div className="bg-gray-200 text-gray-800 px-4 py-2 rounded-2xl rounded-tl-none max-w-[80%] flex items-center gap-2">
+                  <Bot size={16} />
+                  <span className="text-xs font-semibold">Agente</span>
+                  <svg
+                    className="animate-spin h-4 w-4 text-gray-500 ml-2"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v8z"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
         )}

@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
 
     // Parse the request body
     const body = await req.json();
-    const { message, agentType, conversationId } = body;
+    const { messages, agentType, conversationId } = body;
 
     // Map agent type to appropriate prompt style
     let nivel: AgentType = (agentType as AgentType) || "andrea";
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
       nivel = "andrea";
     }
 
-    if (!message) {
+    if (!messages) {
       return NextResponse.json(
         { error: "No message provided" },
         { status: 400 }
@@ -45,13 +45,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (!process.env.DEEPSEEK_API_KEY) {
-      console.error("DEEPSEEK_API_KEY environment variable not configured");
-      return NextResponse.json(
-        { error: "DeepSeek API key not configured" },
-        { status: 500 }
-      );
-    }
     const reqBody = JSON.stringify({
       model: "deepseek-chat",
       messages: [
@@ -59,10 +52,7 @@ export async function POST(req: NextRequest) {
           role: "system",
           content: prompt,
         },
-        {
-          role: "user",
-          content: message,
-        },
+        ...messages,
       ],
     });
     console.log("Making request to Deepseek API with body: ", reqBody);
