@@ -22,4 +22,6 @@ export interface AgentResponse {
 export interface AgentChatProps {
   agentType: AgentType;
   onHtmlContentUpdate: (content: string) => void;
+  messages: ChatMessage[];
+  onMessagesChange: (messages: ChatMessage[]) => void;
 }

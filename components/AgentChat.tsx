@@ -3,10 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Send, Bot, User } from "lucide-react";
 import { sendMessageToAgent } from "@/services/agentService";
-import { ChatMessage } from "@/types/agents";
+import { ChatMessage, AgentChatProps } from "@/types/agents";
 
-const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+const AgentChat = ({
+  agentType,
+  onHtmlContentUpdate,
+  messages,
+  onMessagesChange,
+}: AgentChatProps) => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -41,7 +45,8 @@ const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
       },
     ];
 
-    setMessages((prev) => [...prev, userMessage]);
+    const newMessages = [...messages, userMessage];
+    onMessagesChange(newMessages);
     setInput("");
     setLoading(true);
 
@@ -58,7 +63,7 @@ const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
         timestamp: Date.now(),
       };
 
-      setMessages((prev) => [...prev, agentMessage]);
+      onMessagesChange([...newMessages, agentMessage]);
 
       if (response.htmlContent) {
         onHtmlContentUpdate(response.htmlContent);
@@ -74,7 +79,7 @@ const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
         timestamp: Date.now(),
       };
 
-      setMessages((prev) => [...prev, errorMessage]);
+      onMessagesChange([...messages, userMessage, errorMessage]);
     } finally {
       setLoading(false);
     }
@@ -83,7 +88,7 @@ const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto p-4">
-        {messages.length === 0 ? (
+        {messages?.length === 0 ? (
           <div className="flex items-center justify-center h-full text-gray-400">
             <div className="text-center">
               <Bot size={48} className="mx-auto mb-2" />
@@ -92,7 +97,7 @@ const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
           </div>
         ) : (
           <div className="space-y-4">
-            {messages.map((msg, index) => (
+            {messages?.map((msg, index) => (
               <div
                 key={index}
                 className={`flex ${
