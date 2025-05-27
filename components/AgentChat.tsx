@@ -3,17 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Send, Bot, User } from "lucide-react";
 import { sendMessageToAgent } from "@/services/agentService";
-
-interface AgentChatProps {
-  agentType: "andrea" | "middle" | "senior" | "default";
-  onHtmlContentUpdate: (content: string) => void;
-}
-
-interface ChatMessage {
-  content: string;
-  role: "user" | "assistant" | "system";
-  timestamp: number;
-}
+import { ChatMessage } from "@/types/agents";
 
 const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -40,7 +30,6 @@ const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
       timestamp: Date.now(),
     };
 
-    // Prepara el array de mensajes para la API (system + histórico + mensaje actual)
     const messagesForApi = [
       ...messages.map((msg) => ({
         role: msg.role,
@@ -57,7 +46,6 @@ const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
     setLoading(true);
 
     try {
-      // Llama a la API con el array de mensajes
       const response = await sendMessageToAgent(messagesForApi, agentType);
 
       if (response.error) {
@@ -111,25 +99,32 @@ const AgentChat = ({ agentType, onHtmlContentUpdate }: AgentChatProps) => {
                   msg.role === "user" ? "justify-end" : "justify-start"
                 }`}
               >
-                <div
-                  className={`max-w-[95%] px-4 py-2 rounded-2xl ${
-                    msg.role === "user"
-                      ? "bg-blue-500 text-white rounded-tr-none"
-                      : "bg-gray-200 text-gray-800 rounded-tl-none"
-                  }`}
-                >
-                  <div className="flex items-center gap-2 mb-1">
-                    {msg.role === "assistant" ? (
-                      <Bot size={16} />
-                    ) : (
-                      <User size={16} />
-                    )}
-                    <span className="text-xs font-semibold">
-                      {msg.role === "assistant" ? "Agente" : "Tú"}
-                    </span>
+                {msg.role === "assistant" && agentType === "maquetin" ? (
+                  <div
+                    className="max-w-[95%] px-4 py-2 rounded-2xl bg-white border border-gray-300"
+                    dangerouslySetInnerHTML={{ __html: msg.content }}
+                  />
+                ) : (
+                  <div
+                    className={`max-w-[95%] px-4 py-2 rounded-2xl ${
+                      msg.role === "user"
+                        ? "bg-blue-500 text-white rounded-tr-none"
+                        : "bg-gray-200 text-gray-800 rounded-tl-none"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2 mb-1">
+                      {msg.role === "assistant" ? (
+                        <Bot size={16} />
+                      ) : (
+                        <User size={16} />
+                      )}
+                      <span className="text-xs font-semibold">
+                        {msg.role === "assistant" ? "Agente" : "Tú"}
+                      </span>
+                    </div>
+                    <p>{msg.content}</p>
                   </div>
-                  <p>{msg.content}</p>
-                </div>
+                )}
               </div>
             ))}
             {loading && (

@@ -8,9 +8,12 @@ import { Printer, FileDown, Smartphone, Laptop, Home } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import AgentChat from "@/components/AgentChat";
+import { sendMessageToAgent } from "@/services/agentService";
+import type { AgentType, ChatMessage } from "@/types/agent";
 
 export default function ChatPage() {
   const [htmlContent, setHtmlContent] = useState<string>("");
+  const [htmlLoading, setHtmlLoading] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const renderAreaRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
@@ -55,9 +58,23 @@ export default function ChatPage() {
   }, []);
 
   // Handle HTML content updates from the Agent API
-  const handleHtmlContentUpdate = (content: string) => {
-    setHtmlContent(content);
+  const handleHtmlContentUpdate = async (content: string) => {
+    setHtmlLoading(true);
+    setHtmlContent("");
+    const message = [{ role: "user", content }];
+    const maquetinAgent = await sendMessageToAgent(message, "maquetin");
+    setHtmlContent(cleanHtmlResponse(maquetinAgent.message));
+    setHtmlLoading(false);
   };
+
+  function cleanHtmlResponse(response: string): string {
+    // delete ```html in response
+    return response
+      .replace(/^```html\s*/i, "")
+      .replace(/^```\s*/i, "")
+      .replace(/```$/i, "")
+      .trim();
+  }
 
   // Function to export content as PDF
   const exportToPDF = async () => {
@@ -74,7 +91,11 @@ export default function ChatPage() {
           .replace(/\s+/g, "-")}-contenido.pdf`,
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2 },
-        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+        jsPDF: {
+          unit: "mm",
+          format: "a4",
+          orientation: "portrait" as "portrait",
+        },
       };
 
       html2pdf().set(opt).from(element).save();
@@ -172,7 +193,7 @@ export default function ChatPage() {
               >
                 <AgentChat
                   agentType={
-                    agent as "junior" | "middle" | "senior" | "default"
+                    agent as "andrea" | "middle" | "senior" | "default"
                   }
                   onHtmlContentUpdate={handleHtmlContentUpdate}
                 />
@@ -184,15 +205,41 @@ export default function ChatPage() {
                 className="h-full p-4 overflow-auto rounded-3xl border-4"
                 style={{ borderColor: `var(--${agentDetails?.color}-400)` }}
               >
-                <div
-                  ref={renderAreaRef}
-                  className="render-area"
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      htmlContent ||
-                      `<p style="text-align: center; font-size: 18px; color: #666;">¡Hola! Pregúntame algo en el chat y te mostraré la respuesta aquí con dibujos y explicaciones...</p>`,
-                  }}
-                />
+                <div ref={renderAreaRef} className="render-area">
+                  {htmlLoading ? (
+                    <div className="flex flex-col items-center justify-center h-full text-gray-400">
+                      <svg
+                        className="animate-spin h-8 w-8 text-gray-400 mb-2"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8v8z"
+                        ></path>
+                      </svg>
+                      <span>Maquetín está maquetando...</span>
+                    </div>
+                  ) : (
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          htmlContent ||
+                          `<p style="text-align: center; font-size: 18px; color: #666;">¡Hola! Pregúntame algo en el chat y te mostraré la respuesta aquí con dibujos y explicaciones...</p>`,
+                      }}
+                    />
+                  )}
+                </div>
               </Card>
             </TabsContent>
           </Tabs>
@@ -203,14 +250,8 @@ export default function ChatPage() {
               className="p-4 h-[70vh] rounded-3xl border-4"
               style={{ borderColor: `var(--${agentDetails?.color}-400)` }}
             >
-              <h2
-                className="text-xl font-semibold mb-2 text-center"
-                style={{ color: `var(--${agentDetails?.color}-600)` }}
-              >
-                Chat con {agentDetails?.name}
-              </h2>
               <AgentChat
-                agentType={agent as "junior" | "middle" | "senior" | "default"}
+                agentType={agent as "andrea" | "middle" | "senior" | "default"}
                 onHtmlContentUpdate={handleHtmlContentUpdate}
               />
             </Card>
@@ -219,21 +260,44 @@ export default function ChatPage() {
               className="p-4 h-[70vh] overflow-auto rounded-3xl border-4"
               style={{ borderColor: `var(--${agentDetails?.color}-400)` }}
             >
-              <h2
-                className="text-xl font-semibold mb-2 text-center"
-                style={{ color: `var(--${agentDetails?.color}-600)` }}
-              >
-                Visualización
-              </h2>
               <div
                 ref={renderAreaRef}
                 className="render-area h-[calc(100%-2rem)]"
-                dangerouslySetInnerHTML={{
-                  __html:
-                    htmlContent ||
-                    `<p style="text-align: center; font-size: 18px; color: #666;">¡Hola! Pregúntame algo en el chat y te mostraré la respuesta aquí con dibujos y explicaciones...</p>`,
-                }}
-              />
+              >
+                {htmlLoading ? (
+                  <div className="flex flex-col items-center justify-center h-full text-gray-400">
+                    <svg
+                      className="animate-spin h-8 w-8 text-gray-400 mb-2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8z"
+                      ></path>
+                    </svg>
+                    <span>Maquetín está maquetando...</span>
+                  </div>
+                ) : (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        htmlContent ||
+                        `<p style="text-align: center; font-size: 18px; color: #666;">¡Hola! Pregúntame algo en el chat y te mostraré la respuesta aquí con dibujos y explicaciones...</p>`,
+                    }}
+                  />
+                )}
+              </div>
             </Card>
           </div>
         )}
