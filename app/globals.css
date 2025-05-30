@@ -58,7 +58,6 @@
   }
 }
 
-/* Animaciones adicionales */
 @keyframes float {
   0% {
     transform: translateY(0px);
@@ -75,7 +74,6 @@
   animation: float 3s ease-in-out infinite;
 }
 
-/* Estilos para el área de renderizado */
 .render-area {
   font-family: "Comic Neue", "Comic Sans MS", cursive;
 }

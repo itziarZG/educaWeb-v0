@@ -1,44 +1,19 @@
-// API service to interact with educational agents
+import { AgentMessage, AgentResponse, AgentType } from "@/types/agents";
 
-interface AgentMessage {
-  content: string;
-  role: "user" | "assistant";
-  timestamp: number;
-}
-
-interface AgentResponse {
-  message: string;
-  htmlContent?: string;
-  conversationId?: string;
-  error?: string;
-}
-
-// API base URL
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_AGENT_API_URL || "https://api.example.com";
-
-/**
- * Send message to educational agent via API
- * @param message The message content
- * @param agentType The type of agent (junior, middle, senior, default)
- * @param conversationId Optional conversation ID for continuing conversations
- */
 export async function sendMessageToAgent(
-  message: string,
-  agentType: "junior" | "middle" | "senior" | "default",
-  conversationId?: string
+  messages: { role: string; content: string }[],
+  agentType: AgentType
 ): Promise<AgentResponse> {
   try {
     // Instead of calling external API directly
-    const response = await fetch("/api/andrea-agent", {
+    const response = await fetch("/api/agent", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        message,
+        messages,
         agentType,
-        conversationId,
       }),
     });
 
@@ -61,14 +36,9 @@ export async function sendMessageToAgent(
   }
 }
 
-/**
- * Get conversation history
- * @param conversationId The conversation ID
- * @param agentType The type of agent
- */
 export async function getConversationHistory(
   conversationId: string,
-  agentType: "junior" | "middle" | "senior" | "default"
+  agentType: AgentType
 ): Promise<AgentMessage[]> {
   try {
     // Instead of calling external API directly
