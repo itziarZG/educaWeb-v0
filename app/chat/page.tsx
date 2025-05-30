@@ -16,6 +16,8 @@ export default function ChatPage() {
   const [htmlContent, setHtmlContent] = useState<string>("");
   const [htmlLoading, setHtmlLoading] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [mobileTab, setMobileTab] = useState<string>("chat");
+  const [lastRenderedAgentMsg, setLastRenderedAgentMsg] = useState<string>("");
   const renderAreaRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
   const agent = searchParams.get("agent") || "default";
@@ -57,6 +59,29 @@ export default function ChatPage() {
       window.removeEventListener("resize", checkIfMobile);
     };
   }, []);
+
+  // Detectar cambio de tab en móvil y disparar petición a Maquetín si corresponde
+  useEffect(() => {
+    if (!isMobile) return;
+    if (mobileTab !== "render") return;
+    const lastAgentMsg = [...messages]
+      .reverse()
+      .find((msg) => msg.role === "assistant");
+    if (!lastAgentMsg) return;
+    if (lastRenderedAgentMsg === lastAgentMsg.content) return;
+    // Hacer petición a Maquetín
+    (async () => {
+      setHtmlLoading(true);
+      setHtmlContent("");
+      const maquetinAgent = await sendMessageToAgent(
+        [{ role: "user", content: lastAgentMsg.content }],
+        "maquetin"
+      );
+      setHtmlContent(cleanHtmlResponse(maquetinAgent.message));
+      setHtmlLoading(false);
+      setLastRenderedAgentMsg(lastAgentMsg.content);
+    })();
+  }, [mobileTab, messages, isMobile, lastRenderedAgentMsg]);
 
   // Handle HTML content updates from the Agent API
   const handleHtmlContentUpdate = async (content: string) => {
@@ -194,7 +219,11 @@ export default function ChatPage() {
         {isMobile ? (
           // Mobile layout - Tabs
           <div className="relative w-full">
-            <Tabs defaultValue="chat" className="w-full">
+            <Tabs
+              defaultValue="chat"
+              className="w-full"
+              onValueChange={setMobileTab}
+            >
               <TabsList className="grid w-full grid-cols-2 mb-4 rounded-full">
                 <TabsTrigger value="chat" className="rounded-l-full">
                   Chat
@@ -261,19 +290,7 @@ export default function ChatPage() {
                 </Card>
               </TabsContent>
             </Tabs>
-            {/* Botón flotante entre los tabs, centrado horizontal y verticalmente en la zona visible */}
-            {messages.some((msg) => msg.role === "assistant") && (
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
-                <Button
-                  size="icon"
-                  onClick={handleSendToMaquetin}
-                  className="rounded-full bg-indigo-500 hover:bg-indigo-600 text-white w-10 h-10 shadow-md pointer-events-auto"
-                  title="Visualizar en Maquetín"
-                >
-                  <span className="text-xl">→</span>
-                </Button>
-              </div>
-            )}
+            {/* No hay botón flotante en móvil */}
           </div>
         ) : (
           // Desktop layout - Side by side
