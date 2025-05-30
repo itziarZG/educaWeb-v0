@@ -29,18 +29,13 @@ export default function ChatPage() {
       color: "green",
       emoji: "🌈",
     },
-    middle: {
-      name: "Curiosos del Saber",
+    arnau: {
+      name: "Agente de Arnau",
       color: "blue",
-      emoji: "🔍",
-    },
-    senior: {
-      name: "Jóvenes Científicos",
-      color: "purple",
-      emoji: "🚀",
+      emoji: "⚽",
     },
     default: {
-      name: "Asistente Educativo",
+      name: "Asistente Educativo General",
       color: "indigo",
       emoji: "✨",
     },
@@ -60,7 +55,7 @@ export default function ChatPage() {
     };
   }, []);
 
-  // Detectar cambio de tab en móvil y disparar petición a Maquetín si corresponde
+  // used to make request in visualisation tab in mobile
   useEffect(() => {
     if (!isMobile) return;
     if (mobileTab !== "render") return;
@@ -69,7 +64,7 @@ export default function ChatPage() {
       .find((msg) => msg.role === "assistant");
     if (!lastAgentMsg) return;
     if (lastRenderedAgentMsg === lastAgentMsg.content) return;
-    // Hacer petición a Maquetín
+    // request to maquetin
     (async () => {
       setHtmlLoading(true);
       setHtmlContent("");
@@ -93,7 +88,7 @@ export default function ChatPage() {
     setHtmlLoading(false);
   };
 
-  // Nueva función para enviar el último mensaje del agente a maquetín
+  // send last principal agent to maquetin
   const handleSendToMaquetin = async () => {
     const lastAgentMsg = [...messages]
       .reverse()
@@ -349,7 +344,6 @@ export default function ChatPage() {
                 )}
               </div>
             </Card>
-            {/* Botón flotante entre los dos paneles, centrado vertical y horizontalmente */}
             {messages.some((msg) => msg.role === "assistant") && (
               <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
                 <Button
@@ -380,21 +374,6 @@ export default function ChatPage() {
             <FileDown size={16} />
             Guardar PDF
           </Button>
-        </div>
-
-        <div className="text-center mt-8 text-sm text-gray-500">
-          <p>
-            Dispositivo actual:{" "}
-            {isMobile ? (
-              <span className="flex items-center justify-center gap-1 mt-1">
-                <Smartphone size={16} /> Móvil
-              </span>
-            ) : (
-              <span className="flex items-center justify-center gap-1 mt-1">
-                <Laptop size={16} /> Escritorio
-              </span>
-            )}
-          </p>
         </div>
       </div>
     </main>
