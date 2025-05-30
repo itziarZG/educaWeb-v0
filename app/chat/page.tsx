@@ -8,9 +8,13 @@ import { Printer, FileDown, Smartphone, Laptop, Home } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import AgentChat from "@/components/AgentChat";
+import { sendMessageToAgent } from "@/services/agentService";
+import type { AgentType, ChatMessage } from "@/types/agents";
 
 export default function ChatPage() {
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [htmlContent, setHtmlContent] = useState<string>("");
+  const [htmlLoading, setHtmlLoading] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const renderAreaRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
@@ -55,9 +59,39 @@ export default function ChatPage() {
   }, []);
 
   // Handle HTML content updates from the Agent API
-  const handleHtmlContentUpdate = (content: string) => {
-    setHtmlContent(content);
+  const handleHtmlContentUpdate = async (content: string) => {
+    setHtmlLoading(true);
+    setHtmlContent("");
+    const message = [{ role: "user", content }];
+    const maquetinAgent = await sendMessageToAgent(message, "maquetin");
+    setHtmlContent(cleanHtmlResponse(maquetinAgent.message));
+    setHtmlLoading(false);
   };
+
+  // Nueva función para enviar el último mensaje del agente a maquetín
+  const handleSendToMaquetin = async () => {
+    const lastAgentMsg = [...messages]
+      .reverse()
+      .find((msg) => msg.role === "assistant");
+    if (!lastAgentMsg) return;
+    setHtmlLoading(true);
+    setHtmlContent("");
+    const maquetinAgent = await sendMessageToAgent(
+      [{ role: "user", content: lastAgentMsg.content }],
+      "maquetin"
+    );
+    setHtmlContent(cleanHtmlResponse(maquetinAgent.message));
+    setHtmlLoading(false);
+  };
+
+  function cleanHtmlResponse(response: string): string {
+    // delete ```html in response
+    return response
+      .replace(/^```html\s*/i, "")
+      .replace(/^```\s*/i, "")
+      .replace(/```$/i, "")
+      .trim();
+  }
 
   // Function to export content as PDF
   const exportToPDF = async () => {
@@ -74,7 +108,11 @@ export default function ChatPage() {
           .replace(/\s+/g, "-")}-contenido.pdf`,
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2 },
-        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+        jsPDF: {
+          unit: "mm",
+          format: "a4",
+          orientation: "portrait" as "portrait",
+        },
       };
 
       html2pdf().set(opt).from(element).save();
@@ -155,86 +193,158 @@ export default function ChatPage() {
 
         {isMobile ? (
           // Mobile layout - Tabs
-          <Tabs defaultValue="chat" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-4 rounded-full">
-              <TabsTrigger value="chat" className="rounded-l-full">
-                Chat
-              </TabsTrigger>
-              <TabsTrigger value="render" className="rounded-r-full">
-                Visualización
-              </TabsTrigger>
-            </TabsList>
+          <div className="relative w-full">
+            <Tabs defaultValue="chat" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-4 rounded-full">
+                <TabsTrigger value="chat" className="rounded-l-full">
+                  Chat
+                </TabsTrigger>
+                <TabsTrigger value="render" className="rounded-r-full">
+                  Visualización
+                </TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="chat" className="h-[70vh]">
-              <Card
-                className="h-full p-4 rounded-3xl border-4"
-                style={{ borderColor: `var(--${agentDetails?.color}-400)` }}
-              >
-                <AgentChat
-                  agentType={
-                    agent as "junior" | "middle" | "senior" | "default"
-                  }
-                  onHtmlContentUpdate={handleHtmlContentUpdate}
-                />
-              </Card>
-            </TabsContent>
+              <TabsContent value="chat" className="h-[70vh]">
+                <Card
+                  className="h-full p-4 rounded-3xl border-4"
+                  style={{ borderColor: `var(--${agentDetails?.color}-400)` }}
+                >
+                  <AgentChat
+                    agentType={agent as AgentType}
+                    onHtmlContentUpdate={() => {}}
+                    messages={messages}
+                    onMessagesChange={setMessages}
+                  />
+                </Card>
+              </TabsContent>
 
-            <TabsContent value="render" className="h-[70vh]">
-              <Card
-                className="h-full p-4 overflow-auto rounded-3xl border-4"
-                style={{ borderColor: `var(--${agentDetails?.color}-400)` }}
-              >
-                <div
-                  ref={renderAreaRef}
-                  className="render-area"
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      htmlContent ||
-                      `<p style="text-align: center; font-size: 18px; color: #666;">¡Hola! Pregúntame algo en el chat y te mostraré la respuesta aquí con dibujos y explicaciones...</p>`,
-                  }}
-                />
-              </Card>
-            </TabsContent>
-          </Tabs>
+              <TabsContent value="render" className="h-[70vh]">
+                <Card
+                  className="h-full p-4 overflow-auto rounded-3xl border-4"
+                  style={{ borderColor: `var(--${agentDetails?.color}-400)` }}
+                >
+                  <div ref={renderAreaRef} className="render-area">
+                    {htmlLoading ? (
+                      <div className="flex flex-col items-center justify-center h-full text-gray-400">
+                        <svg
+                          className="animate-spin h-8 w-8 text-gray-400 mb-2"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8v8z"
+                          ></path>
+                        </svg>
+                        <span>Maquetín está maquetando...</span>
+                      </div>
+                    ) : (
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html:
+                            htmlContent ||
+                            `<p style="text-align: center; font-size: 18px; color: #666;">¡Hola! Pregúntame algo en el chat y cuando estén listos los ejercicions dale al botón y yo me encargo</p>`,
+                        }}
+                      />
+                    )}
+                  </div>
+                </Card>
+              </TabsContent>
+            </Tabs>
+            {/* Botón flotante entre los tabs, centrado horizontal y verticalmente en la zona visible */}
+            {messages.some((msg) => msg.role === "assistant") && (
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
+                <Button
+                  size="icon"
+                  onClick={handleSendToMaquetin}
+                  className="rounded-full bg-indigo-500 hover:bg-indigo-600 text-white w-10 h-10 shadow-md pointer-events-auto"
+                  title="Visualizar en Maquetín"
+                >
+                  <span className="text-xl">→</span>
+                </Button>
+              </div>
+            )}
+          </div>
         ) : (
           // Desktop layout - Side by side
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+          <div className="relative grid grid-cols-1 md:grid-cols-2 gap-6 mb-4 items-center">
             <Card
               className="p-4 h-[70vh] rounded-3xl border-4"
               style={{ borderColor: `var(--${agentDetails?.color}-400)` }}
             >
-              <h2
-                className="text-xl font-semibold mb-2 text-center"
-                style={{ color: `var(--${agentDetails?.color}-600)` }}
-              >
-                Chat con {agentDetails?.name}
-              </h2>
               <AgentChat
-                agentType={agent as "junior" | "middle" | "senior" | "default"}
-                onHtmlContentUpdate={handleHtmlContentUpdate}
+                agentType={agent as AgentType}
+                onHtmlContentUpdate={() => {}}
+                messages={messages}
+                onMessagesChange={setMessages}
               />
             </Card>
-
             <Card
               className="p-4 h-[70vh] overflow-auto rounded-3xl border-4"
               style={{ borderColor: `var(--${agentDetails?.color}-400)` }}
             >
-              <h2
-                className="text-xl font-semibold mb-2 text-center"
-                style={{ color: `var(--${agentDetails?.color}-600)` }}
-              >
-                Visualización
-              </h2>
               <div
                 ref={renderAreaRef}
                 className="render-area h-[calc(100%-2rem)]"
-                dangerouslySetInnerHTML={{
-                  __html:
-                    htmlContent ||
-                    `<p style="text-align: center; font-size: 18px; color: #666;">¡Hola! Pregúntame algo en el chat y te mostraré la respuesta aquí con dibujos y explicaciones...</p>`,
-                }}
-              />
+              >
+                {htmlLoading ? (
+                  <div className="flex flex-col items-center justify-center h-full text-gray-400">
+                    <svg
+                      className="animate-spin h-8 w-8 text-gray-400 mb-2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8z"
+                      ></path>
+                    </svg>
+                    <span>Maquetín está maquetando...</span>
+                  </div>
+                ) : (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        htmlContent ||
+                        `<p style="text-align: center; font-size: 18px; color: #666;">¡Hola! Pregúntame algo en el chat y cuando estén listos los ejercicions dale al botón y yo me encargo.</p>`,
+                    }}
+                  />
+                )}
+              </div>
             </Card>
+            {/* Botón flotante entre los dos paneles, centrado vertical y horizontalmente */}
+            {messages.some((msg) => msg.role === "assistant") && (
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
+                <Button
+                  size="icon"
+                  onClick={handleSendToMaquetin}
+                  className="rounded-full bg-indigo-500 hover:bg-indigo-600 text-white w-10 h-10 shadow-md pointer-events-auto"
+                  title="Visualizar en Maquetín"
+                >
+                  <span className="text-xl">→</span>
+                </Button>
+              </div>
+            )}
           </div>
         )}
 
