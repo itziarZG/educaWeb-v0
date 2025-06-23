@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { BookOpen, Brain, Rocket, Stars, Sparkles } from "lucide-react";
+import { BookOpen, Brain, Moon, Rocket, Stars, Sparkles } from "lucide-react";
 
 export default function HomePage() {
   return (
@@ -57,6 +57,26 @@ export default function HomePage() {
                   </p>
                   <Button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white rounded-full px-6">
                     ¡Descubrir!
+                  </Button>
+                </div>
+              </Card>
+            </Link>
+            {/* Agente para edades Gadea */}
+
+            <Link href="/chat?agent=gadea" className="block">
+              <Card className="p-6 h-full border-4 border-gray-400 bg-blue-50 rounded-3xl hover:shadow-xl transition-all hover:-translate-y-2 cursor-pointer">
+                <div className="flex flex-col items-center text-center h-full">
+                  <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center mb-4">
+                    <Moon className="w-12 h-12 text-blue-700" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                    Lunara, guía loba
+                  </h2>
+                  <p className="text-blue-900 mb-4">
+                    Para Gadea. Aprendizajes con espíritu de manada.
+                  </p>
+                  <Button className="mt-4 bg-blue-700 hover:bg-blue-800 text-white rounded-full px-6">
+                    Empezar viaje
                   </Button>
                 </div>
               </Card>

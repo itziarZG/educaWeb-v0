@@ -35,9 +35,9 @@ export default function ChatPage() {
       emoji: "⚽",
     },
     default: {
-      name: "Asistente Educativo General",
-      color: "indigo",
-      emoji: "✨",
+      name: "Agente de Gadea",
+      color: "gray",
+      emoji: "🌕",
     },
   }[agent];
 
