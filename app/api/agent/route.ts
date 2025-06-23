@@ -16,23 +16,26 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const DEEPSEEK_API_URL = process.env.DEEPSEEK_API_URL;
-    if (!DEEPSEEK_API_URL) {
+    // Cambia aquí a la API de OpenAI
+    const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
+    const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+    if (!OPENAI_API_KEY) {
       return NextResponse.json(
-        { error: "DeepSeek API URL not configured" },
+        { error: "OpenAI API key not configured" },
         { status: 500 }
       );
     }
 
     const reqBody = JSON.stringify({
-      model: "deepseek-chat",
+      model: "gpt-4.1-mini", // o "gpt-4" si tienes acceso
       messages: [{ role: "system", content: prompt }, ...messages],
+      temperature: 0.7,
     });
 
-    const response = await fetch(DEEPSEEK_API_URL, {
+    const response = await fetch(OPENAI_API_URL, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.DEEPSEEK_API_KEY}`,
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: reqBody,
@@ -42,7 +45,7 @@ export async function POST(req: NextRequest) {
       const errorText = await response.text();
       return NextResponse.json(
         {
-          error: `Deepseek API returned error status: ${response.status}`,
+          error: `OpenAI API returned error status: ${response.status}`,
           details: errorText,
         },
         { status: response.status }
