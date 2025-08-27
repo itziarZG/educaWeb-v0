@@ -83,17 +83,17 @@ export default function HomePage() {
             </Link>
 
             {/* Agente para edades 11-13 */}
-            <Link href="/chat?agent=default" className="block">
+            <Link href="/chat?agent=rubio" className="block">
               <Card className="p-6 h-full border-4 border-purple-400 bg-purple-50 rounded-3xl hover:shadow-xl transition-all hover:-translate-y-2 cursor-pointer">
                 <div className="flex flex-col items-center text-center h-full">
                   <div className="w-24 h-24 rounded-full bg-purple-200 flex items-center justify-center mb-4">
                     <Rocket className="w-12 h-12 text-purple-600" />
                   </div>
                   <h2 className="text-2xl font-bold text-purple-600 mb-2">
-                    Agente generalizado
+                    Cuadernillos Caligrafía
                   </h2>
                   <p className="text-purple-700 mb-4">
-                    Para todos. Tendrás que presentarte antes.
+                    Para todos. Tendrás que contestar unas preguntas antes.
                   </p>
                   <Button className="mt-4 bg-purple-500 hover:bg-purple-600 text-white rounded-full px-6">
                     ¡Explorar!
