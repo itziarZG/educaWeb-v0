@@ -59,7 +59,7 @@ export default function RootLayout({
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
       </head>
       <body
-        className={`${lexend.variable} font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 selection:bg-primary/30 antialiased`}
+        className={`${lexend.variable} font-display bg-background-light dark:bg-background-dark dark:bg-opacity-10 text-slate-900 dark:text-slate-100 selection:bg-primary/30 antialiased`}
         suppressHydrationWarning
       >
         <ThemeProvider
@@ -85,19 +85,22 @@ export default function RootLayout({
               <div className="flex items-center gap-6">
                 <a
                   className="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors"
-                  href="#"
+                  href="/login"
                 >
                   Login
                 </a>
-                <button className="bg-primary hover:bg-primary/90 text-[#111813] px-5 py-2 rounded-lg text-sm font-bold transition-all shadow-sm">
+                <a
+                  className="bg-primary hover:bg-primary/90 text-[#111813] px-5 py-2 rounded-lg text-sm font-bold transition-all shadow-sm"
+                  href="/register"
+                >
                   Probar gratis
-                </button>
+                </a>
               </div>
             </div>
           </header>
           <main className="w-full">{children}</main>
-          <footer className="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 py-12">
-            <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8">
+          <footer className="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 py-6">
+            <div className="max-w-7xl mx-auto px-2 flex flex-col md:flex-row justify-between items-center gap-8">
               <div className="flex items-center gap-2">
                 <Image
                   src="/logo_tutorai.png"
