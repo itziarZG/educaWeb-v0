@@ -8,11 +8,12 @@ const prompts = promptsData as Record<string, string>;
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { messages, agentType } = body;
+    const { messages, agentType, userEmail } = body;
 
     // LOG 1: Verificar qué llega
     console.log("DEBUG: Datos recibidos:", {
       agentType,
+      userEmail,
       messagesCount: messages?.length,
     });
 
@@ -41,7 +42,9 @@ export async function POST(req: NextRequest) {
 
     const { text } = await generateText({
       model: model,
-      system: prompts[agentType],
+      system: userEmail
+        ? `${prompts[agentType]} (User email: ${userEmail})`
+        : prompts[agentType],
       messages: messages,
     });
 

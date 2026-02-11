@@ -2,8 +2,10 @@ import type React from "react";
 import type { Metadata } from "next";
 import { Lexend } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import { Providers } from "@/app/providers";
 import Image from "next/image";
+import Header from "@/components/Header";
+import { createClient } from "@/utils/supabase/server";
 const lexend = Lexend({
   subsets: ["latin"],
   variable: "--font-lexend",
@@ -26,11 +28,16 @@ export const metadata: Metadata = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <html lang="es" suppressHydrationWarning className="light">
       <head>
@@ -62,43 +69,9 @@ export default function RootLayout({
         className={`${lexend.variable} font-display bg-background-light dark:bg-background-dark dark:bg-opacity-10 text-slate-900 dark:text-slate-100 selection:bg-primary/30 antialiased`}
         suppressHydrationWarning
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <header className="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
-            <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Image
-                  src="/logo_tutorai.png"
-                  alt="TUTOR_AI Logo"
-                  width={40}
-                  height={40}
-                  className="object-contain"
-                />
-                <h2 className="text-[#111813] dark:text-white text-lg font-bold leading-tight tracking-tight">
-                  TUTOR_AI
-                </h2>
-              </div>
-              <div className="flex items-center gap-6">
-                <a
-                  className="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors"
-                  href="/login"
-                >
-                  Login
-                </a>
-                <a
-                  className="bg-primary hover:bg-primary/90 text-[#111813] px-5 py-2 rounded-lg text-sm font-bold transition-all shadow-sm"
-                  href="/register"
-                >
-                  Probar gratis
-                </a>
-              </div>
-            </div>
-          </header>
-          <main className="w-full">{children}</main>
+        <Providers initialUser={user}>
+          <Header />
+          <main className="w-full max-w-7xl mx-auto">{children}</main>
           <footer className="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 py-6">
             <div className="max-w-7xl mx-auto px-2 flex flex-col md:flex-row justify-between items-center gap-8">
               <div className="flex items-center gap-2">
@@ -144,7 +117,7 @@ export default function RootLayout({
               </p>
             </div>
           </footer>
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

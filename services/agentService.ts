@@ -2,15 +2,17 @@ import { AgentMessage, AgentResponse, AgentType } from "@/types/agents";
 
 export async function sendMessageToAgent(
   messages: { role: string; content: string }[],
-  agentType: string, // Asegúrate de que esto sea un string que exista en prompts.json
+  agentType: string,
+  userEmail?: string | null,
 ): Promise<AgentResponse> {
   try {
     const response = await fetch("/api/agent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        messages, // El array de mensajes [{role, content}]
-        agentType, // La llave de tu JSON
+        messages,
+        agentType,
+        userEmail,
       }),
     });
 

@@ -7,7 +7,10 @@ import type { AgentType, ChatMessage } from "@/types/agents";
 
 // Import html2pdf dynamically in component
 
+import { useAuth } from "@/context/auth-context";
+
 export default function ChatPage() {
+  const { user } = useAuth();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -18,6 +21,7 @@ export default function ChatPage() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const renderAreaRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   // Mobile check
   useEffect(() => {
@@ -31,6 +35,31 @@ export default function ChatPage() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  const handlePrint = () => {
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      iframeRef.current.contentWindow.print();
+    }
+  };
+
+  const handleDownloadPdf = async () => {
+    if (iframeRef.current && iframeRef.current.contentDocument) {
+      const element = iframeRef.current.contentDocument.body;
+      const html2pdf = (await import("html2pdf.js")).default;
+      const opt = {
+        margin: 0.5,
+        filename: "visualization.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: {
+          unit: "in",
+          format: "letter",
+          orientation: "portrait" as const,
+        },
+      };
+      html2pdf().set(opt).from(element).save();
+    }
+  };
 
   // Handle Send Message
   const handleSubmit = async (e?: React.FormEvent) => {
@@ -54,7 +83,11 @@ export default function ChatPage() {
         content,
       }));
 
-      const response = await sendMessageToAgent(messagesForApi, "andrea");
+      const response = await sendMessageToAgent(
+        messagesForApi,
+        "andrea",
+        user?.email,
+      );
       if (response.error) throw new Error(response.error);
 
       const agentMsg: ChatMessage = {
@@ -131,11 +164,8 @@ export default function ChatPage() {
               </span>
               <div className="flex flex-col">
                 <h2 className="font-bold text-sm text-[#111318] dark:text-gray-100">
-                  Content Creator
+                  Creador de fichas
                 </h2>
-                <span className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">
-                  Andrea
-                </span>
               </div>
             </div>
             <div className="md:hidden" onClick={toggleSidebar}>
@@ -148,7 +178,7 @@ export default function ChatPage() {
           <div className="flex-1 overflow-y-auto p-4 space-y-6 bg-background-light dark:bg-background-dark">
             {messages.length === 0 && (
               <div className="text-center text-gray-500 mt-10">
-                <p>Start a conversation with Agente Andrea</p>
+                <p>Inicia una conversación con el agente</p>
               </div>
             )}
 
@@ -309,6 +339,27 @@ export default function ChatPage() {
                   </span>
                   Update
                 </button>
+                <div className="h-6 w-px bg-gray-200 dark:bg-dark-border"></div>
+                <button
+                  onClick={handlePrint}
+                  className="flex items-center gap-2 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300 bg-transparent border border-gray-200 dark:border-dark-border/60 rounded-lg hover:bg-gray-50 dark:hover:bg-dark-highlight transition-colors"
+                  title="Print"
+                >
+                  <span className="material-symbols-outlined text-[18px]">
+                    print
+                  </span>
+                  Print
+                </button>
+                <button
+                  onClick={handleDownloadPdf}
+                  className="flex items-center gap-2 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300 bg-transparent border border-gray-200 dark:border-dark-border/60 rounded-lg hover:bg-gray-50 dark:hover:bg-dark-highlight transition-colors"
+                  title="Download PDF"
+                >
+                  <span className="material-symbols-outlined text-[18px]">
+                    picture_as_pdf
+                  </span>
+                  PDF
+                </button>
               </div>
             )}
           </div>
@@ -323,7 +374,13 @@ export default function ChatPage() {
                   <p className="animate-pulse">Creating visualization...</p>
                 </div>
               ) : htmlContent ? (
-                <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+                <iframe
+                  ref={iframeRef}
+                  srcDoc={htmlContent}
+                  className="w-full h-full min-h-[800px] border-0 rounded-xl"
+                  title="Visualization"
+                  sandbox="allow-scripts allow-popups allow-forms"
+                />
               ) : (
                 <div className="flex flex-col items-center justify-center h-full min-h-[400px] text-gray-300 dark:text-gray-600">
                   <span className="material-symbols-outlined text-8xl mb-4 opacity-50">

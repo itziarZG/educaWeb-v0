@@ -8,21 +8,23 @@ export async function signup(formData: FormData) {
 
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
+  const name = formData.get("name") as string;
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
+      data: { name },
       emailRedirectTo: "http://localhost:3000/auth/callback",
     },
   });
 
   if (error) {
     console.error("Error al registrarse:", error.message);
-    return redirect("/error");
+    return { error: error.message };
   }
 
-  return redirect("/dashboard");
+  return { success: true, user: data.user };
 }
 export async function login(formData: FormData) {
   const supabase = await createClient();
@@ -30,21 +32,20 @@ export async function login(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
   if (error) {
     console.error("Error al iniciar sesión:", error.message);
-    return redirect("/login?error=true");
+    return { error: error.message };
   }
-
-  return redirect("/dashboard");
+  return { success: true, user: data.user };
 }
 
 export async function signout() {
   const supabase = await createClient();
   await supabase.auth.signOut();
-  return redirect("/login");
+  return { success: true };
 }
