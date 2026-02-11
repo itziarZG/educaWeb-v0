@@ -10,36 +10,52 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { messages, agentType } = body;
 
-    // Debug: mira tu consola de VSCode/Terminal al hacer la petición
-    console.log("Recibido agentType:", agentType);
+    // LOG 1: Verificar qué llega
+    console.log("DEBUG: Datos recibidos:", {
+      agentType,
+      messagesCount: messages?.length,
+    });
 
-    const systemPrompt = prompts[agentType];
+    const provider = process.env.AI_PROVIDER;
+    const modelName = process.env.AI_MODEL;
+    const hasKey = !!process.env.AI_API_KEY;
 
-    if (!systemPrompt) {
-      console.error(
-        `Error: agentType "${agentType}" no existe en prompts.json`,
-      );
+    // LOG 2: Verificar configuración de entorno
+    console.log("DEBUG: Configuración:", {
+      provider,
+      modelName,
+      hasApiKey: hasKey,
+    });
+
+    if (!prompts[agentType]) {
       return NextResponse.json(
-        { error: `El tipo de agente "${agentType}" no es válido.` },
-        { status: 400 }, // Aquí es donde solía dar el 400
+        { error: `Agent ${agentType} no existe` },
+        { status: 400 },
       );
     }
 
     const model = getLanguageModel();
+
+    // LOG 3: Antes de llamar a la IA
+    console.log("DEBUG: Llamando a la IA...");
+
     const { text } = await generateText({
       model: model,
-      system: systemPrompt,
+      system: prompts[agentType],
       messages: messages,
     });
 
-    return NextResponse.json({
-      message: text,
-      htmlContent: text,
+    return NextResponse.json({ message: text, htmlContent: text });
+  } catch (error: any) {
+    // ESTE ES EL LOG CLAVE: Verás el error real en la consola de Vercel
+    console.error("ERROR CRÍTICO EN API/AGENT:", {
+      message: error.message,
+      stack: error.stack,
+      cause: error.cause,
     });
-  } catch (error) {
-    console.error("DETALLE DEL ERROR:", error);
+
     return NextResponse.json(
-      { error: "Error interno", details: String(error) },
+      { error: "Error interno", details: error.message },
       { status: 500 },
     );
   }
