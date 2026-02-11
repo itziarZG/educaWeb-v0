@@ -9,9 +9,7 @@ export async function createClient() {
   const supabaseKey = supabaseConfig.key;
 
   if (!supabaseUrl || !supabaseKey) {
-    throw new Error(
-      "Faltan las variables de entorno de Supabase. Revisa tu archivo .env.local",
-    );
+    throw new Error("Faltan las variables de entorno de Supabase.");
   }
 
   return createServerClient(supabaseUrl, supabaseKey, {
