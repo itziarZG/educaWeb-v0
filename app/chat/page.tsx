@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
 import { sendMessageToAgent } from "@/services/agentService";
 import type { AgentType, ChatMessage } from "@/types/agents";
 
