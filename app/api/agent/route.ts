@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import promptsData from "@/utils/prompts.json";
+import { generateText } from "ai";
+import { getLanguageModel } from "@utils/ai/models";
+import promptsData from "@utils/prompts.json";
 
 const prompts = promptsData as Record<string, string>;
 
@@ -8,64 +10,37 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { messages, agentType } = body;
 
-    const prompt = prompts[agentType];
-    if (!prompt) {
+    // Debug: mira tu consola de VSCode/Terminal al hacer la petición
+    console.log("Recibido agentType:", agentType);
+
+    const systemPrompt = prompts[agentType];
+
+    if (!systemPrompt) {
+      console.error(
+        `Error: agentType "${agentType}" no existe en prompts.json`,
+      );
       return NextResponse.json(
-        { error: `No system prompt found for agentType: ${agentType}` },
-        { status: 400 }
+        { error: `El tipo de agente "${agentType}" no es válido.` },
+        { status: 400 }, // Aquí es donde solía dar el 400
       );
     }
 
-    // Cambia aquí a la API de OpenAI
-    const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
-    const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-    if (!OPENAI_API_KEY) {
-      return NextResponse.json(
-        { error: "OpenAI API key not configured" },
-        { status: 500 }
-      );
-    }
-
-    const reqBody = JSON.stringify({
-      model: "gpt-4.1-mini", // o "gpt-4" si tienes acceso
-      messages: [{ role: "system", content: prompt }, ...messages],
-      temperature: 0.7,
+    const model = getLanguageModel();
+    const { text } = await generateText({
+      model: model,
+      system: systemPrompt,
+      messages: messages,
     });
-
-    const response = await fetch(OPENAI_API_URL, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: reqBody,
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      return NextResponse.json(
-        {
-          error: `OpenAI API returned error status: ${response.status}`,
-          details: errorText,
-        },
-        { status: response.status }
-      );
-    }
-
-    const data = await response.json();
-    const responseContent = data.choices?.[0]?.message?.content || "";
 
     return NextResponse.json({
-      message: responseContent,
-      htmlContent: responseContent,
+      message: text,
+      htmlContent: text,
     });
   } catch (error) {
+    console.error("DETALLE DEL ERROR:", error);
     return NextResponse.json(
-      {
-        error: "An error occurred while processing your request",
-        message: error instanceof Error ? error.message : String(error),
-      },
-      { status: 500 }
+      { error: "Error interno", details: String(error) },
+      { status: 500 },
     );
   }
 }

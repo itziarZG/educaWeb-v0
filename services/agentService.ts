@@ -2,31 +2,25 @@ import { AgentMessage, AgentResponse, AgentType } from "@/types/agents";
 
 export async function sendMessageToAgent(
   messages: { role: string; content: string }[],
-  agentType: AgentType
+  agentType: string, // Asegúrate de que esto sea un string que exista en prompts.json
 ): Promise<AgentResponse> {
   try {
-    // Instead of calling external API directly
     const response = await fetch("/api/agent", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        messages,
-        agentType,
+        messages, // El array de mensajes [{role, content}]
+        agentType, // La llave de tu JSON
       }),
     });
 
     if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`);
+      // Si falla, intentamos leer el error que enviamos desde el servidor
+      const errorData = await response.json();
+      throw new Error(errorData.error || `Error ${response.status}`);
     }
 
-    const data = await response.json();
-    return {
-      message: data.message,
-      htmlContent: data.htmlContent,
-      conversationId: data.conversationId,
-    };
+    return await response.json();
   } catch (error) {
     console.error("Error communicating with agent API:", error);
     return {
@@ -35,10 +29,9 @@ export async function sendMessageToAgent(
     };
   }
 }
-
 export async function getConversationHistory(
   conversationId: string,
-  agentType: AgentType
+  agentType: AgentType,
 ): Promise<AgentMessage[]> {
   try {
     // Instead of calling external API directly

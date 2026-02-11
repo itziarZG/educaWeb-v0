@@ -18,20 +18,6 @@ export default function ChatPage() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const renderAreaRef = useRef<HTMLDivElement>(null);
-  const searchParams = useSearchParams();
-  const agent = (searchParams.get("agent") as AgentType) || "default";
-
-  // Determine agent details
-  const agentDetails = {
-    andrea: { name: "Andrea (Mates)", emoji: "📐" },
-    arnau: { name: "Arnau (Explorador)", emoji: "🌍" },
-    gadea: { name: "Lunara (Guía)", emoji: "🐺" },
-    socrates: { name: "Socrates", emoji: "🏛️" },
-    ada: { name: "Ada", emoji: "💻" },
-    newton: { name: "Newton", emoji: "🍎" },
-    maquetin: { name: "Maquetín", emoji: "🎨" },
-    default: { name: "Agente General", emoji: "🎓" },
-  }[agent] || { name: "Agente", emoji: "🤖" };
 
   // Mobile check
   useEffect(() => {
@@ -68,7 +54,7 @@ export default function ChatPage() {
         content,
       }));
 
-      const response = await sendMessageToAgent(messagesForApi, agent);
+      const response = await sendMessageToAgent(messagesForApi, "andrea");
       if (response.error) throw new Error(response.error);
 
       const agentMsg: ChatMessage = {
@@ -148,7 +134,7 @@ export default function ChatPage() {
                   Content Creator
                 </h2>
                 <span className="text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wide font-medium">
-                  {agentDetails.name}
+                  Andrea
                 </span>
               </div>
             </div>
@@ -162,10 +148,7 @@ export default function ChatPage() {
           <div className="flex-1 overflow-y-auto p-4 space-y-6 bg-background-light dark:bg-background-dark">
             {messages.length === 0 && (
               <div className="text-center text-gray-500 mt-10">
-                <p>
-                  Start a conversation with {agentDetails.emoji}{" "}
-                  {agentDetails.name}!
-                </p>
+                <p>Start a conversation with Agente Andrea</p>
               </div>
             )}
 
@@ -251,20 +234,37 @@ export default function ChatPage() {
                   send
                 </span>
               </button>
-              <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button
-                  onClick={handleVisualize}
-                  className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-gray-400"
-                  title="Visualize last response"
-                >
-                  <span className="material-symbols-outlined text-[16px]">
-                    preview
-                  </span>
-                </button>
-              </div>
             </div>
           </div>
         </section>
+
+        {/* Action Bar / Divider */}
+        <div className="hidden md:flex w-[80px] flex-col items-center justify-center border-r border-[#f0f2f4] dark:border-dark-border bg-gray-50/50 dark:bg-dark-surface/50 z-10">
+          <button
+            onClick={handleVisualize}
+            disabled={htmlLoading || messages.length === 0}
+            className={`
+              w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all duration-300
+              ${
+                htmlLoading || messages.length === 0
+                  ? "bg-gray-200 text-gray-400 cursor-not-allowed dark:bg-gray-700 dark:text-gray-500"
+                  : "bg-gradient-to-r from-primary to-indigo-600 text-white hover:scale-110 hover:shadow-xl hover:shadow-primary/20"
+              }
+            `}
+            title="Generate Visualization"
+          >
+            <span
+              className={`material-symbols-outlined text-[28px] ${
+                htmlLoading ? "animate-spin" : ""
+              }`}
+            >
+              {htmlLoading ? "sync" : "arrow_forward"}
+            </span>
+          </button>
+          <span className="mt-3 text-[10px] uppercase font-bold text-gray-400 tracking-wider">
+            Visualize
+          </span>
+        </div>
 
         {/* Visualization Section */}
         <section
@@ -289,62 +289,51 @@ export default function ChatPage() {
                     Visual Output
                   </h2>
                 </div>
-                <div className="flex items-center gap-1.5 text-[11px] text-green-600 dark:text-green-400 ml-0.5 mt-0.5 font-medium">
-                  <span
-                    className={`w-1.5 h-1.5 rounded-full ${htmlLoading ? "bg-yellow-500" : "bg-green-500"} animate-pulse`}
-                  ></span>
-                  <span>
-                    {htmlLoading ? "Generating..." : "Agent 2: Display Updated"}
-                  </span>
-                </div>
+                {htmlLoading && (
+                  <div className="flex items-center gap-1.5 text-[11px] text-green-600 dark:text-green-400 ml-0.5 mt-0.5 font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse"></span>
+                    <span>Generating...</span>
+                  </div>
+                )}
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="h-6 w-px bg-gray-200 dark:bg-dark-border"></div>
-              <button
-                onClick={handleVisualize}
-                className="flex items-center gap-2 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300 bg-transparent border border-gray-200 dark:border-dark-border/60 rounded-lg hover:bg-gray-50 dark:hover:bg-dark-highlight transition-colors"
-              >
-                <span className="material-symbols-outlined text-[18px]">
-                  refresh
-                </span>
-                Update
-              </button>
-            </div>
+            {htmlContent && (
+              <div className="flex items-center gap-3">
+                <div className="h-6 w-px bg-gray-200 dark:bg-dark-border"></div>
+                <button
+                  onClick={handleVisualize}
+                  className="flex items-center gap-2 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300 bg-transparent border border-gray-200 dark:border-dark-border/60 rounded-lg hover:bg-gray-50 dark:hover:bg-dark-highlight transition-colors"
+                >
+                  <span className="material-symbols-outlined text-[18px]">
+                    refresh
+                  </span>
+                  Update
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="flex-1 overflow-y-auto p-8 lg:p-12 scroll-smooth">
             <div className="max-w-4xl mx-auto bg-white dark:bg-dark-surface rounded-xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] dark:shadow-none border border-gray-200 dark:border-dark-border min-h-[800px] p-10 md:p-16 relative transition-all">
               {htmlLoading ? (
-                <div className="flex flex-col items-center justify-center p-20 text-gray-400">
-                  <span className="material-symbols-outlined text-6xl animate-spin mb-4">
+                <div className="flex flex-col items-center justify-center h-full min-h-[400px] text-gray-400">
+                  <span className="material-symbols-outlined text-6xl animate-spin mb-4 text-primary/50">
                     settings
                   </span>
-                  <p>Generating visual content...</p>
+                  <p className="animate-pulse">Creating visualization...</p>
                 </div>
               ) : htmlContent ? (
                 <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
               ) : (
-                <div className="text-center text-gray-400 py-20">
-                  <p className="mb-4">No content generated yet.</p>
-                  <p className="text-sm">
-                    Ask the agent to explain a concept, then click the eye icon
-                    or "Update" button.
+                <div className="flex flex-col items-center justify-center h-full min-h-[400px] text-gray-300 dark:text-gray-600">
+                  <span className="material-symbols-outlined text-8xl mb-4 opacity-50">
+                    rocket_launch
+                  </span>
+                  <p className="text-lg font-medium">Ready to visualize</p>
+                  <p className="text-sm mt-2 max-w-xs text-center opacity-75">
+                    Click the arrow button to generate a visual representation
+                    of the chat.
                   </p>
-                  <div className="mt-8 opacity-50 pointer-events-none filter blur-sm select-none">
-                    {/* Placeholder visual */}
-                    <div className="border-b pb-4 mb-4">
-                      <h1 className="text-4xl font-bold mb-4">
-                        The Uncertainty Principle
-                      </h1>
-                      <p>Understanding the fundamental limits...</p>
-                    </div>
-                    <div className="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl text-center">
-                      <div className="text-5xl font-serif italic mb-4">
-                        Δx · Δp ≥ ℏ/2
-                      </div>
-                    </div>
-                  </div>
                 </div>
               )}
             </div>
