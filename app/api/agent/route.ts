@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import promptsData from "@/utils/prompts.json";
+import { generateText } from "ai";
+import { getLanguageModel } from "@utils/ai/models";
+import promptsData from "@utils/prompts.json";
 
 const prompts = promptsData as Record<string, string>;
 
@@ -8,61 +10,53 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { messages, agentType } = body;
 
-    const prompt = prompts[agentType];
-    if (!prompt) {
+    // LOG 1: Verificar qué llega
+    console.log("DEBUG: Datos recibidos:", {
+      agentType,
+      messagesCount: messages?.length,
+    });
+
+    const provider = process.env.AI_PROVIDER;
+    const modelName = process.env.AI_MODEL;
+    const hasKey = !!process.env.AI_API_KEY;
+
+    // LOG 2: Verificar configuración de entorno
+    console.log("DEBUG: Configuración:", {
+      provider,
+      modelName,
+      hasApiKey: hasKey,
+    });
+
+    if (!prompts[agentType]) {
       return NextResponse.json(
-        { error: `No system prompt found for agentType: ${agentType}` },
-        { status: 400 }
+        { error: `Agent ${agentType} no existe` },
+        { status: 400 },
       );
     }
 
-    const DEEPSEEK_API_URL = process.env.DEEPSEEK_API_URL;
-    if (!DEEPSEEK_API_URL) {
-      return NextResponse.json(
-        { error: "DeepSeek API URL not configured" },
-        { status: 500 }
-      );
-    }
+    const model = getLanguageModel();
 
-    const reqBody = JSON.stringify({
-      model: "deepseek-chat",
-      messages: [{ role: "system", content: prompt }, ...messages],
+    // LOG 3: Antes de llamar a la IA
+    console.log("DEBUG: Llamando a la IA...");
+
+    const { text } = await generateText({
+      model: model,
+      system: prompts[agentType],
+      messages: messages,
     });
 
-    const response = await fetch(DEEPSEEK_API_URL, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.DEEPSEEK_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: reqBody,
+    return NextResponse.json({ message: text, htmlContent: text });
+  } catch (error: any) {
+    // ESTE ES EL LOG CLAVE: Verás el error real en la consola de Vercel
+    console.error("ERROR CRÍTICO EN API/AGENT:", {
+      message: error.message,
+      stack: error.stack,
+      cause: error.cause,
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      return NextResponse.json(
-        {
-          error: `Deepseek API returned error status: ${response.status}`,
-          details: errorText,
-        },
-        { status: response.status }
-      );
-    }
-
-    const data = await response.json();
-    const responseContent = data.choices?.[0]?.message?.content || "";
-
-    return NextResponse.json({
-      message: responseContent,
-      htmlContent: responseContent,
-    });
-  } catch (error) {
     return NextResponse.json(
-      {
-        error: "An error occurred while processing your request",
-        message: error instanceof Error ? error.message : String(error),
-      },
-      { status: 500 }
+      { error: "Error interno", details: error.message },
+      { status: 500 },
     );
   }
 }

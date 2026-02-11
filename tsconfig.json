@@ -26,14 +26,14 @@
       "@/*": [
         "./*"
       ],
-      "@utils": [
-        "./utils"
+      "@utils/*": [
+        "./utils/*"
       ],
-      "@services": [
-        "./services"
+      "@services/*": [
+        "./services/*"
       ],
-      "@hooks": [
-        "./hooks"
+      "@hooks/*": [
+        "./hooks/*"
       ]
     }
   },

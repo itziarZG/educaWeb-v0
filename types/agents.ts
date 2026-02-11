@@ -1,4 +1,4 @@
-export type AgentType = "andrea" | "maquetin" | "default";
+export type AgentType = string;
 export type Roles = "user" | "assistant" | "system";
 export interface ChatMessage {
   content: string;
