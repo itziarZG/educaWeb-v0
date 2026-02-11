@@ -10,10 +10,20 @@ const lexend = Lexend({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tutoraiapp.es"),
   title: "TUTOR_AI - Educación Personalizada",
   description:
     "Devuelve la calma a tus tardes. Actividades personalizadas que conectan los intereses de tu hijo con su curso.",
   generator: "ItziarZG",
+  keywords: [
+    "educación",
+    "IA",
+    "tutor",
+    "personalizado",
+    "niños",
+    "primaria",
+    "secundaria",
+  ],
 };
 
 export default function RootLayout({
@@ -24,6 +34,24 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning className="light">
       <head>
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/favicon/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/favicon/site.webmanifest" />
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"

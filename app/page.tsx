@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function HomePage() {
   return (
@@ -6,11 +7,13 @@ export default function HomePage() {
       <header className="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="bg-primary/20 p-1.5 rounded-lg">
-              <span className="material-symbols-outlined text-primary text-2xl font-bold">
-                school
-              </span>
-            </div>
+            <Image
+              src="/logo_tutorai.png"
+              alt="TUTOR_AI Logo"
+              width={40}
+              height={40}
+              className="object-contain"
+            />
             <h2 className="text-[#111813] dark:text-white text-lg font-bold leading-tight tracking-tight">
               TUTOR_AI
             </h2>
@@ -303,9 +306,13 @@ export default function HomePage() {
       <footer className="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 py-12">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary text-2xl font-bold">
-              school
-            </span>
+            <Image
+              src="/logo_tutorai.png"
+              alt="TUTOR_AI Logo"
+              width={32}
+              height={32}
+              className="object-contain mr-2"
+            />
             <span className="text-[#111813] dark:text-white font-bold text-lg uppercase tracking-wider">
               TUTOR_AI
             </span>
@@ -325,7 +332,7 @@ export default function HomePage() {
             </a>
             <a
               className="text-slate-500 hover:text-primary transition-colors text-sm"
-              href="#"
+              href="mailto:contact@tutoraiapp.es"
             >
               Contacto
             </a>

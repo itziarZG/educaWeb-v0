@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@utils/supabase/server";
 
 export default async function DashboardLayout({
@@ -12,7 +13,7 @@ export default async function DashboardLayout({
     data: { user },
   } = await supabase.auth.getUser();
 
-  const userEmail = user?.email || "usuario@ejemplo.com";
+  const userEmail = user?.email || "usuario@tutoraiapp.es";
   const userName = userEmail.split("@")[0];
   const avatarUrl =
     "https://lh3.googleusercontent.com/aida-public/AB6AXuC5zGeI8vlgJgmGZi1GKbM8EMImTHbWxyYEhR4LEXoLsQVFH39OpffvFFxtatVCeaiAqQ4wAEUeKG4YsZjWs1biv6feuIXFa65iySSaVTel4BGtDlWqbQSqW0sbLZiyVuXpDpnBuyjShRa1AAHfj3HxbRDmY8r-7VIkoosEoKPa-YcZj8IkAoikgBu1HwJZF08qPi8ly4CYOdDrJEg2rX72BsJj9IP-MegEwBsXmYQ5yloigMW8hoH7pQGdRVwU3Yln_XL65Dy894Q";
@@ -24,12 +25,13 @@ export default async function DashboardLayout({
         {/* Brand */}
         <div className="flex h-16 items-center px-6 border-b border-gray-100 dark:border-gray-800">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <span
-              className="material-symbols-outlined text-primary text-3xl"
-              style={{ fontVariationSettings: "'FILL' 1, 'wght' 700" }}
-            >
-              rocket_launch
-            </span>
+            <Image
+              src="/logo_tutorai.png"
+              alt="TUTOR_AI Logo"
+              width={32}
+              height={32}
+              className="object-contain mr-2"
+            />
             <span className="text-xl font-bold tracking-tight">TUTOR_AI</span>
           </Link>
         </div>
@@ -115,12 +117,13 @@ export default async function DashboardLayout({
         {/* Mobile Header (Visible on small screens) */}
         <header className="lg:hidden flex h-16 items-center justify-between px-4 bg-white dark:bg-[#1a2e20] border-b border-gray-100 dark:border-gray-800 z-10 shrink-0">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <span
-              className="material-symbols-outlined text-primary text-3xl"
-              style={{ fontVariationSettings: "'FILL' 1, 'wght' 700" }}
-            >
-              rocket_launch
-            </span>
+            <Image
+              src="/logo_tutorai.png"
+              alt="TUTOR_AI Logo"
+              width={32}
+              height={32}
+              className="object-contain mr-2"
+            />
           </Link>
           <div className="flex items-center gap-4">
             <Link href="/dashboard/profile">
