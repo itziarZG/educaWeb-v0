@@ -30,7 +30,7 @@ export default async function DashboardLayout({
             >
               rocket_launch
             </span>
-            <span className="text-xl font-bold tracking-tight">EducaWeb</span>
+            <span className="text-xl font-bold tracking-tight">TUTOR_AI</span>
           </Link>
         </div>
 

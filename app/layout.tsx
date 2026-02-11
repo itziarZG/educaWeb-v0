@@ -10,7 +10,7 @@ const lexend = Lexend({
 });
 
 export const metadata: Metadata = {
-  title: "EDUCAWEB - Educación Personalizada",
+  title: "TUTOR_AI - Educación Personalizada",
   description:
     "Devuelve la calma a tus tardes. Actividades personalizadas que conectan los intereses de tu hijo con su curso.",
   generator: "ItziarZG",

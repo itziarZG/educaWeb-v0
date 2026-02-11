@@ -12,7 +12,7 @@ export default function HomePage() {
               </span>
             </div>
             <h2 className="text-[#111813] dark:text-white text-lg font-bold leading-tight tracking-tight">
-              EDUCAWEB
+              TUTOR_AI
             </h2>
           </div>
           <div className="flex items-center gap-6">
@@ -307,7 +307,7 @@ export default function HomePage() {
               school
             </span>
             <span className="text-[#111813] dark:text-white font-bold text-lg uppercase tracking-wider">
-              EDUCAWEB
+              TUTOR_AI
             </span>
           </div>
           <nav className="flex gap-8">
@@ -337,7 +337,7 @@ export default function HomePage() {
             </a>
           </nav>
           <p className="text-slate-400 text-sm">
-            © 2026 EDUCAWEB. Hecho con ❤️ para familias.
+            © 2026 TUTOR_AI. Hecho con ❤️ para familias.
           </p>
         </div>
       </footer>

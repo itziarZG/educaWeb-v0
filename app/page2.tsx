@@ -5,7 +5,7 @@ export function HomePage2() {
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>EDUCAWEB - Educación Personalizada</title>
+<title>TUTOR_AI - Educación Personalizada</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -40,7 +40,7 @@ body { min-height: max(884px, 100dvh); }
     <div class="bg-primary/20 p-1.5 rounded-lg">
       <span class="material-symbols-outlined text-primary text-2xl font-bold">school</span>
     </div>
-    <h2 class="text-[#111813] dark:text-white text-lg font-bold leading-tight tracking-tight">EDUCAWEB</h2>
+    <h2 class="text-[#111813] dark:text-white text-lg font-bold leading-tight tracking-tight">TUTOR_AI</h2>
   </div>
   <div class="flex items-center gap-6">
     <a class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-primary transition-colors" href="#">Login</a>
@@ -212,7 +212,7 @@ body { min-height: max(884px, 100dvh); }
 <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-primary text-2xl font-bold">school</span>
-<span class="text-[#111813] dark:text-white font-bold text-lg uppercase tracking-wider">EDUCAWEB</span>
+<span class="text-[#111813] dark:text-white font-bold text-lg uppercase tracking-wider">TUTOR_AI</span>
 </div>
 <nav class="flex gap-8">
 <a class="text-slate-500 hover:text-primary transition-colors text-sm" href="#">Privacidad</a>
@@ -220,7 +220,7 @@ body { min-height: max(884px, 100dvh); }
 <a class="text-slate-500 hover:text-primary transition-colors text-sm" href="#">Contacto</a>
 <a class="text-slate-500 hover:text-primary transition-colors text-sm" href="#">Blog</a>
 </nav>
-<p class="text-slate-400 text-sm">© 2026 EDUCAWEB. Hecho con ❤️ para familias.</p>
+<p class="text-slate-400 text-sm">© 2026 TUTOR_AI. Hecho con ❤️ para familias.</p>
 </div>
 </footer>
 

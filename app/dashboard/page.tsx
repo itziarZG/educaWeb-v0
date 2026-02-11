@@ -13,7 +13,7 @@ export default async function Dashboard() {
     .select("*")
     .single();
 
-  console.log(perfil);
+  console.log("aqui", perfil);
   // Placeholder URLs adhering to the new design
   const avatarUrl =
     "https://lh3.googleusercontent.com/aida-public/AB6AXuC5zGeI8vlgJgmGZi1GKbM8EMImTHbWxyYEhR4LEXoLsQVFH39OpffvFFxtatVCeaiAqQ4wAEUeKG4YsZjWs1biv6feuIXFa65iySSaVTel4BGtDlWqbQSqW0sbLZiyVuXpDpnBuyjShRa1AAHfj3HxbRDmY8r-7VIkoosEoKPa-YcZj8IkAoikgBu1HwJZF08qPi8ly4CYOdDrJEg2rX72BsJj9IP-MegEwBsXmYQ5yloigMW8hoH7pQGdRVwU3Yln_XL65Dy894Q";
