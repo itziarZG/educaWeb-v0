@@ -1,62 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateText } from "ai";
 import { getLanguageModel } from "@utils/ai/models";
-import promptsData from "@utils/prompts.json";
-
-const prompts = promptsData as Record<string, string>;
 
 export async function POST(req: NextRequest) {
+  console.log("DEBUG: Entrando en API/AGENT", req.body);
   try {
     const body = await req.json();
-    const { messages, agentType, userEmail } = body;
+    // 1. Extraemos los mensajes que ya vienen con el system prompt incluido
+    const { messages, childInfo } = body;
 
-    // LOG 1: Verificar qué llega
-    console.log("DEBUG: Datos recibidos:", {
-      agentType,
-      userEmail,
-      messagesCount: messages?.length,
-    });
-
-    const provider = process.env.AI_PROVIDER;
-    const modelName = process.env.AI_MODEL;
-    const hasKey = !!process.env.AI_API_KEY;
-
-    // LOG 2: Verificar configuración de entorno
-    console.log("DEBUG: Configuración:", {
-      provider,
-      modelName,
-      hasApiKey: hasKey,
-    });
-
-    if (!prompts[agentType]) {
-      return NextResponse.json(
-        { error: `Agent ${agentType} no existe` },
-        { status: 400 },
-      );
-    }
-
-    const model = getLanguageModel();
-
-    // LOG 3: Antes de llamar a la IA
-    console.log("DEBUG: Llamando a la IA...");
-
+    // 2. Usamos la función generateText de la librería 'ai' (Vercel AI SDK)
     const { text } = await generateText({
-      model: model,
-      system: userEmail
-        ? `${prompts[agentType]} (User email: ${userEmail})`
-        : prompts[agentType],
-      messages: messages,
+      model: getLanguageModel(),
+      messages: messages, // Pasamos el array completo (System + Historial + User)
     });
 
-    return NextResponse.json({ message: text, htmlContent: text });
+    console.log("DEBUG: Respuesta del agente", text);
+    return NextResponse.json({
+      message: text,
+      htmlContent: text, // O la lógica que uses para extraer lo que hay entre '----'
+    });
   } catch (error: any) {
-    // ESTE ES EL LOG CLAVE: Verás el error real en la consola de Vercel
-    console.error("ERROR CRÍTICO EN API/AGENT:", {
-      message: error.message,
-      stack: error.stack,
-      cause: error.cause,
-    });
-
+    console.error("ERROR CRÍTICO EN API/AGENT:", error);
     return NextResponse.json(
       { error: "Error interno", details: error.message },
       { status: 500 },
