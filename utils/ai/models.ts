@@ -2,29 +2,41 @@
 import { createOpenAI, openai } from "@ai-sdk/openai"; // Importamos createOpenAI
 import { google } from "@ai-sdk/google";
 import { createOllama } from "ollama-ai-provider";
+import { LanguageModel } from "ai";
 
-export function getLanguageModel() {
+export function getLanguageModel(): LanguageModel {
   const provider = process.env.AI_PROVIDER || "openai";
   const modelName = process.env.AI_MODEL || "gpt-4o-mini";
   const apiKey = process.env.AI_API_KEY;
+
+  let model: any;
+
   switch (provider) {
     case "openai":
-      return openai(modelName);
+      model = openai(modelName);
+      break;
 
     case "gemini":
-      return google(modelName);
+      model = google(modelName);
+      break;
 
     case "deepseek":
       const ds = createOpenAI({
         apiKey: apiKey,
         baseURL: "https://api.deepseek.com/v1",
       });
-      return ds.chat(modelName);
+      model = ds.chat(modelName);
+      break;
+
     case "ollama":
       const ollama = createOllama();
-      return ollama(modelName);
+      model = ollama(modelName);
+      break;
 
     default:
-      return openai("gpt-4o-mini");
+      model = openai("gpt-4o-mini");
+      break;
   }
+
+  return model as unknown as LanguageModel;
 }
