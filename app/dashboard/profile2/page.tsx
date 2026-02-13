@@ -1,6 +1,37 @@
 import Link from "next/link";
+import { createClient } from "@utils/supabase/server";
+import { redirect } from "next/navigation";
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/login");
+  }
+  console.log("USER", user);
+  // Fetch the children directly
+  const { data: children, error } = await supabase
+    .from("hijos")
+    .select("nombre, edad, curso, gustos, observaciones")
+    .eq("perfil_id", user.id);
+
+  if (error) {
+    console.error("Error fetching children:", error);
+  }
+
+  if (!children || children.length === 0) {
+    redirect("/create-child");
+  }
+
+  const userName = user.user_metadata?.name || "Estudiante";
+  // Fallback image handling could be improved, but this keeps existing default
+  const userAvatar =
+    user.user_metadata?.avatar_url ||
+    "https://lh3.googleusercontent.com/aida-public/AB6AXuDSO01SGULMp02c38TT8XG7J-80B2mbPY8J6Oidfye4QipB3I2ZDgy1wsJOfiYu5a787qDdB8yP88pI_r1lnLY_hjorIQVoh1gtGBHhnBMSefco_CeHo1w1BepKmkGo-d60yj0Lt8vhX1jj52Nq71rIqqzGc3hPuPTIQKAasKfnQ83cNCRQQoMaRUGitvrlm2AG73BYrgt37BvegFdaCLUEwrpyF4QOGhkcNaEOmsyLqiGRsL9W0hnqUUGnSdvxuZ6S31t5qFo_cXuZ";
+
   return (
     <div className="flex flex-col min-h-screen bg-background-light dark:bg-background-dark font-display text-[#111318] dark:text-white antialiased">
       <header className="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e5e7eb] dark:border-[#2a303c] bg-white dark:bg-[#1a202c] px-6 py-3 shadow-sm">
@@ -54,8 +85,7 @@ export default function ProfilePage() {
             <div
               className="bg-center bg-no-repeat bg-cover rounded-full size-9 ring-2 ring-primary/20 cursor-pointer"
               style={{
-                backgroundImage:
-                  'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBWZDg0HRoTYUwvLhX6CBcvscsh-PyzQEWS-w8_4-4R9HgegfFiPXB9rYzHVeoIwFz-PBzfPvkkYMDSAtjt_32X2GCwa476G7U0_TkisdanpfOlJKEehNVGou-1oysYUcauXIlGv02_NSqZJUejQzjiVRVyXzXSPnMFZoO-LdcPscCXRIz5os_AVv16wlJ4ASvepCzblJfac_i-g67DWXMI7WLoJ6H2HgwC7C07A_qo0Mohd-moIYBmum0z7acqgLUsQTVSDhV95gMO")',
+                backgroundImage: `url("${userAvatar}")`,
               }}
             ></div>
           </div>
@@ -69,13 +99,12 @@ export default function ProfilePage() {
               <div
                 className="bg-center bg-no-repeat bg-cover rounded-full size-20 ring-4 ring-primary/10"
                 style={{
-                  backgroundImage:
-                    'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDSO01SGULMp02c38TT8XG7J-80B2mbPY8J6Oidfye4QipB3I2ZDgy1wsJOfiYu5a787qDdB8yP88pI_r1lnLY_hjorIQVoh1gtGBHhnBMSefco_CeHo1w1BepKmkGo-d60yj0Lt8vhX1jj52Nq71rIqqzGc3hPuPTIQKAasKfnQ83cNCRQQoMaRUGitvrlm2AG73BYrgt37BvegFdaCLUEwrpyF4QOGhkcNaEOmsyLqiGRsL9W0hnqUUGnSdvxuZ6S31t5qFo_cXuZ")',
+                  backgroundImage: `url("${userAvatar}")`,
                 }}
               ></div>
               <div className="text-center">
                 <h3 className="text-[#111318] dark:text-white text-lg font-bold">
-                  Alex Chen
+                  {userName}
                 </h3>
                 <p className="text-primary text-sm font-medium">
                   Level 4 Scholar
@@ -171,6 +200,56 @@ export default function ProfilePage() {
                 </button>
               </div>
             </div>
+
+            {/* Children Section */}
+            <section className="bg-white dark:bg-[#1a202c] rounded-xl shadow-sm border border-[#e5e7eb] dark:border-[#2a303c] overflow-hidden">
+              <div className="border-b border-[#e5e7eb] dark:border-[#2a303c] px-6 py-4 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-blue-500/10 rounded-lg text-blue-600 dark:text-blue-400">
+                    <span className="material-symbols-outlined">
+                      child_care
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-[#111318] dark:text-white">
+                      Children
+                    </h3>
+                    <p className="text-sm text-[#616f89] dark:text-[#a0aec0]">
+                      Manage your children's profiles.
+                    </p>
+                  </div>
+                </div>
+                <button className="text-primary hover:text-primary/80 font-medium text-sm flex items-center gap-1">
+                  <span className="material-symbols-outlined text-lg">add</span>
+                  Add Child
+                </button>
+              </div>
+              <div className="p-6">
+                {children && children.length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {children.map((child: any, index: number) => (
+                      <div
+                        key={index}
+                        className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg"
+                      >
+                        <p className="font-bold text-[#111318] dark:text-white">
+                          {child.nombre || "Child " + (index + 1)}
+                        </p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {child.edad
+                            ? `${child.edad} years old`
+                            : "Age not set"}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-6 text-gray-500 dark:text-gray-400">
+                    No children added yet.
+                  </div>
+                )}
+              </div>
+            </section>
 
             <section className="bg-white dark:bg-[#1a202c] rounded-xl shadow-sm border border-[#e5e7eb] dark:border-[#2a303c] overflow-hidden">
               <div className="border-b border-[#e5e7eb] dark:border-[#2a303c] px-6 py-4 flex items-center gap-3">
