@@ -1,6 +1,7 @@
 import type React from "react";
 import type { Metadata } from "next";
 import { Lexend } from "next/font/google";
+import { Lexend } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/app/providers";
 import Image from "next/image";
@@ -16,7 +17,20 @@ export const metadata: Metadata = {
   title: "TUTOR_AI - Educación Personalizada",
   description:
     "Devuelve la calma a tus tardes. Actividades personalizadas que conectan los intereses de tu hijo con su curso.",
+  metadataBase: new URL("https://tutoraiapp.es"),
+  title: "TUTOR_AI - Educación Personalizada",
+  description:
+    "Devuelve la calma a tus tardes. Actividades personalizadas que conectan los intereses de tu hijo con su curso.",
   generator: "ItziarZG",
+  keywords: [
+    "educación",
+    "IA",
+    "tutor",
+    "personalizado",
+    "niños",
+    "primaria",
+    "secundaria",
+  ],
   keywords: [
     "educación",
     "IA",
