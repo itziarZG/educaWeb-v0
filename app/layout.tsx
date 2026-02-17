@@ -1,30 +1,30 @@
-import type React from "react";
-import type { Metadata } from "next";
-import { Lexend } from "next/font/google";
-import "./globals.css";
-import { Providers } from "@/app/providers";
-import Image from "next/image";
-import Header from "@/components/Header";
-import { createClient } from "@/utils/supabase/server";
+import type React from 'react';
+import type { Metadata } from 'next';
+import { Lexend } from 'next/font/google';
+import './globals.css';
+import { Providers } from '@/app/providers';
+import Image from 'next/image';
+import Header from '@/components/Header';
+import { createClient } from '@/utils/supabase/server';
 const lexend = Lexend({
-  subsets: ["latin"],
-  variable: "--font-lexend",
+  subsets: ['latin'],
+  variable: '--font-lexend',
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://tutoraiapp.es"),
-  title: "TUTOR_AI - Educación Personalizada",
+  metadataBase: new URL('https://tutoraiapp.es'),
+  title: 'TUTOR_AI - Educación Personalizada',
   description:
-    "Devuelve la calma a tus tardes. Actividades personalizadas que conectan los intereses de tu hijo con su curso.",
-  generator: "ItziarZG",
+    'Devuelve la calma a tus tardes. Actividades personalizadas que conectan los intereses de tu hijo con su curso.',
+  generator: 'ItziarZG',
   keywords: [
-    "educación",
-    "IA",
-    "tutor",
-    "personalizado",
-    "niños",
-    "primaria",
-    "secundaria",
+    'educación',
+    'IA',
+    'tutor',
+    'personalizado',
+    'niños',
+    'primaria',
+    'secundaria',
   ],
 };
 
@@ -59,10 +59,7 @@ export default async function RootLayout({
           href="/favicon/favicon-16x16.png"
         />
         <link rel="manifest" href="/favicon/site.webmanifest" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-          rel="stylesheet"
-        />
+
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
       </head>
       <body

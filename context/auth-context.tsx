@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   createContext,
@@ -6,10 +6,10 @@ import {
   useEffect,
   useState,
   ReactNode,
-} from "react";
-import { User } from "@supabase/supabase-js";
-import { createClient } from "@utils/supabase/client";
-import { useRouter } from "next/navigation";
+} from 'react';
+import { User } from '@supabase/supabase-js';
+import { createClient } from '@utils/supabase/client';
+import { useRouter } from 'next/navigation';
 
 interface AuthContextType {
   user: User | null;
@@ -46,13 +46,13 @@ export function AuthProvider({
       async (event, session) => {
         setUser(session?.user ?? null);
         setLoading(false);
-        if (event === "SIGNED_OUT") {
+        if (event === 'SIGNED_OUT') {
           setUser(null);
           router.refresh();
-        } else if (event === "SIGNED_IN") {
+        } else if (event === 'SIGNED_IN') {
           router.refresh();
         }
-      },
+      }
     );
 
     return () => {
@@ -63,16 +63,9 @@ export function AuthProvider({
   const signOut = async () => {
     await supabase.auth.signOut();
     setUser(null);
-    router.push("/");
+    router.push('/');
     router.refresh();
   };
-
-  useEffect(() => {
-    if (initialUser !== undefined) {
-      setUser(initialUser);
-      setLoading(false);
-    }
-  }, [initialUser]);
 
   return (
     <AuthContext.Provider value={{ user, loading, signOut }}>
@@ -84,7 +77,7 @@ export function AuthProvider({
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 }

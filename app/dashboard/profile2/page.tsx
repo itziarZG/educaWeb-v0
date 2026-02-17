@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { createClient } from "@utils/supabase/server";
-import { redirect } from "next/navigation";
+import Link from 'next/link';
+import { createClient } from '@utils/supabase/server';
+import { redirect } from 'next/navigation';
 
 export default async function ProfilePage() {
   const supabase = await createClient();
@@ -9,28 +9,28 @@ export default async function ProfilePage() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
+    redirect('/login');
   }
-  console.log("USER", user);
+  console.log('USER', user);
   // Fetch the children directly
   const { data: children, error } = await supabase
-    .from("hijos")
-    .select("nombre, edad, curso, gustos, observaciones")
-    .eq("perfil_id", user.id);
+    .from('hijos')
+    .select('nombre, edad, curso, gustos, observaciones')
+    .eq('perfil_id', user.id);
 
   if (error) {
-    console.error("Error fetching children:", error);
+    console.error('Error fetching children:', error);
   }
 
   if (!children || children.length === 0) {
-    redirect("/create-child");
+    redirect('/create-child');
   }
 
-  const userName = user.user_metadata?.name || "Estudiante";
+  const userName = user.user_metadata?.name || 'Estudiante';
   // Fallback image handling could be improved, but this keeps existing default
   const userAvatar =
     user.user_metadata?.avatar_url ||
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuDSO01SGULMp02c38TT8XG7J-80B2mbPY8J6Oidfye4QipB3I2ZDgy1wsJOfiYu5a787qDdB8yP88pI_r1lnLY_hjorIQVoh1gtGBHhnBMSefco_CeHo1w1BepKmkGo-d60yj0Lt8vhX1jj52Nq71rIqqzGc3hPuPTIQKAasKfnQ83cNCRQQoMaRUGitvrlm2AG73BYrgt37BvegFdaCLUEwrpyF4QOGhkcNaEOmsyLqiGRsL9W0hnqUUGnSdvxuZ6S31t5qFo_cXuZ";
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuDSO01SGULMp02c38TT8XG7J-80B2mbPY8J6Oidfye4QipB3I2ZDgy1wsJOfiYu5a787qDdB8yP88pI_r1lnLY_hjorIQVoh1gtGBHhnBMSefco_CeHo1w1BepKmkGo-d60yj0Lt8vhX1jj52Nq71rIqqzGc3hPuPTIQKAasKfnQ83cNCRQQoMaRUGitvrlm2AG73BYrgt37BvegFdaCLUEwrpyF4QOGhkcNaEOmsyLqiGRsL9W0hnqUUGnSdvxuZ6S31t5qFo_cXuZ';
 
   return (
     <div className="flex flex-col min-h-screen bg-background-light dark:bg-background-dark font-display text-[#111318] dark:text-white antialiased">
@@ -169,7 +169,7 @@ export default async function ProfilePage() {
                 <div className="h-2 w-full bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-primary rounded-full"
-                    style={{ width: "85%" }}
+                    style={{ width: '85%' }}
                   ></div>
                 </div>
                 <p className="text-[11px] text-gray-400 dark:text-gray-500 mt-2">
@@ -215,7 +215,7 @@ export default async function ProfilePage() {
                       Children
                     </h3>
                     <p className="text-sm text-[#616f89] dark:text-[#a0aec0]">
-                      Manage your children's profiles.
+                      Manage your children&apos;s profiles.
                     </p>
                   </div>
                 </div>
@@ -227,21 +227,29 @@ export default async function ProfilePage() {
               <div className="p-6">
                 {children && children.length > 0 ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {children.map((child: any, index: number) => (
-                      <div
-                        key={index}
-                        className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg"
-                      >
-                        <p className="font-bold text-[#111318] dark:text-white">
-                          {child.nombre || "Child " + (index + 1)}
-                        </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          {child.edad
-                            ? `${child.edad} years old`
-                            : "Age not set"}
-                        </p>
-                      </div>
-                    ))}
+                    {children.map(
+                      (
+                        child: {
+                          nombre: string;
+                          edad: number | null;
+                        },
+                        index: number
+                      ) => (
+                        <div
+                          key={index}
+                          className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg"
+                        >
+                          <p className="font-bold text-[#111318] dark:text-white">
+                            {child.nombre || 'Child ' + (index + 1)}
+                          </p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">
+                            {child.edad
+                              ? `${child.edad} years old`
+                              : 'Age not set'}
+                          </p>
+                        </div>
+                      )
+                    )}
                   </div>
                 ) : (
                   <div className="text-center py-6 text-gray-500 dark:text-gray-400">
@@ -413,7 +421,7 @@ export default async function ProfilePage() {
                   <button className="px-4 py-2 rounded-full border border-dashed border-[#e5e7eb] dark:border-[#4a5568] hover:border-primary text-[#616f89] dark:text-[#a0aec0] hover:text-primary text-sm font-medium transition-all flex items-center gap-1">
                     <span className="material-symbols-outlined text-sm">
                       add
-                    </span>{" "}
+                    </span>{' '}
                     Add Topic
                   </button>
                 </div>

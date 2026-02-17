@@ -4,5 +4,5 @@ export const supabaseConfig = {
 };
 
 if (!supabaseConfig.url || !supabaseConfig.key) {
-  throw new Error("Faltan variables de entorno de Supabase");
+  throw new Error('Faltan variables de entorno de Supabase');
 }

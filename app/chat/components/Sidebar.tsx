@@ -1,5 +1,5 @@
-import Link from "next/link";
-import type { ChatMessage } from "@/types/agents";
+import Link from 'next/link';
+import type { ChatMessage } from '@/types/agents';
 export default function Sidebar({
   sidebarOpen,
   setMessages,
@@ -11,14 +11,14 @@ export default function Sidebar({
 }) {
   return (
     <aside
-      className={`${sidebarOpen ? "flex" : "hidden"} md:flex w-64 bg-white dark:bg-dark-surface border-r border-[#f0f2f4] dark:border-dark-border flex-col h-full shrink-0 transition-all duration-200`}
+      className={`${sidebarOpen ? 'flex' : 'hidden'} md:flex w-64 bg-white dark:bg-dark-surface border-r border-[#f0f2f4] dark:border-dark-border flex-col h-full shrink-0 transition-all duration-200`}
     >
       <div className="p-4 flex flex-col h-full">
         <div className="flex items-center gap-3 mb-6 px-2">
           <div className="bg-primary/10 p-2 rounded-lg">
             <span
               className="material-symbols-outlined text-primary"
-              style={{ fontSize: "24px" }}
+              style={{ fontSize: '24px' }}
             >
               school
             </span>

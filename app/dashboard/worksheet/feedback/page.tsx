@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function FeedbackPage() {
   const router = useRouter();
@@ -11,7 +11,7 @@ export default function FeedbackPage() {
 
   const handleSave = () => {
     // Here we would save the feedback
-    router.push("/dashboard");
+    router.push('/dashboard');
   };
 
   return (
@@ -73,15 +73,15 @@ export default function FeedbackPage() {
                   onClick={() => setMotivation(level)}
                   className={`flex-1 aspect-square rounded-2xl flex flex-col items-center justify-center gap-1 transition-all border-2 ${
                     motivation === level
-                      ? "border-primary bg-primary/10 scale-105 shadow-md"
-                      : "border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#102216]"
+                      ? 'border-primary bg-primary/10 scale-105 shadow-md'
+                      : 'border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#102216]'
                   }`}
                 >
                   <span className="text-3xl">
-                    {level === 1 ? "😞" : level === 2 ? "😐" : "🤩"}
+                    {level === 1 ? '😞' : level === 2 ? '😐' : '🤩'}
                   </span>
                   <span className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase">
-                    {level === 1 ? "Baja" : level === 2 ? "Media" : "Alta"}
+                    {level === 1 ? 'Baja' : level === 2 ? 'Media' : 'Alta'}
                   </span>
                 </button>
               ))}

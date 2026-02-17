@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { signup } from "../auth/actions";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { signup } from '../auth/actions';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -61,7 +61,7 @@ export default function RegisterForm() {
             Cuenta creada exitosamente
           </p>
           <button
-            onClick={() => router.push("/login")}
+            onClick={() => router.push('/login')}
             className="bg-primary text-black font-bold py-2 px-4 rounded hover:bg-emerald-400 transition-colors"
           >
             Iniciar sesión

@@ -1,24 +1,24 @@
-import { AgentMessage, AgentResponse } from "@/types/agents";
-import prompts from "@/utils/prompts.json";
+import { AgentMessage, AgentResponse } from '@/types/agents';
+import prompts from '@/utils/prompts.json';
 
 export async function sendMessageToAgent(
   messages: { role: string; content: string }[],
-  childInfoOrAgent?: any,
+  childInfoOrAgent?: unknown,
   userEmail?: string,
-  childInfoArg?: any,
+  childInfoArg?: unknown
 ): Promise<AgentResponse> {
   let childInfo = childInfoOrAgent;
   let agentName: string | undefined;
 
-  if (typeof childInfoOrAgent === "string") {
+  if (typeof childInfoOrAgent === 'string') {
     agentName = childInfoOrAgent;
     childInfo = childInfoArg;
   }
 
   try {
-    const response = await fetch("/api/agent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch('/api/agent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         messages,
         childInfo,
@@ -35,32 +35,32 @@ export async function sendMessageToAgent(
 
     return await response.json();
   } catch (error) {
-    console.error("Error communicating with agent API:", error);
+    console.error('Error communicating with agent API:', error);
     return {
-      message: "",
-      error: error instanceof Error ? error.message : "Unknown error occurred",
+      message: '',
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
     };
   }
 }
 export async function sendMessageToMaquetin(
-  messages: { role: string; content: string }[],
+  messages: { role: string; content: string }[]
 ): Promise<AgentResponse> {
   const systemPrompt = prompts.maquetin;
   const lastUserMessage = messages[messages.length - 1];
 
   if (!lastUserMessage) {
-    throw new Error("No messages provided to sendMessageToMaquetin");
+    throw new Error('No messages provided to sendMessageToMaquetin');
   }
 
   const maquetinMessages = [
-    { role: "system", content: systemPrompt },
-    { role: "user", content: lastUserMessage.content },
+    { role: 'system', content: systemPrompt },
+    { role: 'user', content: lastUserMessage.content },
   ];
 
   try {
-    const response = await fetch("/api/agent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const response = await fetch('/api/agent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         messages: maquetinMessages,
       }),
@@ -74,22 +74,22 @@ export async function sendMessageToMaquetin(
 
     return await response.json();
   } catch (error) {
-    console.error("Error communicating with agent API:", error);
+    console.error('Error communicating with agent API:', error);
     return {
-      message: "",
-      error: error instanceof Error ? error.message : "Unknown error occurred",
+      message: '',
+      error: error instanceof Error ? error.message : 'Unknown error occurred',
     };
   }
 }
 export async function getConversationHistory(
-  conversationId: string,
+  conversationId: string
 ): Promise<AgentMessage[]> {
   try {
     // Instead of calling external API directly
-    const response = await fetch("/api/andrea-agent", {
-      method: "POST",
+    const response = await fetch('/api/andrea-agent', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         conversationId,
@@ -103,7 +103,7 @@ export async function getConversationHistory(
     const data = await response.json();
     return data.messages || [];
   } catch (error) {
-    console.error("Error fetching conversation history:", error);
+    console.error('Error fetching conversation history:', error);
     return [];
   }
 }
@@ -122,7 +122,7 @@ export function generateSystemPrompt(child: {
 - Nivel actual: ${child.curso}.
 - Intereses: ${child.gustos}.
 - Comunidad Autónoma: ${child.comunidadAutonoma}.
-${child.observaciones ? `- Notas importantes: ${child.observaciones}` : ""}
+${child.observaciones ? `- Notas importantes: ${child.observaciones}` : ''}
 
 **Tu Misión:**
 Tu objetivo es reforzar su aprendizaje, atención y motivación. Debes proponer actividades lúdicas basadas estrictamente en sus intereses (${child.gustos}) y adaptadas a su nivel educativo (${child.curso}) y a su comunidad autónoma (${child.comunidadAutonoma}).

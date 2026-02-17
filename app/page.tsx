@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function HomePage() {
   return (
@@ -19,7 +19,7 @@ export default function HomePage() {
               <h1 className="text-4xl lg:text-6xl font-black text-[#111813] dark:text-white leading-[1.1] tracking-tight">
                 <span className="text-primary underline decoration-primary/20 underline-offset-8">
                   Acompaña
-                </span>{" "}
+                </span>{' '}
                 el aprendizaje de tus hijos, curso a curso
               </h1>
               <p className="text-lg lg:text-xl text-slate-600 dark:text-slate-400 max-w-lg leading-relaxed">
@@ -29,7 +29,7 @@ export default function HomePage() {
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                href="/dashboard"
+                href="/register"
                 className="bg-primary hover:bg-primary/90 text-[#111813] px-8 py-4 rounded-xl text-lg font-bold transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
               >
                 Empieza gratis ahora
@@ -54,8 +54,8 @@ export default function HomePage() {
               style={{
                 backgroundImage:
                   'url("https://lh3.googleusercontent.com/aida-public/AB6AXuAEuNJ-VJNWX4ukpQHGhJKfmyH8-v-8cTcaweu1yclAbV17tCytS9KGamN91f1GuOQjCct0rG5id7Taohu-MEYCsIsFAI7kHfjqdOSilm9nPdKOSIXgCKWgntSvsWwjFK-D_xSyEKYe-qKltTDhv4le_1NYbqGqVUqCGRI8ctbvivfw_ljU1fQvZdGlc_pCWwx1Qp0HwIMhYTpVn-H_yPJeJkdCU_srAXdEpdDqzvG3XGOMR5sc9JG3-uQfI4V-Yi1OLmrVsf-YKPk")',
-                backgroundSize: "cover",
-                backgroundPosition: "center",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
               }}
             ></div>
           </div>
@@ -179,7 +179,7 @@ export default function HomePage() {
                   style={{
                     backgroundImage:
                       'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBd7OsKkM0BQ6n24HOkz7p0guJ6bfusvkPfEIRe_lxcsxs_l6atjpHc39yawDuTt7YygOnqv9GYd4G9sAMv5chX1eH3Ahe0jY46JHfJohgsbFGU6IB8pBiGpviEil--RMJGT8PODmlM9lMkF9UCDE7aK_XFl6hXP2EuOBO7gpGLN-1U6hCwnO0Dvv4Ikx1l1I0q0ktQDBhEcpmWsBUhyKGPAcVYIEmdCB7XfHisQSjt7B8sdJN1-9nbpY8KL9tu4D-oHCcpt5qwdH4")',
-                    backgroundSize: "cover",
+                    backgroundSize: 'cover',
                   }}
                 ></div>
                 <div
@@ -187,7 +187,7 @@ export default function HomePage() {
                   style={{
                     backgroundImage:
                       'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBwtUJsfiQ72wkoexFfB5ogofk_5h2Bs32sDKmXbndpplK93eySIBoEol3FDj7Ojq5iF34qwWhugMwRrF_gD5NUcy7Z-oaXEs4pcEDN1g4M__cAfLEXKWpOk7Q7gLCubUxV1QGIVYedPuzZCDdecSEwTWNRnP3QTYRR4d5_VbuyXFZsqlol8dCJkSKiCpyusKKpKR9RU9CR2cB9tu2cBfLHSQjAtQReTlzeyHP8v9pyxDFhhcp7G1_LzmLZamS_pfENUJyZJKUU_JU")',
-                    backgroundSize: "cover",
+                    backgroundSize: 'cover',
                   }}
                 ></div>
               </div>
@@ -250,7 +250,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col items-center gap-4">
                 <Link
-                  href="/dashboard"
+                  href="/register"
                   className="bg-primary hover:bg-primary/90 text-[#111813] px-12 py-5 rounded-2xl text-xl font-black transition-all shadow-xl shadow-primary/20 w-full sm:w-auto block"
                 >
                   Probar gratis

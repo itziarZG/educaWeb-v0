@@ -1,5 +1,5 @@
-import ChatClient from "./chat-client";
-import { getChildById } from "./actions";
+import ChatClient from './chat-client';
+import { getChildById } from './actions';
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
@@ -8,7 +8,7 @@ export default async function ChatPage(props: { searchParams: SearchParams }) {
   const childId = searchParams.childId;
   let initialChildInfo = null;
 
-  if (typeof childId === "string") {
+  if (typeof childId === 'string') {
     initialChildInfo = await getChildById(childId);
   }
 

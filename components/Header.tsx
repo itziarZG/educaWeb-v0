@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import Link from "next/link";
-import { useAuth } from "@/context/auth-context";
+import Image from 'next/image';
+import Link from 'next/link';
+import { useAuth } from '@/context/auth-context';
 
 export default function Header() {
   const { user, signOut } = useAuth();
@@ -26,10 +26,10 @@ export default function Header() {
           {user ? (
             <div className="flex items-center gap-4">
               <span className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                Hola,{" "}
+                Hola,{' '}
                 {user.user_metadata?.name ||
                   user.identities?.[0]?.identity_data?.name ||
-                  "Usuario"}
+                  'Usuario'}
               </span>
               <button
                 onClick={() => signOut()}
