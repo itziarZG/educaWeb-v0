@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { addChild as addChildAction } from "./actions";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { addChild as addChildAction } from './actions';
 
 export default function CreateChildForm() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function CreateChildForm() {
       setLoading(false);
     } else {
       setLoading(false);
-      router.push("/select-profile");
+      router.push('/select-profile');
       router.refresh();
     }
   };

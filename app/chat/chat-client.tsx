@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState, useRef, useEffect } from "react";
-import type { ChatMessage, ChildInfo } from "@/types/agents";
-import { useChatInfo } from "./hooks";
+import { useState, useRef, useEffect } from 'react';
+import type { ChildInfo } from '@/types/agents';
+import { useChatInfo } from './hooks';
 
 // Import html2pdf dynamically in component
 
@@ -38,13 +38,13 @@ export default function ChatClient({
   useEffect(() => {
     const checkIfMobile = () => setIsMobile(window.innerWidth < 768);
     checkIfMobile();
-    window.addEventListener("resize", checkIfMobile);
-    return () => window.removeEventListener("resize", checkIfMobile);
+    window.addEventListener('resize', checkIfMobile);
+    return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
 
   // Scroll to bottom
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   const handlePrint = () => {
@@ -56,16 +56,16 @@ export default function ChatClient({
   const handleDownloadPdf = async () => {
     if (iframeRef.current && iframeRef.current.contentDocument) {
       const element = iframeRef.current.contentDocument.body;
-      const html2pdf = (await import("html2pdf.js")).default;
+      const html2pdf = (await import('html2pdf.js')).default;
       const opt = {
         margin: 0.5,
-        filename: "visualization.pdf",
-        image: { type: "jpeg" as const, quality: 0.98 },
+        filename: 'visualization.pdf',
+        image: { type: 'jpeg' as const, quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: {
-          unit: "in",
-          format: "letter",
-          orientation: "portrait" as const,
+          unit: 'in',
+          format: 'letter',
+          orientation: 'portrait' as const,
         },
       };
       html2pdf().set(opt).from(element).save();
@@ -80,7 +80,7 @@ export default function ChatClient({
       <main className="flex-1 flex h-full relative overflow-hidden bg-white dark:bg-dark-surface transition-colors duration-200">
         {/* Chat Section */}
         <section
-          className={`w-full md:w-[380px] lg:w-[420px] flex flex-col border-r border-[#f0f2f4] dark:border-dark-border bg-white dark:bg-dark-surface z-20 shrink-0 ${htmlContent && isMobile ? "hidden" : "flex"}`}
+          className={`w-full md:w-[380px] lg:w-[420px] flex flex-col border-r border-[#f0f2f4] dark:border-dark-border bg-white dark:bg-dark-surface z-20 shrink-0 ${htmlContent && isMobile ? 'hidden' : 'flex'}`}
         >
           <div className="h-16 shrink-0 border-b border-[#f0f2f4] dark:border-dark-border flex items-center justify-between px-4 lg:px-6">
             <div className="flex items-center gap-2">
@@ -89,8 +89,8 @@ export default function ChatClient({
               </span>
               <div className="flex flex-col">
                 <h2 className="font-bold text-sm text-[#111318] dark:text-gray-100">
-                  Creador de fichas{" "}
-                  {childInfo ? `para ${childInfo.nombre}` : ""}
+                  Creador de fichas{' '}
+                  {childInfo ? `para ${childInfo.nombre}` : ''}
                 </h2>
               </div>
             </div>
@@ -111,9 +111,9 @@ export default function ChatClient({
             {messages.map((msg, idx) => (
               <div
                 key={idx}
-                className={`flex gap-3 ${msg.role === "user" ? "flex-row-reverse" : ""}`}
+                className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}
               >
-                {msg.role === "assistant" ? (
+                {msg.role === 'assistant' ? (
                   <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center shrink-0 text-primary border border-indigo-200 dark:border-indigo-800/50">
                     <span className="material-symbols-outlined text-[18px]">
                       smart_toy
@@ -130,18 +130,18 @@ export default function ChatClient({
                 )}
 
                 <div
-                  className={`flex flex-col gap-1 max-w-[85%] ${msg.role === "user" ? "items-end" : ""}`}
+                  className={`flex flex-col gap-1 max-w-[85%] ${msg.role === 'user' ? 'items-end' : ''}`}
                 >
                   <span
-                    className={`text-xs font-semibold text-gray-500 ${msg.role === "user" ? "mr-1" : "ml-1"}`}
+                    className={`text-xs font-semibold text-gray-500 ${msg.role === 'user' ? 'mr-1' : 'ml-1'}`}
                   >
-                    {msg.role === "assistant" ? "Agent" : "You"}
+                    {msg.role === 'assistant' ? 'Agent' : 'You'}
                   </span>
                   <div
                     className={`${
-                      msg.role === "user"
-                        ? "bg-primary text-white rounded-tr-none"
-                        : "bg-white dark:bg-dark-surface dark:text-gray-200 border border-gray-100 dark:border-dark-border rounded-tl-none"
+                      msg.role === 'user'
+                        ? 'bg-primary text-white rounded-tr-none'
+                        : 'bg-white dark:bg-dark-surface dark:text-gray-200 border border-gray-100 dark:border-dark-border rounded-tl-none'
                     } 
                             p-3 rounded-xl shadow-sm text-sm leading-relaxed`}
                   >
@@ -171,7 +171,7 @@ export default function ChatClient({
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
+                  if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
                     handleSubmit();
                   }
@@ -203,18 +203,18 @@ export default function ChatClient({
               w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all duration-300
               ${
                 htmlLoading || messages.length === 0
-                  ? "bg-gray-200 text-gray-400 cursor-not-allowed dark:bg-gray-700 dark:text-gray-500"
-                  : "bg-linear-to-r from-primary to-indigo-600 text-white hover:scale-110 hover:shadow-xl hover:shadow-primary/20"
+                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed dark:bg-gray-700 dark:text-gray-500'
+                  : 'bg-linear-to-r from-primary to-indigo-600 text-white hover:scale-110 hover:shadow-xl hover:shadow-primary/20'
               }
             `}
             title="Generate Visualization"
           >
             <span
               className={`material-symbols-outlined text-[28px] ${
-                htmlLoading ? "animate-spin" : ""
+                htmlLoading ? 'animate-spin' : ''
               }`}
             >
-              {htmlLoading ? "sync" : "arrow_forward"}
+              {htmlLoading ? 'sync' : 'arrow_forward'}
             </span>
           </button>
           <span className="mt-3 text-[10px] uppercase font-bold text-gray-400 tracking-wider">
@@ -224,13 +224,13 @@ export default function ChatClient({
 
         {/* Visualization Section */}
         <section
-          className={`hidden md:flex flex-1 flex-col bg-slate-50 dark:bg-background-dark h-full overflow-hidden relative transition-colors duration-200 ${htmlContent && isMobile ? "flex! w-full absolute inset-0 z-30" : ""}`}
+          className={`hidden md:flex flex-1 flex-col bg-slate-50 dark:bg-background-dark h-full overflow-hidden relative transition-colors duration-200 ${htmlContent && isMobile ? 'flex! w-full absolute inset-0 z-30' : ''}`}
         >
           <div className="h-16 shrink-0 bg-white dark:bg-dark-surface border-b border-[#f0f2f4] dark:border-dark-border flex items-center justify-between px-6 lg:px-8">
             <div className="flex items-center gap-4">
               {isMobile && (
                 <button
-                  onClick={() => setHtmlContent("")}
+                  onClick={() => setHtmlContent('')}
                   className="md:hidden"
                 >
                   <span className="material-symbols-outlined">arrow_back</span>

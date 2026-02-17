@@ -1,17 +1,16 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
+import React, { useState } from 'react';
+import Link from 'next/link';
 
 export default function InteractiveWorksheetPage() {
-  const [diamonds, setDiamonds] = useState([
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuBVIL_Pv9L7eAqiEABTwzAA14z6WRrRcPcpjC4VFOvri1KytkmvcVg1IVCAAowFUWffu02jgEkHkHdeILiRB2YOI4LyaauC73Xzqo7OuhU76yWsKeVGlO-T4_eezgEkS0P6IibJEtJoiz3KcnjB-sceZd26VQ7W0qZxoQAf0OIdp4zLmgOfOyHT-TASInnzd07Xagkpeu4IIStJX6eTK0d126mYG_ujeYqDySm-AtXNEcFAzXXXwz6PuSf1QF0kQyFdrBnyWqxQvpw",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuBxABMl4H-S7RdguXso8ThFyImCJf3OR4r3TsRi9UGOGxOO6hNHzMQ3W5NEpC6ZnDMEg8XcljCloGKsD0G4lmzbEw4VbAjAZ3Im48vHvaIrAX7BvOgdqGQnYV8gKGkkD3IS3osJ0yRR_nZNsFZUrgWdU9asOdWCAK7VdnzBU58Ewbt3YXDtgVio9n7ow_blE18rVIIjNY8R6JuBkzp8mijzp8KCm3fRSPh32xB9U206Ot8Tohy9g0rlEU3a6iTL3-mzi4yzQU-a5Mc",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuDDlNB8lZWR5e9Q-0CgX-b9Pe-FUaH67MYfmd4AZJwD1k3CAyxOhTxHtNfAM2EBe_Ntpf2TcPza1ogshW6FAPPehvLeJUpuNZgFXb2HW2wR8rw9Tq5zOYx_Zoz6eHYnojPUNBsOlCRRjPZWQI0V6zHl7Orq1EL0o0n5gi2B9wsmWVHg7FzIvHVRG1m4I5Co5-f2LJYjuTbOCJCEeGhojF_kX8XksnMx5YFhl-eLTV7FWqZfpPTsCGpQZCYX-Dir9lRifFsdKL-eHIs",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuAnN_omBEOhv_167mY2ySQIzf7nIzf9eYzO30odLPcP6mWyifdUmyz21NlKtKWQRezFLHwQCieLPDL2ctWWrNc3atcRHmTOynNBSbkU-IBWoJHmy750C9ZmOaVstsLqdY8er_0BW2OO5isKTVqadNLR3xQIecSiql9UxORkpG4GPZhRWXZs1hLcQxnvm5iq16eSR8Pj739l18UMm7BBzWbRtgHFLICLYN1qG4QuKkKbtZwOYdGzx6EZLGucI1jYW9TD6IN70J3G8Vg",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuCI6Eyntnrl3Mo_YMmK9iTMmDTwnr6LQYX6Qh6ormF2uCa7Q5B6B4sxeZ8Lq4hgF28-Mxnd8zvoeeaTurQoxwTBASV6ia-wplow7wjFLvRT70kU27NCym1VCX6_Uw1Z-607AcfBaVldbOBJwe9aS07v1LbEDUoOWV1M0uDkRVtW2nCYIijhupOBMtjkwGOHfCj5x7e56dwPV-j2imS4Sz0-roHgZiixryRmvTprRhhq9StULfB1c4b0_g_-_J88yMOMk6MVFB8Gka8",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuDjcL8AdKI-cSjkf5rd5PcdElMTaAHOgjnzWVhvDjIUOZBcZpMLxc_oK2Lh2aRoxfy2wnlGXB4zkiAAaXrdKRDQpY_LRQRpKeyR19VUXr9OchUPBPVoB0RPPPwLWvFiZE36BbEUIAdzA7N-v6KOUxPVRy54rnkj3wVojhJo5uPWgDMqoDN-375gWuzgXAzMyAOdWIpaJ12HqoNiyGOUArsmFSUjrdr4r_JOED5MxctVROoCYQZxd702koec0bahdxvyVstdpfL40_0",
+  const [diamonds] = useState([
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuBVIL_Pv9L7eAqiEABTwzAA14z6WRrRcPcpjC4VFOvri1KytkmvcVg1IVCAAowFUWffu02jgEkHkHdeILiRB2YOI4LyaauC73Xzqo7OuhU76yWsKeVGlO-T4_eezgEkS0P6IibJEtJoiz3KcnjB-sceZd26VQ7W0qZxoQAf0OIdp4zLmgOfOyHT-TASInnzd07Xagkpeu4IIStJX6eTK0d126mYG_ujeYqDySm-AtXNEcFAzXXXwz6PuSf1QF0kQyFdrBnyWqxQvpw',
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuBxABMl4H-S7RdguXso8ThFyImCJf3OR4r3TsRi9UGOGxOO6hNHzMQ3W5NEpC6ZnDMEg8XcljCloGKsD0G4lmzbEw4VbAjAZ3Im48vHvaIrAX7BvOgdqGQnYV8gKGkkD3IS3osJ0yRR_nZNsFZUrgWdU9asOdWCAK7VdnzBU58Ewbt3YXDtgVio9n7ow_blE18rVIIjNY8R6JuBkzp8mijzp8KCm3fRSPh32xB9U206Ot8Tohy9g0rlEU3a6iTL3-mzi4yzQU-a5Mc',
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuDDlNB8lZWR5e9Q-0CgX-b9Pe-FUaH67MYfmd4AZJwD1k3CAyxOhTxHtNfAM2EBe_Ntpf2TcPza1ogshW6FAPPehvLeJUpuNZgFXb2HW2wR8rw9Tq5zOYx_Zoz6eHYnojPUNBsOlCRRjPZWQI0V6zHl7Orq1EL0o0n5gi2B9wsmWVHg7FzIvHVRG1m4I5Co5-f2LJYjuTbOCJCEeGhojF_kX8XksnMx5YFhl-eLTV7FWqZfpPTsCGpQZCYX-Dir9lRifFsdKL-eHIs',
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuAnN_omBEOhv_167mY2ySQIzf7nIzf9eYzO30odLPcP6mWyifdUmyz21NlKtKWQRezFLHwQCieLPDL2ctWWrNc3atcRHmTOynNBSbkU-IBWoJHmy750C9ZmOaVstsLqdY8er_0BW2OO5isKTVqadNLR3xQIecSiql9UxORkpG4GPZhRWXZs1hLcQxnvm5iq16eSR8Pj739l18UMm7BBzWbRtgHFLICLYN1qG4QuKkKbtZwOYdGzx6EZLGucI1jYW9TD6IN70J3G8Vg',
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuCI6Eyntnrl3Mo_YMmK9iTMmDTwnr6LQYX6Qh6ormF2uCa7Q5B6B4sxeZ8Lq4hgF28-Mxnd8zvoeeaTurQoxwTBASV6ia-wplow7wjFLvRT70kU27NCym1VCX6_Uw1Z-607AcfBaVldbOBJwe9aS07v1LbEDUoOWV1M0uDkRVtW2nCYIijhupOBMtjkwGOHfCj5x7e56dwPV-j2imS4Sz0-roHgZiixryRmvTprRhhq9StULfB1c4b0_g_-_J88yMOMk6MVFB8Gka8',
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuDjcL8AdKI-cSjkf5rd5PcdElMTaAHOgjnzWVhvDjIUOZBcZpMLxc_oK2Lh2aRoxfy2wnlGXB4zkiAAaXrdKRDQpY_LRQRpKeyR19VUXr9OchUPBPVoB0RPPPwLWvFiZE36BbEUIAdzA7N-v6KOUxPVRy54rnkj3wVojhJo5uPWgDMqoDN-375gWuzgXAzMyAOdWIpaJ12HqoNiyGOUArsmFSUjrdr4r_JOED5MxctVROoCYQZxd702koec0bahdxvyVstdpfL40_0',
   ]);
 
   return (
@@ -56,7 +55,7 @@ export default function InteractiveWorksheetPage() {
             ¡Ayuda al Dragón!
           </h1>
           <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-8 relative z-10">
-            Necesita contar sus tesoros para dormir tranquilo. Arrastra{" "}
+            Necesita contar sus tesoros para dormir tranquilo. Arrastra{' '}
             <strong className="text-primary font-black">4 diamantes</strong> al
             cofre.
           </p>

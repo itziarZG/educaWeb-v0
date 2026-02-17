@@ -1,9 +1,6 @@
-"use client";
+'use client';
 
-import React from "react";
-import Link from "next/link";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
+import React from 'react';
 
 export default function AnalyticsPage() {
   return (
@@ -15,7 +12,8 @@ export default function AnalyticsPage() {
             Análisis de Evolución
           </h2>
           <p className="text-[#61896f] dark:text-[#a0c4ae] text-base mt-2">
-            Seguimiento detallado de 'Autonomía' y 'Motivación'
+            Seguimiento detallado de &apos;Autonomía&apos; y
+            &apos;Motivación&apos;
           </p>
         </div>
 
@@ -201,7 +199,7 @@ export default function AnalyticsPage() {
                 <div
                   className="absolute inset-0 rounded-full border-[6px] border-primary border-t-transparent -rotate-45"
                   style={{
-                    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                    clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
                   }}
                 ></div>
                 <span className="text-4xl font-black text-[#111813] dark:text-white">
@@ -219,7 +217,7 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Quick Summary */}
-          <div className="flex-1 bg-gradient-to-br from-[#102216] to-[#1a2e20] p-6 rounded-3xl text-white relative overflow-hidden">
+          <div className="flex-1 bg-linear-to-br from-[#102216] to-[#1a2e20] p-6 rounded-3xl text-white relative overflow-hidden">
             <div className="absolute -right-4 -top-4 text-white/5 pointer-events-none">
               <span className="material-symbols-outlined text-[150px]">
                 auto_awesome
@@ -227,9 +225,9 @@ export default function AnalyticsPage() {
             </div>
             <h3 className="text-lg font-bold mb-4 relative z-10">Resumen IA</h3>
             <p className="text-sm text-gray-300 leading-relaxed relative z-10">
-              Leo ha mostrado un aumento del{" "}
+              Leo ha mostrado un aumento del{' '}
               <strong className="text-primary">22%</strong> en autonomía esta
-              semana. Se recomienda aumentar ligeramente la dificultad en{" "}
+              semana. Se recomienda aumentar ligeramente la dificultad en{' '}
               <strong className="text-white">Matemáticas</strong> para mantener
               el flujo.
             </p>

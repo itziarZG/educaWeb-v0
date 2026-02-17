@@ -1,18 +1,18 @@
-"use server";
+'use server';
 
-import { createClient } from "@/utils/supabase/server";
-import { ChildInfo } from "@/types/agents";
+import { createClient } from '@/utils/supabase/server';
+import { ChildInfo } from '@/types/agents';
 
 export async function getChildById(childId: string): Promise<ChildInfo | null> {
   const supabase = await createClient();
   const { data: childData, error } = await supabase
-    .from("hijos")
-    .select("*")
-    .eq("id", childId)
+    .from('hijos')
+    .select('*')
+    .eq('id', childId)
     .single();
 
   if (error) {
-    console.error("Error fetching child:", error);
+    console.error('Error fetching child:', error);
     return null;
   }
 

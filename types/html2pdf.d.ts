@@ -9,13 +9,13 @@ declare module 'html2pdf.js' {
     html2canvas?: {
       scale?: number;
       useCORS?: boolean;
-      [key: string]: any;
+      [key: string]: unknown;
     };
     jsPDF?: {
       unit?: string;
       format?: string;
       orientation?: 'portrait' | 'landscape';
-      [key: string]: any;
+      [key: string]: unknown;
     };
     pagebreak?: {
       mode?: string;
@@ -29,12 +29,15 @@ declare module 'html2pdf.js' {
     from(element: HTMLElement | string): Html2Pdf;
     set(options: Html2PdfOptions): Html2Pdf;
     save(): Promise<void>;
-    outputPdf(): any;
-    outputImg(): any;
+    outputPdf(): unknown;
+    outputImg(): unknown;
   }
 
   function html2pdf(): Html2Pdf;
-  function html2pdf(element: HTMLElement | string, options?: Html2PdfOptions): Html2Pdf;
+  function html2pdf(
+    element: HTMLElement | string,
+    options?: Html2PdfOptions
+  ): Html2Pdf;
 
   export = html2pdf;
 }

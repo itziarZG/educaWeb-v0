@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function ProfilePage() {
   return (
@@ -140,7 +140,7 @@ export default function ProfilePage() {
                 <div className="h-2 w-full bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-primary rounded-full"
-                    style={{ width: "85%" }}
+                    style={{ width: '85%' }}
                   ></div>
                 </div>
                 <p className="text-[11px] text-gray-400 dark:text-gray-500 mt-2">
@@ -334,7 +334,7 @@ export default function ProfilePage() {
                   <button className="px-4 py-2 rounded-full border border-dashed border-[#e5e7eb] dark:border-[#4a5568] hover:border-primary text-[#616f89] dark:text-[#a0aec0] hover:text-primary text-sm font-medium transition-all flex items-center gap-1">
                     <span className="material-symbols-outlined text-sm">
                       add
-                    </span>{" "}
+                    </span>{' '}
                     Add Topic
                   </button>
                 </div>

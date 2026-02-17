@@ -1,15 +1,14 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import Link from "next/link";
+import React, { useState } from 'react';
 
 export default function ProfileSettings() {
-  const [activeTab, setActiveTab] = useState("child");
+  const [activeTab, setActiveTab] = useState('child');
   const [contrastEnabled, setContrastEnabled] = useState(false);
   const [dyslexiaFontEnabled, setDyslexiaFontEnabled] = useState(true);
 
   const avatarUrl =
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuAb3jSZiveRj3q8ztLaJircg2p0fV5iaOHJZrs8tL6lsh3KPdiOBWFDhZO1nyw7oURSpz6KvQlmyG1_1QoJ8QDpQnA9eJpVcfIp7CIyyEdPH78dgV2N6Aj9VtTnTZSHnUj9169JyECeBAaLxdBLAhBLoyFGfTE9z64Y6ZVdMbvX9-UEbBb0nzueghlqxjodK87t4WwoBrcBzIiJcYdtbQDOOjGj-o-8XQdVxoweHQRtbI7JdQiKczXRRGFK34Lxb1KyX9R0PNaNyGQ";
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuAb3jSZiveRj3q8ztLaJircg2p0fV5iaOHJZrs8tL6lsh3KPdiOBWFDhZO1nyw7oURSpz6KvQlmyG1_1QoJ8QDpQnA9eJpVcfIp7CIyyEdPH78dgV2N6Aj9VtTnTZSHnUj9169JyECeBAaLxdBLAhBLoyFGfTE9z64Y6ZVdMbvX9-UEbBb0nzueghlqxjodK87t4WwoBrcBzIiJcYdtbQDOOjGj-o-8XQdVxoweHQRtbI7JdQiKczXRRGFK34Lxb1KyX9R0PNaNyGQ';
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-5xl mx-auto pb-20">
@@ -21,14 +20,14 @@ export default function ProfileSettings() {
         {/* Toggle between Child/Family */}
         <div className="flex bg-white dark:bg-[#1a2e20] p-1 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
           <button
-            onClick={() => setActiveTab("child")}
-            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === "child" ? "bg-primary text-[#102216] shadow-md" : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"}`}
+            onClick={() => setActiveTab('child')}
+            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'child' ? 'bg-primary text-[#102216] shadow-md' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}
           >
             Perfil del Niño
           </button>
           <button
-            onClick={() => setActiveTab("family")}
-            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === "family" ? "bg-primary text-[#102216] shadow-md" : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"}`}
+            onClick={() => setActiveTab('family')}
+            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${activeTab === 'family' ? 'bg-primary text-[#102216] shadow-md' : 'text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}
           >
             Cuenta Familiar
           </button>

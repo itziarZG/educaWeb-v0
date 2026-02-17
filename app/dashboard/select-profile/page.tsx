@@ -1,14 +1,13 @@
-"use client";
+'use client';
 
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
+import React from 'react';
+import Link from 'next/link';
 
 export default function ProfileSelectionPage() {
   const leoUrl =
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuDB0zIlaHUbAWN_lOj7jjhfik0xanQMOFO_knLHysvrIk8RrQXH_xoZtCuTVN0WlVC7pS2ONH9xAjqnjA2eryi3ET_r9QeuFo2_f1pZ0nb2fDrsQ4A8q3rEFYIo_qgx8vXqI2J1hM5gjIjqbXikNKGlT5Vi_Ek1DOgPICkaQrn5Tkyv3DIN2mWz79ciZwGjy6KCHhoeuwwy1IfgL0r68q0RaoDslAzN6pdI-iL_SF7OKy48lEjdNK0bResnklqBOeQSklcdLO_wBw0";
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuDB0zIlaHUbAWN_lOj7jjhfik0xanQMOFO_knLHysvrIk8RrQXH_xoZtCuTVN0WlVC7pS2ONH9xAjqnjA2eryi3ET_r9QeuFo2_f1pZ0nb2fDrsQ4A8q3rEFYIo_qgx8vXqI2J1hM5gjIjqbXikNKGlT5Vi_Ek1DOgPICkaQrn5Tkyv3DIN2mWz79ciZwGjy6KCHhoeuwwy1IfgL0r68q0RaoDslAzN6pdI-iL_SF7OKy48lEjdNK0bResnklqBOeQSklcdLO_wBw0';
   const saraUrl =
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuAxXPGEDc25SdXBFYN6F-zGt2FmNaQYkzGuc7YxS7ydHnUqGPAqpOYTPjE1L9fKNcOEqw9sHT_GV_SM5FkH6ijxvy0v2ayw-vfDfiIiiE1F6JKB4SyEK_4PlbMbuYuRk2BGMUUgkxtDYWoM5SsY7T6E5gXTWTaYTzK9sw-Jq5bHMuixkWcEGw9Y_6j09fjfWwh-3tInKu7nwA0tWlQU0IXUSQA-lM2VHxnZ5Y_gDITsrsP5YdA-26sLYxPLiM4tZkONDBkjPHrtEr0";
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuAxXPGEDc25SdXBFYN6F-zGt2FmNaQYkzGuc7YxS7ydHnUqGPAqpOYTPjE1L9fKNcOEqw9sHT_GV_SM5FkH6ijxvy0v2ayw-vfDfiIiiE1F6JKB4SyEK_4PlbMbuYuRk2BGMUUgkxtDYWoM5SsY7T6E5gXTWTaYTzK9sw-Jq5bHMuixkWcEGw9Y_6j09fjfWwh-3tInKu7nwA0tWlQU0IXUSQA-lM2VHxnZ5Y_gDITsrsP5YdA-26sLYxPLiM4tZkONDBkjPHrtEr0';
 
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark font-display antialiased transition-colors duration-300">

@@ -1,5 +1,5 @@
 export type AgentType = string;
-export type Roles = "user" | "assistant" | "system";
+export type Roles = 'user' | 'assistant' | 'system';
 export interface ChatMessage {
   content: string;
   role: Roles;

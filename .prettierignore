@@ -1,0 +1,35 @@
+# Dependency directories
+node_modules
+.pnpm-store
+.npm
+.yarn
+
+# Next.js build output
+.next
+out
+dist
+build
+
+# Environment files
+.env
+.env.local
+.env.*
+
+# Public generated files
+/public/next.svg
+/public/vercel.svg
+
+# Package manager lock files (optional, but often ignored for formatting to avoid merge conflicts)
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+bun.lockb
+
+# Type definitions/generated types
+next-env.d.ts
+.d.ts
+
+# IDE settings
+.vscode
+.idea
+*.tsbuildinfo
