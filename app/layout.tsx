@@ -58,6 +58,10 @@ export default async function RootLayout({
           sizes="16x16"
           href="/favicon/favicon-16x16.png"
         />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        />
         <link rel="manifest" href="/favicon/site.webmanifest" />
 
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
