@@ -39,4 +39,6 @@ export function getLanguageModel(): LanguageModel {
   }
 
   return model as unknown as LanguageModel;
+
+  return model as unknown as LanguageModel;
 }
