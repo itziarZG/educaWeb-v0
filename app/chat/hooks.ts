@@ -25,6 +25,8 @@ export const useChatInfo = (
     initialChildInfo || null
   );
 
+  const [noCreditsModalOpen, setNoCreditsModalOpen] = useState(false);
+
   // Sync state with prop
   useEffect(() => {
     setChildInfo(initialChildInfo || null);
@@ -87,20 +89,28 @@ export const useChatInfo = (
         timestamp: Date.now(),
       };
       setMessages([...newMessages, agentMsg]);
-
-      if (response.htmlContent) {
-        setHtmlContent(cleanHtmlResponse(response.htmlContent));
-      }
-    } catch (error) {
+    } catch (error: Error | unknown) {
       console.error(error);
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: 'assistant',
-          content: 'Error al conectar con el agente.',
-          timestamp: Date.now(),
-        },
-      ]);
+      const errorMessage = error instanceof Error ? error.message : '';
+
+      // Chequeamos si es error de créditos (402 o mensaje específico)
+      if (
+        errorMessage.includes('Sin créditos') ||
+        errorMessage.includes('402')
+      ) {
+        setNoCreditsModalOpen(true);
+        // Opcional: Eliminar el último mensaje del usuario para que no parezca que se envió
+        // setMessages(messages);
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: 'Error al conectar con el agente. ' + errorMessage,
+            timestamp: Date.now(),
+          },
+        ]);
+      }
     } finally {
       setLoading(false);
     }
@@ -137,5 +147,7 @@ export const useChatInfo = (
     childInfo,
     handleSubmit,
     handleVisualize,
+    noCreditsModalOpen,
+    setNoCreditsModalOpen,
   };
 };

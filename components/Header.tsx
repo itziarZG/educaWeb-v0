@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useAuth } from '@/context/auth-context';
+import CreditosBadge from './CreditosBadge';
 
 export default function Header() {
   const { user, signOut } = useAuth();
@@ -22,18 +23,19 @@ export default function Header() {
             TUTOR_AI
           </h2>
         </div>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center md:gap-6 gap-2">
           {user ? (
-            <div className="flex items-center gap-4">
+            <div className="flex items-center md:gap-4 gap-1">
               <span className="text-sm font-medium text-slate-700 dark:text-slate-200">
                 Hola,{' '}
                 {user.user_metadata?.name ||
                   user.identities?.[0]?.identity_data?.name ||
                   'Usuario'}
               </span>
+              <CreditosBadge />
               <button
                 onClick={() => signOut()}
-                className="bg-primary hover:bg-primary/90 text-[#111813] px-5 py-2 rounded-lg text-sm font-bold transition-all shadow-sm"
+                className="bg-primary hover:bg-primary/90 text-[#111813] md:px-5 px-2 py-2 rounded-lg text-sm font-bold transition-all shadow-sm"
               >
                 Salir
               </button>
@@ -47,7 +49,7 @@ export default function Header() {
                 Login
               </Link>
               <Link
-                className="bg-primary hover:bg-primary/90 text-[#111813] px-5 py-2 rounded-lg text-sm font-bold transition-all shadow-sm"
+                className="bg-primary hover:bg-primary/90 text-[#111813] md:px-5 px-3 py-2 rounded-lg text-sm font-bold transition-all shadow-sm"
                 href="/register"
               >
                 Probar gratis

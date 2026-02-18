@@ -1,4 +1,5 @@
-import Link from 'next/link';
+'use client';
+import LinkButton from '@/components/LinkButton';
 
 export default function HomePage() {
   return (
@@ -17,7 +18,7 @@ export default function HomePage() {
             </div>
             <div className="space-y-4">
               <h1 className="text-4xl lg:text-6xl font-black text-[#111813] dark:text-white leading-[1.1] tracking-tight">
-                <span className="text-primary underline decoration-primary/20 underline-offset-8">
+                <span className="text-primary dark:text-primary-100 underline decoration-primary/20 underline-offset-8">
                   Acompaña
                 </span>{' '}
                 el aprendizaje de tus hijos, curso a curso
@@ -27,15 +28,20 @@ export default function HomePage() {
                 con su curso. Estudio efectivo, motivador y sin estrés.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/register"
-                className="bg-primary hover:bg-primary/90 text-[#111813] px-8 py-4 rounded-xl text-lg font-bold transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
-              >
-                Empieza gratis ahora
-                <span className="material-symbols-outlined">arrow_forward</span>
-              </Link>
-              <div className="flex items-center gap-3 px-4 py-2 border border-slate-200 dark:border-slate-800 rounded-xl">
+            <div className="flex flex-col sm:flex-row gap-6 items-start">
+              <div className="flex flex-col gap-2">
+                <span className="text-xs font-bold text-orange-600 bg-orange-100 dark:bg-orange-900/30 dark:text-orange-300 px-3 py-1 rounded-full w-fit">
+                  🔥 Acceso Beta Gratuito (Plazas Limitadas)
+                </span>
+                <LinkButton href="/register" variant="big">
+                  Empieza gratis ahora
+                  <span className="material-symbols-outlined">
+                    arrow_forward
+                  </span>
+                </LinkButton>
+              </div>
+
+              <div className="flex items-center gap-3 px-4 py-2 border border-slate-200 dark:border-slate-800 rounded-xl mt-2 sm:mt-8">
                 <div className="flex -space-x-2">
                   <div className="w-8 h-8 rounded-full border-2 border-white bg-slate-200"></div>
                   <div className="w-8 h-8 rounded-full border-2 border-white bg-slate-300"></div>
@@ -249,12 +255,7 @@ export default function HomePage() {
                 tus hijos.
               </p>
               <div className="flex flex-col items-center gap-4">
-                <Link
-                  href="/register"
-                  className="bg-primary hover:bg-primary/90 text-[#111813] px-12 py-5 rounded-2xl text-xl font-black transition-all shadow-xl shadow-primary/20 w-full sm:w-auto block"
-                >
-                  Probar gratis
-                </Link>
+                <LinkButton href="/register">Probar gratis</LinkButton>
                 <p className="text-slate-500 text-sm">
                   Sin compromiso. Cancela en cualquier momento.
                 </p>

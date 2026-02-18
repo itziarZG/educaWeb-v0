@@ -7,7 +7,7 @@ export default async function Dashboard() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  await supabase.from('perfiles').select('*').single();
+  await supabase.from('clients').select('*').single();
 
   // Placeholder URLs adhering to the new design
   // Placeholder URLs adhering to the new design
