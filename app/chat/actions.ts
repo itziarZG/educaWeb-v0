@@ -6,7 +6,7 @@ import { ChildInfo } from '@/types/agents';
 export async function getChildById(childId: string): Promise<ChildInfo | null> {
   const supabase = await createClient();
   const { data: childData, error } = await supabase
-    .from('hijos')
+    .from('children')
     .select('*')
     .eq('id', childId)
     .single();

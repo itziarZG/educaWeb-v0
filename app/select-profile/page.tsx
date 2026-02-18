@@ -14,7 +14,7 @@ export default async function ProfileSelectionPage() {
   }
 
   const { data: children, error } = await supabase
-    .from('hijos')
+    .from('children')
     .select('id,nombre, edad, curso, gustos, observaciones')
     .eq('perfil_id', user.id);
 

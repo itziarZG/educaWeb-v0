@@ -24,6 +24,7 @@ export async function sendMessageToAgent(
         childInfo,
         agentName,
         userEmail,
+        mode: 'chat',
       }),
     });
 
@@ -63,6 +64,7 @@ export async function sendMessageToMaquetin(
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         messages: maquetinMessages,
+        mode: 'visualization',
       }),
     });
 

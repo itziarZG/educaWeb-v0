@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useAuth } from '@/context/auth-context';
 import { getChildById } from './actions';
@@ -6,13 +6,14 @@ import {
   sendMessageToAgent,
   sendMessageToMaquetin,
 } from '@/services/agentService';
+import { createClient } from '@/utils/supabase/client';
 import type { ChatMessage, ChildInfo } from '@/types/agents';
 
 export const useChatInfo = (
   initialChildInfo?: ChildInfo | null,
   systemPrompt?: string
 ) => {
-  const {} = useAuth();
+  const { user } = useAuth();
   const searchParams = useSearchParams();
   const childId = searchParams.get('childId');
 
@@ -24,6 +25,8 @@ export const useChatInfo = (
   const [childInfo, setChildInfo] = useState<ChildInfo | null>(
     initialChildInfo || null
   );
+
+  const [noCreditsModalOpen, setNoCreditsModalOpen] = useState(false);
 
   // Sync state with prop
   useEffect(() => {
@@ -38,6 +41,29 @@ export const useChatInfo = (
       });
     }
   }, [childId, childInfo]);
+
+  const checkCredits = useCallback(async () => {
+    if (!user) return false;
+    const supabase = createClient();
+    const { data: clientData, error } = await supabase
+      .from('clients')
+      .select('credits')
+      .eq('id', user.id)
+      .single();
+
+    if (error || !clientData || (clientData.credits || 0) <= 0) {
+      setNoCreditsModalOpen(true);
+      return false;
+    }
+    return true;
+  }, [user]);
+
+  // Check credits on load
+  useEffect(() => {
+    if (user) {
+      checkCredits();
+    }
+  }, [user, checkCredits]);
 
   function cleanHtmlResponse(response: string): string {
     return response
@@ -87,20 +113,28 @@ export const useChatInfo = (
         timestamp: Date.now(),
       };
       setMessages([...newMessages, agentMsg]);
-
-      if (response.htmlContent) {
-        setHtmlContent(cleanHtmlResponse(response.htmlContent));
-      }
-    } catch (error) {
+    } catch (error: Error | unknown) {
       console.error(error);
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: 'assistant',
-          content: 'Error al conectar con el agente.',
-          timestamp: Date.now(),
-        },
-      ]);
+      const errorMessage = error instanceof Error ? error.message : '';
+
+      // Chequeamos si es error de créditos (402 o mensaje específico)
+      if (
+        errorMessage.includes('Sin créditos') ||
+        errorMessage.includes('402')
+      ) {
+        setNoCreditsModalOpen(true);
+        // Opcional: Eliminar el último mensaje del usuario para que no parezca que se envió
+        // setMessages(messages);
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: 'Error al conectar con el agente. ' + errorMessage,
+            timestamp: Date.now(),
+          },
+        ]);
+      }
     } finally {
       setLoading(false);
     }
@@ -112,6 +146,11 @@ export const useChatInfo = (
       .reverse()
       .find((m) => m.role === 'assistant');
     if (!lastAgentMsg) return;
+
+    // Check for credits
+    // Check for credits
+    const hasCredits = await checkCredits();
+    if (!hasCredits) return;
 
     setHtmlLoading(true);
     try {
@@ -137,5 +176,7 @@ export const useChatInfo = (
     childInfo,
     handleSubmit,
     handleVisualize,
+    noCreditsModalOpen,
+    setNoCreditsModalOpen,
   };
 };

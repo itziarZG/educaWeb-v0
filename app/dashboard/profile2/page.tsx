@@ -14,7 +14,7 @@ export default async function ProfilePage() {
   console.log('USER', user);
   // Fetch the children directly
   const { data: children, error } = await supabase
-    .from('hijos')
+    .from('children')
     .select('nombre, edad, curso, gustos, observaciones')
     .eq('perfil_id', user.id);
 
