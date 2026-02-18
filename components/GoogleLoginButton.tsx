@@ -6,16 +6,14 @@ import { useState } from 'react';
 export default function GoogleLoginButton() {
   const [isLoading, setIsLoading] = useState(false);
   const supabase = createClient();
-
+  const redirectTo = `${window.location.origin}/auth/callback`;
   const handleGoogleLogin = async () => {
     setIsLoading(true);
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo:
-            process.env.NEXT_PUBLIC_AUTH_REDIRECT_URL ||
-            `${window.location.origin}/auth/callback`,
+          redirectTo: redirectTo,
         },
       });
 
