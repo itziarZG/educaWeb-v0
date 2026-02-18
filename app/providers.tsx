@@ -14,7 +14,7 @@ export function Providers({
   initialUser?: User | null;
 }) {
   return (
-    <AuthProvider initialUser={initialUser}>
+    <AuthProvider initialUser={initialUser} key={initialUser?.id}>
       <ThemeProvider
         attribute="class"
         defaultTheme="system"
