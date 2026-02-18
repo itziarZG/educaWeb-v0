@@ -8,7 +8,7 @@ export default function HomePage() {
       <section className="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-32">
         <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col gap-8">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-slate-800 dark:text-primary-100 px-3 py-1 rounded-full w-fit">
+            <div className="inline-flex items-center gap-2 bg-primary/10 dark:bg-orange-900/30 text-orange-300 px-3 py-1 rounded-full w-fit">
               <span className="material-symbols-outlined text-sm">
                 auto_awesome
               </span>
@@ -206,33 +206,35 @@ export default function HomePage() {
       <section className="py-16 bg-background-light dark:bg-background-dark/50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="flex flex-col items-center text-center gap-2">
-              <p className="text-primary text-4xl lg:text-5xl font-black">
+            <div className="dark:bg-orange-900/60 rounded-2xl flex flex-col items-center text-center gap-2">
+              <p className="text-orange-400 text-4xl lg:text-5xl font-black">
                 100%
               </p>
-              <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
+              <p className="text-sm font-bold text-orange-400 uppercase tracking-widest">
                 Personalizable
               </p>
             </div>
-            <div className="flex flex-col items-center text-center gap-2">
-              <p className="text-primary text-4xl lg:text-5xl font-black">
+            <div className="dark:bg-orange-900/60 rounded-2xl flex flex-col items-center text-center gap-2">
+              <p className="text-orange-400 text-4xl lg:text-5xl font-black">
                 500+
               </p>
-              <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
+              <p className="text-sm font-bold text-orange-400 uppercase tracking-widest">
                 Fichas Generadas
               </p>
             </div>
-            <div className="flex flex-col items-center text-center gap-2">
-              <p className="text-primary text-4xl lg:text-5xl font-black">
+            <div className="dark:bg-orange-900/60 rounded-2xl flex flex-col items-center text-center gap-2">
+              <p className="text-orange-400 text-4xl lg:text-5xl font-black">
                 24/7
               </p>
-              <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
+              <p className="text-sm font-bold text-orange-400 uppercase tracking-widest">
                 Acceso Inmediato
               </p>
             </div>
-            <div className="flex flex-col items-center text-center gap-2">
-              <p className="text-primary text-4xl lg:text-5xl font-black">0</p>
-              <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
+            <div className="dark:bg-orange-900/60 rounded-2xl flex flex-col items-center text-center gap-2">
+              <p className="text-orange-400 text-4xl lg:text-5xl font-black">
+                0
+              </p>
+              <p className="text-sm font-bold text-orange-400 uppercase tracking-widest">
                 Estrés en Casa
               </p>
             </div>

@@ -58,6 +58,11 @@ export default async function RootLayout({
         <link rel="manifest" href="/favicon/site.webmanifest" />
 
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+        />
       </head>
       <body
         className={`${lexend.variable} font-display bg-background-light dark:bg-background-dark dark:bg-opacity-10 text-slate-900 dark:text-slate-100 selection:bg-primary/30 antialiased`}
