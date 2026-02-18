@@ -1,4 +1,3 @@
-'use client';
 import LinkButton from '@/components/LinkButton';
 
 export default function HomePage() {

@@ -1,4 +1,5 @@
-'use client';
+import Button from '@/components/Button';
+
 interface NoCreditsModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -13,12 +14,9 @@ export default function NoCreditsModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
       <div className="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-8 shadow-2xl scale-100 animate-in zoom-in-95 duration-200 border border-slate-200 dark:border-slate-800 relative">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
-        >
+        <Button onClick={onClose}>
           <span className="material-symbols-outlined">close</span>
-        </button>
+        </Button>
 
         <div className="flex flex-col items-center text-center space-y-6">
           <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-2">
