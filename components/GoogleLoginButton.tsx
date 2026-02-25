@@ -6,14 +6,13 @@ import { useState } from 'react';
 export default function GoogleLoginButton() {
   const [isLoading, setIsLoading] = useState(false);
   const supabase = createClient();
-  const redirectTo = `${window.location.origin}/auth/callback`;
   const handleGoogleLogin = async () => {
     setIsLoading(true);
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: redirectTo,
+          redirectTo: `${window.location.origin}/auth/callback`,
         },
       });
 
@@ -31,7 +30,7 @@ export default function GoogleLoginButton() {
     <button
       onClick={handleGoogleLogin}
       disabled={isLoading}
-      className="flex items-center justify-center gap-3 w-full bg-white dark:bg-[#1a2e20] text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2.5 text-sm font-medium hover:bg-gray-50 dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+      className="flex items-center justify-center gap-3 w-full bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-lg px-2 py-2.5 text-sm font-medium hover:bg-gray-50 dark:hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
     >
       {isLoading ? (
         <svg

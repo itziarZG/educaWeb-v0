@@ -18,14 +18,14 @@ export async function getChildById(childId: string): Promise<ChildInfo | null> {
 
   const child: ChildInfo = {
     id: childData.id,
-    nombre: childData.nombre,
-    edad: childData.edad,
-    curso: childData.curso,
-    gustos: childData.gustos,
-    observaciones: childData.observaciones,
-    perfilId: childData.perfil_id,
+    name: childData.name,
+    age: childData.age,
+    grade: childData.grade,
+    interests: childData.interests,
+    observations: childData.observations,
+    userId: childData.user_id,
     systemPrompt: childData.system_prompt,
-    comunidadAutonoma: childData.comunidad_autonoma,
+    region: childData.region,
   };
 
   return child;

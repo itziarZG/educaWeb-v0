@@ -15,8 +15,8 @@ export default async function ProfileSelectionPage() {
 
   const { data: children, error } = await supabase
     .from('children')
-    .select('id,nombre, edad, curso, gustos, observaciones')
-    .eq('perfil_id', user.id);
+    .select('id,name, age, grade, interests, observations')
+    .eq('user_id', user.id);
 
   if (error) {
     console.error('Error fetching children:', error);
@@ -71,7 +71,7 @@ export default async function ProfileSelectionPage() {
                     ></div>
                   </div>
                   <p className="text-slate-900 dark:text-slate-100 text-xl font-semibold leading-normal">
-                    {child.nombre}
+                    {child.name}
                   </p>
                 </Link>
               ))}

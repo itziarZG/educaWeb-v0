@@ -28,24 +28,24 @@ export interface AgentChatProps {
 
 export interface ChildInfoAPI {
   id: string;
-  nombre: string;
-  edad: number;
-  curso: string;
-  gustos: string;
-  observaciones: string;
-  perfil_id: string;
+  name: string;
+  age: number;
+  grade: string;
+  interests: string;
+  observations: string;
+  user_id: string;
   system_prompt: string;
-  comunidad_autonoma: string;
+  region: string;
 }
 
 export interface ChildInfo {
   id: string;
-  nombre: string;
-  edad: number;
-  curso: string;
-  gustos: string;
-  observaciones: string;
-  perfilId: string;
+  name: string;
+  age: number;
+  grade: string;
+  interests: string;
+  observations: string;
+  userId: string;
   systemPrompt: string;
-  comunidadAutonoma: string;
+  region: string;
 }
