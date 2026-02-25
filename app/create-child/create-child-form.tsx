@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { addChild as addChildAction } from './actions';
+import { toast } from 'sonner';
 
 export default function CreateChildForm() {
   const router = useRouter();
@@ -17,11 +18,12 @@ export default function CreateChildForm() {
     const formData = new FormData(event.currentTarget);
 
     const result = await addChildAction(formData);
-
     if (result && result.error) {
       setError(result.error);
+      toast.error(result.error);
       setLoading(false);
     } else {
+      toast.success('Perfil creado con éxito');
       setLoading(false);
       router.push('/select-profile');
       router.refresh();

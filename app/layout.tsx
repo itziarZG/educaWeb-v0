@@ -6,6 +6,7 @@ import { Providers } from '@/app/providers';
 import Image from 'next/image';
 import Header from '@/components/Header';
 import { createClient } from '@/utils/supabase/server';
+
 const lexend = Lexend({
   subsets: ['latin'],
   variable: '--font-lexend',

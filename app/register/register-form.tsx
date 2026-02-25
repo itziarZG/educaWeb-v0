@@ -3,6 +3,7 @@
 import { signup } from '../auth/actions';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -14,9 +15,11 @@ export default function RegisterForm() {
     const result = await signup(formData);
     if (result.error) {
       setError(result.error);
+      toast.error(result.error);
     } else {
       setError(null);
       setSuccess(true);
+      toast.success('Cuenta creada exitosamente');
     }
   };
   return (

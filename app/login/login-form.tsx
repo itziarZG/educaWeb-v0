@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { login } from '../auth/actions';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export default function LoginForm() {
   const [error, setError] = useState<string | null>(null);
@@ -19,8 +20,10 @@ export default function LoginForm() {
 
     if (result && result.error) {
       setError(result.error);
+      toast.error(result.error);
       setLoading(false);
     } else {
+      toast.success('Sesión iniciada correctamente');
       setLoading(false);
       router.refresh(); // Refresh to update server components/context
       router.push('/select-profile');

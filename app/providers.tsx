@@ -3,6 +3,7 @@
 import { ReactNode } from 'react';
 import { ThemeProvider } from '@/components/theme-provider';
 import { AuthProvider } from '@/context/auth-context';
+import { Toaster } from 'sonner';
 
 import { User } from '@supabase/supabase-js';
 
@@ -21,6 +22,7 @@ export function Providers({
         enableSystem
         disableTransitionOnChange
       >
+        <Toaster richColors position="top-center" />
         {children}
       </ThemeProvider>
     </AuthProvider>
