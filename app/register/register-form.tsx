@@ -20,10 +20,10 @@ export default function RegisterForm() {
     }
   };
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex w-full flex-col items-center justify-center ">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-4 bg-white p-8 rounded-xl shadow-md border dark:bg-[#1a2e20] dark:border-gray-800"
+        className="flex flex-col gap-4 bg-white p-8 rounded-xl shadow-md border dark:bg-gray-800 dark:border-gray-800"
       >
         <h1 className="text-2xl font-bold">Crear cuenta</h1>
         <input

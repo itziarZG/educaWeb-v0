@@ -14,7 +14,7 @@ export async function signup(formData: FormData) {
     password,
     options: {
       data: { name },
-      emailRedirectTo: 'http://localhost:3000/auth/callback',
+      emailRedirectTo: `${window.location.origin}/auth/callback`,
     },
   });
 

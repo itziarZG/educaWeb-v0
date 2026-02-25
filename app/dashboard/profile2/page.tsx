@@ -15,8 +15,8 @@ export default async function ProfilePage() {
   // Fetch the children directly
   const { data: children, error } = await supabase
     .from('children')
-    .select('nombre, edad, curso, gustos, observaciones')
-    .eq('perfil_id', user.id);
+    .select('name, age, grade, interests, observations')
+    .eq('user_id', user.id);
 
   if (error) {
     console.error('Error fetching children:', error);
@@ -230,8 +230,8 @@ export default async function ProfilePage() {
                     {children.map(
                       (
                         child: {
-                          nombre: string;
-                          edad: number | null;
+                          name: string;
+                          age: number | null;
                         },
                         index: number
                       ) => (
@@ -240,11 +240,11 @@ export default async function ProfilePage() {
                           className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg"
                         >
                           <p className="font-bold text-[#111318] dark:text-white">
-                            {child.nombre || 'Child ' + (index + 1)}
+                            {child.name || 'Child ' + (index + 1)}
                           </p>
                           <p className="text-sm text-gray-500 dark:text-gray-400">
-                            {child.edad
-                              ? `${child.edad} years old`
+                            {child.age
+                              ? `${child.age} years old`
                               : 'Age not set'}
                           </p>
                         </div>

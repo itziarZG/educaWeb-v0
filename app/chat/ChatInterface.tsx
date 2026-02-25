@@ -37,7 +37,7 @@ export default function ChatInterface({
           </span>
           <div className="flex flex-col">
             <h2 className="font-bold text-sm text-[#111318] dark:text-gray-100">
-              Creador de fichas {childInfo ? `para ${childInfo.nombre}` : ''}
+              Creador de fichas {childInfo ? `para ${childInfo.name}` : ''}
             </h2>
           </div>
         </div>
