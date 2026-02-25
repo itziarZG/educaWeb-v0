@@ -1,4 +1,4 @@
-import Link from "next/link";
+import LinkButton from '@/components/LinkButton';
 
 export default function HomePage() {
   return (
@@ -7,7 +7,7 @@ export default function HomePage() {
       <section className="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-32">
         <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col gap-8">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-slate-800 dark:text-primary-100 px-3 py-1 rounded-full w-fit">
+            <div className="inline-flex items-center gap-2 bg-primary/10 dark:bg-orange-900/30 text-orange-300 px-3 py-1 rounded-full w-fit">
               <span className="material-symbols-outlined text-sm">
                 auto_awesome
               </span>
@@ -17,9 +17,9 @@ export default function HomePage() {
             </div>
             <div className="space-y-4">
               <h1 className="text-4xl lg:text-6xl font-black text-[#111813] dark:text-white leading-[1.1] tracking-tight">
-                <span className="text-primary underline decoration-primary/20 underline-offset-8">
+                <span className="text-primary dark:text-primary-100 underline decoration-primary/20 underline-offset-8">
                   Acompaña
-                </span>{" "}
+                </span>{' '}
                 el aprendizaje de tus hijos, curso a curso
               </h1>
               <p className="text-lg lg:text-xl text-slate-600 dark:text-slate-400 max-w-lg leading-relaxed">
@@ -27,15 +27,20 @@ export default function HomePage() {
                 con su curso. Estudio efectivo, motivador y sin estrés.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/dashboard"
-                className="bg-primary hover:bg-primary/90 text-[#111813] px-8 py-4 rounded-xl text-lg font-bold transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
-              >
-                Empieza gratis ahora
-                <span className="material-symbols-outlined">arrow_forward</span>
-              </Link>
-              <div className="flex items-center gap-3 px-4 py-2 border border-slate-200 dark:border-slate-800 rounded-xl">
+            <div className="flex flex-col sm:flex-row gap-6 items-start">
+              <div className="flex flex-col gap-2">
+                <span className="text-xs font-bold text-orange-600 bg-orange-100 dark:bg-orange-900/30 dark:text-orange-300 px-3 py-1 rounded-full w-fit">
+                  🔥 Acceso Beta Gratuito (Plazas Limitadas)
+                </span>
+                <LinkButton href="/register" variant="big">
+                  Empieza gratis ahora
+                  <span className="material-symbols-outlined">
+                    arrow_forward
+                  </span>
+                </LinkButton>
+              </div>
+
+              <div className="flex items-center gap-3 px-4 py-2 border border-slate-200 dark:border-slate-800 rounded-xl mt-2 sm:mt-8">
                 <div className="flex -space-x-2">
                   <div className="w-8 h-8 rounded-full border-2 border-white bg-slate-200"></div>
                   <div className="w-8 h-8 rounded-full border-2 border-white bg-slate-300"></div>
@@ -54,8 +59,8 @@ export default function HomePage() {
               style={{
                 backgroundImage:
                   'url("https://lh3.googleusercontent.com/aida-public/AB6AXuAEuNJ-VJNWX4ukpQHGhJKfmyH8-v-8cTcaweu1yclAbV17tCytS9KGamN91f1GuOQjCct0rG5id7Taohu-MEYCsIsFAI7kHfjqdOSilm9nPdKOSIXgCKWgntSvsWwjFK-D_xSyEKYe-qKltTDhv4le_1NYbqGqVUqCGRI8ctbvivfw_ljU1fQvZdGlc_pCWwx1Qp0HwIMhYTpVn-H_yPJeJkdCU_srAXdEpdDqzvG3XGOMR5sc9JG3-uQfI4V-Yi1OLmrVsf-YKPk")',
-                backgroundSize: "cover",
-                backgroundPosition: "center",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
               }}
             ></div>
           </div>
@@ -179,7 +184,7 @@ export default function HomePage() {
                   style={{
                     backgroundImage:
                       'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBd7OsKkM0BQ6n24HOkz7p0guJ6bfusvkPfEIRe_lxcsxs_l6atjpHc39yawDuTt7YygOnqv9GYd4G9sAMv5chX1eH3Ahe0jY46JHfJohgsbFGU6IB8pBiGpviEil--RMJGT8PODmlM9lMkF9UCDE7aK_XFl6hXP2EuOBO7gpGLN-1U6hCwnO0Dvv4Ikx1l1I0q0ktQDBhEcpmWsBUhyKGPAcVYIEmdCB7XfHisQSjt7B8sdJN1-9nbpY8KL9tu4D-oHCcpt5qwdH4")',
-                    backgroundSize: "cover",
+                    backgroundSize: 'cover',
                   }}
                 ></div>
                 <div
@@ -187,7 +192,7 @@ export default function HomePage() {
                   style={{
                     backgroundImage:
                       'url("https://lh3.googleusercontent.com/aida-public/AB6AXuBwtUJsfiQ72wkoexFfB5ogofk_5h2Bs32sDKmXbndpplK93eySIBoEol3FDj7Ojq5iF34qwWhugMwRrF_gD5NUcy7Z-oaXEs4pcEDN1g4M__cAfLEXKWpOk7Q7gLCubUxV1QGIVYedPuzZCDdecSEwTWNRnP3QTYRR4d5_VbuyXFZsqlol8dCJkSKiCpyusKKpKR9RU9CR2cB9tu2cBfLHSQjAtQReTlzeyHP8v9pyxDFhhcp7G1_LzmLZamS_pfENUJyZJKUU_JU")',
-                    backgroundSize: "cover",
+                    backgroundSize: 'cover',
                   }}
                 ></div>
               </div>
@@ -200,33 +205,35 @@ export default function HomePage() {
       <section className="py-16 bg-background-light dark:bg-background-dark/50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="flex flex-col items-center text-center gap-2">
-              <p className="text-primary text-4xl lg:text-5xl font-black">
+            <div className="dark:bg-orange-900/60 rounded-2xl flex flex-col items-center text-center gap-2">
+              <p className="text-orange-400 text-4xl lg:text-5xl font-black">
                 100%
               </p>
-              <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
+              <p className="text-sm font-bold text-orange-400 uppercase tracking-widest">
                 Personalizable
               </p>
             </div>
-            <div className="flex flex-col items-center text-center gap-2">
-              <p className="text-primary text-4xl lg:text-5xl font-black">
+            <div className="dark:bg-orange-900/60 rounded-2xl flex flex-col items-center text-center gap-2">
+              <p className="text-orange-400 text-4xl lg:text-5xl font-black">
                 500+
               </p>
-              <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
+              <p className="text-sm font-bold text-orange-400 uppercase tracking-widest">
                 Fichas Generadas
               </p>
             </div>
-            <div className="flex flex-col items-center text-center gap-2">
-              <p className="text-primary text-4xl lg:text-5xl font-black">
+            <div className="dark:bg-orange-900/60 rounded-2xl flex flex-col items-center text-center gap-2">
+              <p className="text-orange-400 text-4xl lg:text-5xl font-black">
                 24/7
               </p>
-              <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
+              <p className="text-sm font-bold text-orange-400 uppercase tracking-widest">
                 Acceso Inmediato
               </p>
             </div>
-            <div className="flex flex-col items-center text-center gap-2">
-              <p className="text-primary text-4xl lg:text-5xl font-black">0</p>
-              <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
+            <div className="dark:bg-orange-900/60 rounded-2xl flex flex-col items-center text-center gap-2">
+              <p className="text-orange-400 text-4xl lg:text-5xl font-black">
+                0
+              </p>
+              <p className="text-sm font-bold text-orange-400 uppercase tracking-widest">
                 Estrés en Casa
               </p>
             </div>
@@ -249,12 +256,7 @@ export default function HomePage() {
                 tus hijos.
               </p>
               <div className="flex flex-col items-center gap-4">
-                <Link
-                  href="/dashboard"
-                  className="bg-primary hover:bg-primary/90 text-[#111813] px-12 py-5 rounded-2xl text-xl font-black transition-all shadow-xl shadow-primary/20 w-full sm:w-auto block"
-                >
-                  Probar gratis
-                </Link>
+                <LinkButton href="/register">Probar gratis</LinkButton>
                 <p className="text-slate-500 text-sm">
                   Sin compromiso. Cancela en cualquier momento.
                 </p>

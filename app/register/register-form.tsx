@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { signup } from "../auth/actions";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { signup } from '../auth/actions';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -20,10 +20,10 @@ export default function RegisterForm() {
     }
   };
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex w-full flex-col items-center justify-center ">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-4 bg-white p-8 rounded-xl shadow-md border dark:bg-[#1a2e20] dark:border-gray-800"
+        className="flex flex-col gap-4 bg-white p-8 rounded-xl shadow-md border dark:bg-gray-800 dark:border-gray-800"
       >
         <h1 className="text-2xl font-bold">Crear cuenta</h1>
         <input
@@ -61,7 +61,7 @@ export default function RegisterForm() {
             Cuenta creada exitosamente
           </p>
           <button
-            onClick={() => router.push("/login")}
+            onClick={() => router.push('/login')}
             className="bg-primary text-black font-bold py-2 px-4 rounded hover:bg-emerald-400 transition-colors"
           >
             Iniciar sesión

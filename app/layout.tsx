@@ -1,30 +1,30 @@
-import type React from "react";
-import type { Metadata } from "next";
-import { Lexend } from "next/font/google";
-import "./globals.css";
-import { Providers } from "@/app/providers";
-import Image from "next/image";
-import Header from "@/components/Header";
-import { createClient } from "@/utils/supabase/server";
+import type React from 'react';
+import type { Metadata } from 'next';
+import { Lexend } from 'next/font/google';
+import './globals.css';
+import { Providers } from '@/app/providers';
+import Image from 'next/image';
+import Header from '@/components/Header';
+import { createClient } from '@/utils/supabase/server';
 const lexend = Lexend({
-  subsets: ["latin"],
-  variable: "--font-lexend",
+  subsets: ['latin'],
+  variable: '--font-lexend',
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://tutoraiapp.es"),
-  title: "TUTOR_AI - Educación Personalizada",
+  metadataBase: new URL('https://tutoraiapp.es'),
+  title: 'TUTOR_AI - Educación Personalizada',
   description:
-    "Devuelve la calma a tus tardes. Actividades personalizadas que conectan los intereses de tu hijo con su curso.",
-  generator: "ItziarZG",
+    'Devuelve la calma a tus tardes. Actividades personalizadas que conectan los intereses de tu hijo con su curso.',
+  generator: 'ItziarZG',
   keywords: [
-    "educación",
-    "IA",
-    "tutor",
-    "personalizado",
-    "niños",
-    "primaria",
-    "secundaria",
+    'educación',
+    'IA',
+    'tutor',
+    'personalizado',
+    'niños',
+    'primaria',
+    'secundaria',
   ],
 };
 
@@ -42,28 +42,27 @@ export default async function RootLayout({
     <html lang="es" suppressHydrationWarning className="light">
       <head>
         <link
+          rel="icon"
+          type="image/png"
+          href="/favicon/favicon-96x96.png"
+          sizes="96x96"
+        />
+        <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon/favicon.ico" />
+        <link
           rel="apple-touch-icon"
           sizes="180x180"
           href="/favicon/apple-touch-icon.png"
         />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon/favicon-16x16.png"
-        />
+        <meta name="apple-mobile-web-app-title" content="Tutor_AI" />
         <link rel="manifest" href="/favicon/site.webmanifest" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-          rel="stylesheet"
-        />
+
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+        />
       </head>
       <body
         className={`${lexend.variable} font-display bg-background-light dark:bg-background-dark dark:bg-opacity-10 text-slate-900 dark:text-slate-100 selection:bg-primary/30 antialiased`}
@@ -104,12 +103,6 @@ export default async function RootLayout({
                   href="mailto:contact@tutoraiapp.es"
                 >
                   Contacto
-                </a>
-                <a
-                  className="text-slate-500 hover:text-primary transition-colors text-sm"
-                  href="#"
-                >
-                  Blog
                 </a>
               </nav>
               <p className="text-slate-400 text-sm">

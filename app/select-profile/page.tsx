@@ -1,8 +1,7 @@
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { createClient } from "@utils/supabase/server";
-import { redirect } from "next/navigation";
+import React from 'react';
+import Link from 'next/link';
+import { createClient } from '@utils/supabase/server';
+import { redirect } from 'next/navigation';
 
 export default async function ProfileSelectionPage() {
   const supabase = await createClient();
@@ -11,24 +10,22 @@ export default async function ProfileSelectionPage() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
+    redirect('/login');
   }
 
   const { data: children, error } = await supabase
-    .from("hijos")
-    .select("id,nombre, edad, curso, gustos, observaciones")
-    .eq("perfil_id", user.id);
+    .from('children')
+    .select('id,name, age, grade, interests, observations')
+    .eq('user_id', user.id);
 
   if (error) {
-    console.error("Error fetching children:", error);
+    console.error('Error fetching children:', error);
   }
   if (!children || children.length === 0) {
-    redirect("/profile/create-child");
+    redirect('/create-child');
   }
   const leoUrl =
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuDB0zIlaHUbAWN_lOj7jjhfik0xanQMOFO_knLHysvrIk8RrQXH_xoZtCuTVN0WlVC7pS2ONH9xAjqnjA2eryi3ET_r9QeuFo2_f1pZ0nb2fDrsQ4A8q3rEFYIo_qgx8vXqI2J1hM5gjIjqbXikNKGlT5Vi_Ek1DOgPICkaQrn5Tkyv3DIN2mWz79ciZwGjy6KCHhoeuwwy1IfgL0r68q0RaoDslAzN6pdI-iL_SF7OKy48lEjdNK0bResnklqBOeQSklcdLO_wBw0";
-  const saraUrl =
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuAxXPGEDc25SdXBFYN6F-zGt2FmNaQYkzGuc7YxS7ydHnUqGPAqpOYTPjE1L9fKNcOEqw9sHT_GV_SM5FkH6ijxvy0v2ayw-vfDfiIiiE1F6JKB4SyEK_4PlbMbuYuRk2BGMUUgkxtDYWoM5SsY7T6E5gXTWTaYTzK9sw-Jq5bHMuixkWcEGw9Y_6j09fjfWwh-3tInKu7nwA0tWlQU0IXUSQA-lM2VHxnZ5Y_gDITsrsP5YdA-26sLYxPLiM4tZkONDBkjPHrtEr0";
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuDB0zIlaHUbAWN_lOj7jjhfik0xanQMOFO_knLHysvrIk8RrQXH_xoZtCuTVN0WlVC7pS2ONH9xAjqnjA2eryi3ET_r9QeuFo2_f1pZ0nb2fDrsQ4A8q3rEFYIo_qgx8vXqI2J1hM5gjIjqbXikNKGlT5Vi_Ek1DOgPICkaQrn5Tkyv3DIN2mWz79ciZwGjy6KCHhoeuwwy1IfgL0r68q0RaoDslAzN6pdI-iL_SF7OKy48lEjdNK0bResnklqBOeQSklcdLO_wBw0';
 
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark font-display antialiased transition-colors duration-300">
@@ -74,7 +71,7 @@ export default async function ProfileSelectionPage() {
                     ></div>
                   </div>
                   <p className="text-slate-900 dark:text-slate-100 text-xl font-semibold leading-normal">
-                    {child.nombre}
+                    {child.name}
                   </p>
                 </Link>
               ))}

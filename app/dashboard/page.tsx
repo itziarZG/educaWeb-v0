@@ -1,5 +1,5 @@
-import { createClient } from "@utils/supabase/server";
-import Link from "next/link";
+import { createClient } from '@utils/supabase/server';
+import Link from 'next/link';
 
 export default async function Dashboard() {
   const supabase = await createClient();
@@ -7,17 +7,13 @@ export default async function Dashboard() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const { data: perfil, error } = await supabase
-    .from("perfiles")
-    .select("*")
-    .single();
+  await supabase.from('clients').select('*').single();
 
   // Placeholder URLs adhering to the new design
-  const avatarUrl =
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuC5zGeI8vlgJgmGZi1GKbM8EMImTHbWxyYEhR4LEXoLsQVFH39OpffvFFxtatVCeaiAqQ4wAEUeKG4YsZjWs1biv6feuIXFa65iySSaVTel4BGtDlWqbQSqW0sbLZiyVuXpDpnBuyjShRa1AAHfj3HxbRDmY8r-7VIkoosEoKPa-YcZj8IkAoikgBu1HwJZF08qPi8ly4CYOdDrJEg2rX72BsJj9IP-MegEwBsXmYQ5yloigMW8hoH7pQGdRVwU3Yln_XL65Dy894Q";
+  // Placeholder URLs adhering to the new design
 
   const familyUrl =
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuAGIAV0yd2FnpzvB0978HxNUm6fwhI24iNyBg6Dx-wK32aIhXw-14zYDkNyYjzgwtvlkunHx6OSuiBoWRln7CSl2eyaCVWnLudEZdhuFCizuXs1QZVrEFZjVNXzkUbNS8Bl1-jgKZAw9QLuSct_Fxd-U0jNT-deXs5OquC4Cf6USjd8GoD-E9FRM5So4pgFyr8WMdk0pRYWFg1u6mXXI10g3ExD2ocT3zKu8mdKa-34j_yfIFzeiEtNqLXLqWVU3DX3h9HYVkjGwBA";
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuAGIAV0yd2FnpzvB0978HxNUm6fwhI24iNyBg6Dx-wK32aIhXw-14zYDkNyYjzgwtvlkunHx6OSuiBoWRln7CSl2eyaCVWnLudEZdhuFCizuXs1QZVrEFZjVNXzkUbNS8Bl1-jgKZAw9QLuSct_Fxd-U0jNT-deXs5OquC4Cf6USjd8GoD-E9FRM5So4pgFyr8WMdk0pRYWFg1u6mXXI10g3ExD2ocT3zKu8mdKa-34j_yfIFzeiEtNqLXLqWVU3DX3h9HYVkjGwBA';
 
   return (
     <div className="flex flex-col gap-8 w-full">
@@ -25,7 +21,7 @@ export default async function Dashboard() {
       <section className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-[#111813] dark:text-white tracking-tight text-3xl md:text-4xl font-bold leading-tight">
-            ¡Hola, {user?.email?.split("@")[0] || "Leo"}! 👋
+            ¡Hola, {user?.email?.split('@')[0] || 'Leo'}! 👋
           </h1>
           <p className="text-[#61896f] dark:text-[#a0c4ae] text-base mt-2">
             ¿Listo para tu aventura de aprendizaje hoy?
@@ -73,7 +69,7 @@ export default async function Dashboard() {
         {/* Left Column (Main Action & Progress) */}
         <div className="lg:col-span-2 flex flex-col gap-6">
           {/* Hero Action Card */}
-          <div className="relative group w-full overflow-hidden rounded-3xl bg-gradient-to-r from-primary to-emerald-400 p-1 shadow-lg shadow-primary/20">
+          <div className="relative group w-full overflow-hidden rounded-3xl bg-linear-to-r from-primary to-emerald-400 p-1 shadow-lg shadow-primary/20">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
             <div className="relative bg-white dark:bg-[#102216] rounded-[22px] p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 md:gap-10 h-full">
               <div className="flex-1 text-center md:text-left z-10">
@@ -222,7 +218,8 @@ export default async function Dashboard() {
 
             <div className="bg-background-light dark:bg-[#102216] p-3 rounded-xl">
               <p className="text-sm text-gray-600 dark:text-gray-300 text-center italic">
-                "¡Gran trabajo en equipo! Leo ha estado muy tranquilo hoy."
+                &quot;¡Gran trabajo en equipo! Leo ha estado muy tranquilo
+                hoy.&quot;
               </p>
             </div>
 

@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { ReactNode } from "react";
-import { ThemeProvider } from "@/components/theme-provider";
-import { AuthProvider } from "@/context/auth-context";
+import { ReactNode } from 'react';
+import { ThemeProvider } from '@/components/theme-provider';
+import { AuthProvider } from '@/context/auth-context';
 
-import { User } from "@supabase/supabase-js";
+import { User } from '@supabase/supabase-js';
 
 export function Providers({
   children,
@@ -14,7 +14,7 @@ export function Providers({
   initialUser?: User | null;
 }) {
   return (
-    <AuthProvider initialUser={initialUser}>
+    <AuthProvider initialUser={initialUser} key={initialUser?.id}>
       <ThemeProvider
         attribute="class"
         defaultTheme="system"

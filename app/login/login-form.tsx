@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { login } from "../auth/actions";
-import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { login } from '../auth/actions';
+import { useRouter } from 'next/navigation';
 
 export default function LoginForm() {
   const [error, setError] = useState<string | null>(null);
@@ -23,12 +23,12 @@ export default function LoginForm() {
     } else {
       setLoading(false);
       router.refresh(); // Refresh to update server components/context
-      router.push("/select-profile");
+      router.push('/select-profile');
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center justify-center w-full">
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-4 bg-white p-8 rounded-xl shadow-md border dark:bg-[#1a2e20] dark:border-gray-800"
@@ -55,7 +55,7 @@ export default function LoginForm() {
           disabled={loading}
           className="bg-primary text-black font-bold py-2 rounded hover:bg-emerald-400 transition-colors disabled:opacity-50"
         >
-          {loading ? "Entrando..." : "Entrar"}
+          {loading ? 'Entrando...' : 'Entrar'}
         </button>
       </form>
       {error && <p className="text-red-500 mt-4 font-medium">{error}</p>}
