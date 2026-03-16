@@ -3,11 +3,12 @@
 import { signup } from '../auth/actions';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export default function RegisterForm() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<boolean>(false);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -16,7 +17,8 @@ export default function RegisterForm() {
       setError(result.error);
     } else {
       setError(null);
-      setSuccess(true);
+      toast.success('Usuario creado. ¡Tienes 3 créditos de prueba!');
+      router.push('/create-child');
     }
   };
   return (
@@ -55,19 +57,6 @@ export default function RegisterForm() {
         </button>
       </form>
       {error && <p className="text-red-500 mt-4 font-medium">{error}</p>}
-      {success && (
-        <div className="flex flex-col items-center gap-4 mt-4">
-          <p className="text-green-500 font-medium">
-            Cuenta creada exitosamente
-          </p>
-          <button
-            onClick={() => router.push('/login')}
-            className="bg-primary text-black font-bold py-2 px-4 rounded hover:bg-emerald-400 transition-colors"
-          >
-            Iniciar sesión
-          </button>
-        </div>
-      )}
     </div>
   );
 }

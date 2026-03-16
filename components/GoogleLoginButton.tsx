@@ -9,10 +9,14 @@ export default function GoogleLoginButton() {
   const handleGoogleLogin = async () => {
     setIsLoading(true);
     try {
+      const url = new URL(window.location.origin);
+      const protocol = url.hostname === 'localhost' ? 'http:' : 'https:';
+      const redirectUrl = `${protocol}//${url.host}/auth/callback`;
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: redirectUrl,
         },
       });
 

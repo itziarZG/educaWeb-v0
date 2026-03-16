@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { addChild as addChildAction } from './actions';
+import { toast } from 'sonner';
 
 export default function CreateChildForm() {
   const router = useRouter();
@@ -23,8 +24,8 @@ export default function CreateChildForm() {
       setLoading(false);
     } else {
       setLoading(false);
+      toast.success('¡Perfil de estudiante creado con éxito!');
       router.push('/select-profile');
-      router.refresh();
     }
   };
 
