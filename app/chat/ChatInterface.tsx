@@ -1,5 +1,6 @@
 import { ChatMessage, ChildInfo } from '@/types/agents';
 import { RefObject } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface ChatInterfaceProps {
   messages: ChatMessage[];
@@ -136,8 +137,9 @@ export default function ChatInterface({
                 sync
               </span>
             </div>
-            <div className="bg-white dark:bg-dark-surface p-3 rounded-xl rounded-tl-none shadow-sm border border-gray-100 dark:border-dark-border text-sm text-gray-500">
-              Thinking...
+            <div className="flex-1 space-y-2">
+              <Skeleton className="h-10 w-3/4 rounded-xl rounded-tl-none" />
+              <Skeleton className="h-4 w-1/4 rounded-lg" />
             </div>
           </div>
         )}
