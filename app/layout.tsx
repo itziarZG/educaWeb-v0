@@ -4,6 +4,7 @@ import { Lexend } from 'next/font/google';
 import './globals.css';
 import { Providers } from '@/app/providers';
 import Image from 'next/image';
+import Link from 'next/link';
 import Header from '@/components/Header';
 import { createClient } from '@/utils/supabase/server';
 const lexend = Lexend({
@@ -86,18 +87,18 @@ export default async function RootLayout({
                 </span>
               </div>
               <nav className="flex gap-8">
-                <a
+                <Link
                   className="text-slate-500 hover:text-primary transition-colors text-sm"
-                  href="#"
+                  href="/privacidad"
                 >
                   Privacidad
-                </a>
-                <a
+                </Link>
+                <Link
                   className="text-slate-500 hover:text-primary transition-colors text-sm"
-                  href="#"
+                  href="/terminos"
                 >
                   Términos
-                </a>
+                </Link>
                 <a
                   className="text-slate-500 hover:text-primary transition-colors text-sm"
                   href="mailto:contact@tutoraiapp.es"
