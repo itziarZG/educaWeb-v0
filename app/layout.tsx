@@ -99,12 +99,12 @@ export default async function RootLayout({
                 >
                   Términos
                 </Link>
-                <a
+                <Link
                   className="text-slate-500 hover:text-primary transition-colors text-sm"
-                  href="mailto:contact@tutoraiapp.es"
+                  href="/contacto"
                 >
                   Contacto
-                </a>
+                </Link>
               </nav>
               <p className="text-slate-400 text-sm">
                 © 2026 TUTOR_AI. Hecho con ❤️ para familias.
