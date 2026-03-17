@@ -131,15 +131,18 @@ export default function ChatInterface({
           </div>
         ))}
         {loading && (
-          <div className="flex gap-3">
-            <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center shrink-0 text-primary">
-              <span className="material-symbols-outlined text-[18px] animate-spin">
-                sync
-              </span>
-            </div>
-            <div className="flex-1 space-y-2">
-              <Skeleton className="h-10 w-3/4 rounded-xl rounded-tl-none" />
-              <Skeleton className="h-4 w-1/4 rounded-lg" />
+          <div role="status" aria-live="polite">
+            <span className="sr-only">El asistente está generando una respuesta…</span>
+            <div className="flex gap-3">
+              <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center shrink-0 text-primary">
+                <span className="material-symbols-outlined text-[18px] animate-spin">
+                  sync
+                </span>
+              </div>
+              <div className="flex-1 space-y-2">
+                <Skeleton className="h-10 w-3/4 rounded-xl rounded-tl-none" />
+                <Skeleton className="h-4 w-1/4 rounded-lg" />
+              </div>
             </div>
           </div>
         )}
