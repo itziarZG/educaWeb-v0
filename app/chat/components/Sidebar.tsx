@@ -85,6 +85,7 @@ export default function Sidebar({
           <Link
             href="/select-profile"
             className="flex items-center gap-3 w-full px-2 py-2 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-dark-highlight/50 transition-colors text-left"
+            aria-label={childInfo ? `Perfil actual: ${childInfo.name}. Cambiar perfil` : 'Seleccionar perfil'}
           >
             <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
               <span className="material-symbols-outlined text-primary text-[18px]">

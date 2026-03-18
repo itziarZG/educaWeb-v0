@@ -47,6 +47,7 @@ export default function ChatInterface({
             href="/select-profile"
             className="p-2 rounded-full text-gray-400 hover:text-primary hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors"
             title="Cambiar perfil"
+            aria-label="Cambiar perfil"
           >
             <span className="material-symbols-outlined text-[20px]">
               swap_horiz
