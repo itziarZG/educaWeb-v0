@@ -6,6 +6,7 @@ import { useChatInfo } from './hooks';
 import NoCreditsModal from './NoCreditsModal';
 import ChatInterface from './ChatInterface';
 import VisualizationInterface from './VisualizationInterface';
+import Sidebar from './components/Sidebar';
 
 interface ChatClientProps {
   initialChildInfo?: ChildInfo | null;
@@ -18,6 +19,7 @@ export default function ChatClient({
 }: ChatClientProps) {
   const {
     messages,
+    setMessages,
     input,
     setInput,
     loading,
@@ -84,6 +86,13 @@ export default function ChatClient({
 
   return (
     <div className="bg-background-light dark:bg-background-dark font-display text-[#111318] dark:text-gray-100 h-screen overflow-hidden flex transition-colors duration-200">
+      {/* Sidebar */}
+      <Sidebar
+        sidebarOpen={sidebarOpen}
+        setMessages={setMessages}
+        agentDetails={{ name: 'Creador de fichas', emoji: '📝' }}
+        childInfo={childInfo}
+      />
       {/* Main Content */}
       <main className="flex-1 flex h-full relative overflow-hidden bg-white dark:bg-dark-surface transition-colors duration-200">
         {/* Chat Section */}

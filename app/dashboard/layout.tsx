@@ -79,7 +79,7 @@ export default async function DashboardLayout({
             Herramientas
           </p>
           <NavLink
-            href="/dashboard/generator"
+            href="/select-profile"
             icon="auto_awesome"
             label="Generador AI"
           />

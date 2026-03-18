@@ -167,6 +167,7 @@ export const useChatInfo = (
 
   return {
     messages,
+    setMessages,
     input,
     setInput,
     loading,

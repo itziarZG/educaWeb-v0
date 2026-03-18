@@ -1,4 +1,5 @@
 import { ChatMessage, ChildInfo } from '@/types/agents';
+import Link from 'next/link';
 import { RefObject } from 'react';
 
 interface ChatInterfaceProps {
@@ -42,6 +43,15 @@ export default function ChatInterface({
           </div>
         </div>
         <div className="flex items-center gap-2">
+          <Link
+            href="/select-profile"
+            className="p-2 rounded-full text-gray-400 hover:text-primary hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors"
+            title="Cambiar perfil"
+          >
+            <span className="material-symbols-outlined text-[20px]">
+              swap_horiz
+            </span>
+          </Link>
           <div className="md:hidden">
             <button
               onClick={onVisualize}
