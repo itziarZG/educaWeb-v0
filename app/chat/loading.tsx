@@ -2,7 +2,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export default function ChatLoading() {
   return (
-    <div className="bg-background-light dark:bg-background-dark h-screen overflow-hidden flex transition-colors duration-200 animate-in fade-in duration-500">
+    <div className="bg-background-light dark:bg-background-dark h-screen overflow-hidden flex transition-colors animate-in fade-in duration-500">
       <main className="flex-1 flex h-full relative overflow-hidden bg-white dark:bg-dark-surface transition-colors duration-200">
         {/* Chat Section Skeleton */}
         <section className="w-full md:w-[380px] lg:w-[420px] flex flex-col border-r border-[#f0f2f4] dark:border-dark-border bg-white dark:bg-dark-surface z-20 shrink-0">
