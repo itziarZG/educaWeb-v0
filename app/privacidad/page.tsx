@@ -178,7 +178,7 @@ export default function PrivacidadPage() {
           Aplicamos medidas técnicas y organizativas razonables para proteger
           tus datos frente a accesos no autorizados, pérdida o destrucción.
           Todas las comunicaciones se realizan mediante HTTPS y las contraseñas
-          se almacenan de forma cifrada.
+          se almacenan de forma segura mediante funciones de hash no reversibles.
         </p>
       </section>
 
