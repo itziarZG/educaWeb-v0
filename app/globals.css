@@ -5,7 +5,6 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --breakpoint-xxs: 375px;
   --font-display: 'Lexend', sans-serif;
   --font-sans: 'Lexend', sans-serif;
 
