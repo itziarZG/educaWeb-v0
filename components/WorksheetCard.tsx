@@ -31,7 +31,7 @@ export default function WorksheetCard({
   return (
     <div
       onClick={onClick}
-      className="group cursor-pointer bg-white dark:bg-dark-surface rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-dark-border hover:shadow-lg dark:hover:shadow-primary/20 transition-all hover:border-primary/30 dark:hover:border-primary/30 hover:-translate-y-1"
+      className="relative group cursor-pointer bg-white dark:bg-dark-surface rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-dark-border hover:shadow-lg dark:hover:shadow-primary/20 transition-all hover:border-primary/30 dark:hover:border-primary/30 hover:-translate-y-1"
     >
       {/* Topic Badge */}
       <div className="mb-4">
