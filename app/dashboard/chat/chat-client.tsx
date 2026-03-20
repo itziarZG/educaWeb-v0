@@ -71,52 +71,48 @@ export default function ChatClient({
     // 1. Guardar ficha en BD
     await saveWorksheet();
 
-    // 2. Crear una ventana nueva con el contenido para impresión
+    // 2. Crear elemento para impresión y usar CSS @media print
     if (!htmlContent) return;
 
     try {
-      const printWindow = window.open('', '', 'width=800,height=600');
-      if (!printWindow) {
-        alert(
-          'Por favor, desactiva el bloqueador de ventanas emergentes para imprimir.'
-        );
-        return;
-      }
+      // Crear contenedor con la ficha
+      const printDiv = document.createElement('div');
+      printDiv.id = '__print-worksheet__';
+      printDiv.innerHTML = htmlContent;
+      document.body.appendChild(printDiv);
 
-      printWindow.document.write(`
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title>Imprimir Ficha</title>
-            <style>
-              body {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                margin: 20px;
-                background: white;
-              }
-              @media print {
-                body {
-                  margin: 0;
-                  padding: 0;
-                }
-              }
-            </style>
-          </head>
-          <body>
-            ${htmlContent}
-          </body>
-        </html>
-      `);
-      printWindow.document.close();
+      // Inyectar estilos para ocultar todo excepto la ficha durante impresión
+      const printStyle = document.createElement('style');
+      printStyle.id = '__print-styles__';
+      printStyle.textContent = `
+        @media print {
+          body > * {
+            display: none !important;
+          }
+          #__print-worksheet__ {
+            display: block !important;
+            position: static !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 20px !important;
+            background: white !important;
+          }
+        }
+      `;
+      document.head.appendChild(printStyle);
 
-      // Esperar a que se carguen recursos y luego imprimir
-      printWindow.onload = () => {
+      // Esperar a que se renderice y luego imprimir
+      setTimeout(() => {
+        window.print();
+
+        // Limpiar después de imprimir (con pequeño delay para que se haya enviado al print)
         setTimeout(() => {
-          printWindow.print();
-        }, 500);
-      };
+          const elem = document.getElementById('__print-worksheet__');
+          const style = document.getElementById('__print-styles__');
+          if (elem) document.body.removeChild(elem);
+          if (style) document.head.removeChild(style);
+        }, 100);
+      }, 300);
     } catch (error) {
       console.error('Error printing:', error);
       alert('Error al imprimir. Por favor, intenta de nuevo.');
