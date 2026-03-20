@@ -52,7 +52,6 @@ export default function FeedbackForm({
 
         if (response.status === 409) {
           toast.error('Ya existe feedback para esta ficha');
-          setSubmitted(true);
           setError('Ya existe feedback para esta ficha');
           return;
         }
