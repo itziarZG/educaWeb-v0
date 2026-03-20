@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { createClient } from '@utils/supabase/client';
 import { useChild, Child } from '@/context/child-context';
 
@@ -13,7 +13,7 @@ export default function ChildSelector({ initialChildren }: ChildSelectorProps) {
   const [children, setChildren] = useState<Child[]>(initialChildren);
   const { selectedChild, setSelectedChild } = useChild();
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
