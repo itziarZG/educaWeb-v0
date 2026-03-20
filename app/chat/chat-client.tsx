@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import type { ChildInfo } from '@/types/agents';
+import type { WorksheetFeedback } from '@/types/worksheet';
 import { useChatInfo } from './hooks';
 import NoCreditsModal from './NoCreditsModal';
 import ChatInterface from './ChatInterface';
@@ -37,6 +38,8 @@ export default function ChatClient({
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showMobileViz, setShowMobileViz] = useState(false);
+  const [worksheetId, setWorksheetId] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState<WorksheetFeedback | undefined>();
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -92,8 +95,8 @@ export default function ChatClient({
     }
   };
 
-  const saveWorksheet = async () => {
-    if (!childInfo || !htmlContent) return;
+  const saveWorksheet = async (): Promise<string | null> => {
+    if (!childInfo || !htmlContent) return null;
 
     try {
       const response = await fetch('/api/worksheets', {
@@ -109,12 +112,17 @@ export default function ChatClient({
       if (!response.ok) {
         const error = await response.json();
         console.error('Error saving worksheet:', error);
-        return;
+        return null;
       }
 
-      console.log('Worksheet saved successfully');
+      const data = await response.json();
+      const id = data.id;
+      setWorksheetId(id);
+      console.log('Worksheet saved successfully with ID:', id);
+      return id;
     } catch (error) {
       console.error('Error in saveWorksheet:', error);
+      return null;
     }
   };
 
@@ -188,6 +196,12 @@ export default function ChatClient({
             handleVisualize={handleVisualize}
             setShowMobileViz={setShowMobileViz}
             isMobile={isMobile}
+            worksheetId={worksheetId ?? undefined}
+            feedback={feedback}
+            onFeedbackSubmitted={() => {
+              // Opcionalmente refrescar estado aquí si es necesario
+              console.log('Feedback submitted');
+            }}
           />
         </section>
       </main>

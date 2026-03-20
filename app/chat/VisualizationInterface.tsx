@@ -1,4 +1,6 @@
 import { RefObject } from 'react';
+import type { WorksheetFeedback } from '@/types/worksheet';
+import FeedbackForm from '@/components/FeedbackForm';
 
 interface VisualizationInterfaceProps {
   htmlContent: string;
@@ -9,6 +11,9 @@ interface VisualizationInterfaceProps {
   handleVisualize: () => void;
   setShowMobileViz: (show: boolean) => void;
   isMobile: boolean;
+  worksheetId?: string;
+  feedback?: WorksheetFeedback;
+  onFeedbackSubmitted?: () => void;
 }
 
 export default function VisualizationInterface({
@@ -20,6 +25,9 @@ export default function VisualizationInterface({
   handleVisualize,
   setShowMobileViz,
   isMobile,
+  worksheetId,
+  feedback,
+  onFeedbackSubmitted,
 }: VisualizationInterfaceProps) {
   return (
     <>
@@ -94,13 +102,24 @@ export default function VisualizationInterface({
               <p className="animate-pulse">Creando visualización...</p>
             </div>
           ) : htmlContent ? (
-            <iframe
-              ref={iframeRef}
-              srcDoc={htmlContent}
-              className="w-full h-full min-h-[800px] border-0 rounded-xl"
-              title="Visualization"
-              sandbox="allow-scripts allow-popups allow-forms allow-same-origin allow-modals"
-            />
+            <div className="space-y-6">
+              <iframe
+                ref={iframeRef}
+                srcDoc={htmlContent}
+                className="w-full h-full min-h-[800px] border-0 rounded-xl"
+                title="Visualization"
+                sandbox="allow-scripts allow-popups allow-forms allow-same-origin allow-modals"
+              />
+
+              {/* FeedbackForm Component */}
+              {worksheetId && (
+                <FeedbackForm
+                  worksheetId={worksheetId}
+                  initialFeedback={feedback}
+                  onFeedbackSubmitted={onFeedbackSubmitted}
+                />
+              )}
+            </div>
           ) : (
             <div className="flex flex-col items-center justify-center h-full min-h-[400px] text-gray-300 dark:text-gray-400">
               <span className="material-symbols-outlined text-8xl mb-4 opacity-50">
