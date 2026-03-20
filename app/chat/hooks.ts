@@ -25,6 +25,8 @@ export const useChatInfo = (
   const [childInfo, setChildInfo] = useState<ChildInfo | null>(
     initialChildInfo || null
   );
+  const [topic, setTopic] = useState<string>('Matemáticas'); // Default topic
+  const [showTopicCustom, setShowTopicCustom] = useState(false); // Para mostrar input cuando es "Otros"
 
   const [noCreditsModalOpen, setNoCreditsModalOpen] = useState(false);
 
@@ -174,6 +176,10 @@ export const useChatInfo = (
     setHtmlContent,
     htmlLoading,
     childInfo,
+    topic,
+    setTopic,
+    showTopicCustom,
+    setShowTopicCustom,
     handleSubmit,
     handleVisualize,
     noCreditsModalOpen,

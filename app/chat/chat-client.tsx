@@ -24,6 +24,10 @@ export default function ChatClient({
     htmlContent,
     htmlLoading,
     childInfo,
+    topic,
+    setTopic,
+    showTopicCustom,
+    setShowTopicCustom,
     handleSubmit,
     handleVisualize,
     noCreditsModalOpen,
@@ -55,13 +59,21 @@ export default function ChatClient({
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const handlePrint = () => {
+  const handlePrint = async () => {
+    // 1. Guardar ficha en BD
+    await saveWorksheet();
+
+    // 2. Abrir dialog de impresión
     if (iframeRef.current && iframeRef.current.contentWindow) {
       iframeRef.current.contentWindow.print();
     }
   };
 
   const handleDownloadPdf = async () => {
+    // 1. Guardar ficha en BD
+    await saveWorksheet();
+
+    // 2. Descargar PDF
     if (iframeRef.current && iframeRef.current.contentDocument) {
       const element = iframeRef.current.contentDocument.body;
       const html2pdf = (await import('html2pdf.js')).default;
@@ -77,6 +89,32 @@ export default function ChatClient({
         },
       };
       html2pdf().set(opt).from(element).save();
+    }
+  };
+
+  const saveWorksheet = async () => {
+    if (!childInfo || !htmlContent) return;
+
+    try {
+      const response = await fetch('/api/worksheets', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          childId: childInfo.id,
+          topic: topic || 'Sin especificar',
+          htmlContent: htmlContent,
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        console.error('Error saving worksheet:', error);
+        return;
+      }
+
+      console.log('Worksheet saved successfully');
+    } catch (error) {
+      console.error('Error in saveWorksheet:', error);
     }
   };
 
@@ -102,6 +140,10 @@ export default function ChatClient({
             messagesEndRef={messagesEndRef}
             onVisualize={onVisualize}
             htmlLoading={htmlLoading}
+            topic={topic}
+            setTopic={setTopic}
+            showTopicCustom={showTopicCustom}
+            setShowTopicCustom={setShowTopicCustom}
           />
         </section>
 
