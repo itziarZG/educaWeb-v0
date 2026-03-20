@@ -1,5 +1,6 @@
 import { ChatMessage, ChildInfo } from '@/types/agents';
 import { RefObject } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface ChatInterfaceProps {
   messages: ChatMessage[];
@@ -13,6 +14,10 @@ interface ChatInterfaceProps {
   messagesEndRef: RefObject<HTMLDivElement | null>;
   onVisualize: () => void; // Mobile only
   htmlLoading: boolean; // For mobile visualize button state
+  topic: string;
+  setTopic: (value: string) => void;
+  showTopicCustom: boolean;
+  setShowTopicCustom: (value: boolean) => void;
 }
 
 export default function ChatInterface({
@@ -27,6 +32,10 @@ export default function ChatInterface({
   onVisualize,
   htmlLoading,
   isMobile,
+  topic,
+  setTopic,
+  showTopicCustom,
+  setShowTopicCustom,
 }: ChatInterfaceProps) {
   return (
     <>
@@ -68,6 +77,47 @@ export default function ChatInterface({
             </span>
           </div>
         </div>
+      </div>
+
+      {/* Topic Selector */}
+      <div className="px-4 lg:px-6 py-3 border-b border-[#f0f2f4] dark:border-dark-border bg-gray-50 dark:bg-dark-highlight">
+        <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">
+          Tema de hoy
+        </label>
+        <div className="flex gap-2 items-start">
+          <select
+            value={showTopicCustom ? 'otros' : topic}
+            onChange={(e) => {
+              if (e.target.value === 'otros') {
+                setShowTopicCustom(true);
+                setTopic('');
+              } else {
+                setShowTopicCustom(false);
+                setTopic(e.target.value);
+              }
+            }}
+            className="flex-1 bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border rounded-lg text-sm p-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-gray-800 dark:text-gray-200"
+          >
+            <option value="Matemáticas">Matemáticas</option>
+            <option value="Ciencias">Ciencias</option>
+            <option value="Lenguaje">Lenguaje</option>
+            <option value="Historia">Historia</option>
+            <option value="Inglés">Inglés</option>
+            <option value="Artes">Artes</option>
+            <option value="Educación Física">Educación Física</option>
+            <option value="otros">Otros</option>
+          </select>
+        </div>
+
+        {showTopicCustom && (
+          <input
+            type="text"
+            placeholder="Especifica el tema..."
+            value={topic}
+            onChange={(e) => setTopic(e.target.value)}
+            className="w-full mt-2 bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border rounded-lg text-sm p-2 focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none text-gray-800 dark:text-gray-200 placeholder-gray-400"
+          />
+        )}
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-6 bg-background-light dark:bg-background-dark">
@@ -130,14 +180,20 @@ export default function ChatInterface({
           </div>
         ))}
         {loading && (
-          <div className="flex gap-3">
-            <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center shrink-0 text-primary">
-              <span className="material-symbols-outlined text-[18px] animate-spin">
-                sync
-              </span>
-            </div>
-            <div className="bg-white dark:bg-dark-surface p-3 rounded-xl rounded-tl-none shadow-sm border border-gray-100 dark:border-dark-border text-sm text-gray-500">
-              Thinking...
+          <div role="status" aria-live="polite">
+            <span className="sr-only">
+              El asistente está generando una respuesta…
+            </span>
+            <div className="flex gap-3">
+              <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/40 flex items-center justify-center shrink-0 text-primary">
+                <span className="material-symbols-outlined text-[18px] animate-spin">
+                  sync
+                </span>
+              </div>
+              <div className="flex-1 space-y-2">
+                <Skeleton className="h-10 w-3/4 rounded-xl rounded-tl-none" />
+                <Skeleton className="h-4 w-1/4 rounded-lg" />
+              </div>
             </div>
           </div>
         )}

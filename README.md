@@ -25,7 +25,7 @@
 - **Frontend:** [Next.js 16](https://nextjs.org/) (App Router), [React 19](https://react.dev/)
 - **Styling:** [Tailwind CSS 4.0](https://tailwindcss.com/) (using the latest `@tailwindcss/postcss`)
 - **Backend/BaaS:** [Supabase](https://supabase.com/) (Auth, Database, SSR)
-- **AI Integration:** [Vercel AI SDK](https://sdk.vercel.ai/), OpenAI, DeepSeek, Ollama
+- **AI Integration:** [Vercel AI SDK](https://sdk.vercel.ai/), OpenAI, Google Gemini, DeepSeek, Ollama (local LLMs)
 - **UI Components:** Lucide Icons, Recharts, Sonner Toasts, Embla Carousel
 - **Forms:** React Hook Form + Zod
 - **Utilities:** `html2pdf.js` for worksheet generation
@@ -39,7 +39,7 @@
 - Node.js (v18+ recommended)
 - pnpm (preferred) or npm
 - Supabase project
-- AI Provider API Key (OpenAI, DeepSeek, etc.)
+- AI Provider API Key (OpenAI, Google Gemini, DeepSeek, etc.) or local Ollama setup
 
 ### Installation
 
@@ -62,11 +62,11 @@
     ```bash
     NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
     NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-    OPENAI_API_KEY=your_openai_key
+    AI_API_KEY=your_ai_provider_key
 
     # Optional AI Selection
-    AI_PROVIDER=openai # or 'local', 'deepseek'
-    AI_MODEL=gpt-4o # or your preferred model
+    AI_PROVIDER=openai # or 'gemini', 'deepseek', 'ollama'
+    AI_MODEL=gpt-4o # or your preferred model for the chosen provider
     ```
 
 4.  **Run the development server:**

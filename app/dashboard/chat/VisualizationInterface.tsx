@@ -1,4 +1,7 @@
 import { RefObject } from 'react';
+import type { WorksheetFeedback } from '@/types/worksheet';
+import FeedbackForm from '@/components/FeedbackForm';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface VisualizationInterfaceProps {
   htmlContent: string;
@@ -9,6 +12,9 @@ interface VisualizationInterfaceProps {
   handleVisualize: () => void;
   setShowMobileViz: (show: boolean) => void;
   isMobile: boolean;
+  worksheetId?: string;
+  feedback?: WorksheetFeedback;
+  onFeedbackSubmitted?: () => void;
 }
 
 export default function VisualizationInterface({
@@ -20,6 +26,9 @@ export default function VisualizationInterface({
   handleVisualize,
   setShowMobileViz,
   isMobile,
+  worksheetId,
+  feedback,
+  onFeedbackSubmitted,
 }: VisualizationInterfaceProps) {
   return (
     <>
@@ -90,17 +99,41 @@ export default function VisualizationInterface({
       <div className="flex-1 overflow-y-auto p-8 lg:p-12 scroll-smooth">
         <div className="max-w-4xl mx-auto bg-white dark:bg-dark-surface rounded-xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] dark:shadow-none border border-gray-200 dark:border-dark-border min-h-[800px] p-10 md:p-16 relative transition-all">
           {htmlLoading ? (
-            <div className="flex flex-col items-center justify-center h-full min-h-[400px] text-gray-400">
-              <p className="animate-pulse">Creando visualización...</p>
+            <div className="flex flex-col gap-8 h-full">
+              <div className="flex justify-between items-center">
+                <Skeleton className="h-12 w-48" />
+                <Skeleton className="h-10 w-32" />
+              </div>
+              <div className="space-y-4">
+                <Skeleton className="h-8 w-full" />
+                <Skeleton className="h-8 w-5/6" />
+                <Skeleton className="h-8 w-4/6" />
+              </div>
+              <Skeleton className="flex-1 w-full rounded-xl" />
+              <div className="flex justify-center gap-4">
+                <Skeleton className="h-12 w-32 rounded-full" />
+                <Skeleton className="h-12 w-32 rounded-full" />
+              </div>
             </div>
           ) : htmlContent ? (
-            <iframe
-              ref={iframeRef}
-              srcDoc={htmlContent}
-              className="w-full h-full min-h-[800px] border-0 rounded-xl"
-              title="Visualization"
-              sandbox="allow-scripts allow-popups allow-forms allow-same-origin allow-modals"
-            />
+            <div className="space-y-6">
+              <iframe
+                ref={iframeRef}
+                srcDoc={htmlContent}
+                className="w-full h-full min-h-[800px] border-0 rounded-xl"
+                title="Visualization"
+                sandbox="allow-scripts allow-popups allow-forms allow-same-origin allow-modals"
+              />
+
+              {/* FeedbackForm Component */}
+              {worksheetId && (
+                <FeedbackForm
+                  worksheetId={worksheetId}
+                  initialFeedback={feedback}
+                  onFeedbackSubmitted={onFeedbackSubmitted}
+                />
+              )}
+            </div>
           ) : (
             <div className="flex flex-col items-center justify-center h-full min-h-[400px] text-gray-300 dark:text-gray-400">
               <span className="material-symbols-outlined text-8xl mb-4 opacity-50">

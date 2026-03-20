@@ -1,6 +1,19 @@
 import LinkButton from '@/components/LinkButton';
+import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
 
-export default function HomePage() {
+export default async function HomePage() {
+  // Verificar si el usuario está logueado
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // Si está logueado, redirigir al dashboard
+  if (user) {
+    redirect('/dashboard/select-profile');
+  }
+
   return (
     <>
       {/* Hero Section */}

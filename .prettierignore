@@ -1,3 +1,10 @@
+node_modules
+.next
+dist
+coverage
+build
+.git
+
 # Dependency directories
 node_modules
 .pnpm-store

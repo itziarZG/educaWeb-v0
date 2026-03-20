@@ -44,12 +44,18 @@ importers:
       embla-carousel-react:
         specifier: 8.6.0
         version: 8.6.0(react@19.2.4)
+      html2canvas:
+        specifier: ^1.4.1
+        version: 1.4.1
       html2pdf.js:
         specifier: 0.14.0
         version: 0.14.0
       input-otp:
         specifier: 1.4.2
         version: 1.4.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      jspdf:
+        specifier: ^4.2.1
+        version: 4.2.1
       lucide-react:
         specifier: 0.563.0
         version: 0.563.0(react@19.2.4)
@@ -2362,8 +2368,8 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
-  jspdf@4.1.0:
-    resolution: {integrity: sha512-xd1d/XRkwqnsq6FP3zH1Q+Ejqn2ULIJeDZ+FTKpaabVpZREjsJKRJwuokTNgdqOU+fl55KgbvgZ1pRTSWCP2kQ==}
+  jspdf@4.2.1:
+    resolution: {integrity: sha512-YyAXyvnmjTbR4bHQRLzex3CuINCDlQnBqoSYyjJwTP2x9jDLuKDzy7aKUl0hgx3uhcl7xzg32agn5vlie6HIlQ==}
 
   jsx-ast-utils@3.3.5:
     resolution: {integrity: sha512-ZZow9HBI5O6EPgSJLUb8n2NKgmVWTwCvHGwFuJlMjvLFqlGG6pjirPhtdsseaLZjSibD8eegzmYpUZwoIlj2cQ==}
@@ -5233,7 +5239,7 @@ snapshots:
     dependencies:
       dompurify: 3.3.1
       html2canvas: 1.4.1
-      jspdf: 4.1.0
+      jspdf: 4.2.1
 
   iceberg-js@0.8.1: {}
 
@@ -5418,7 +5424,7 @@ snapshots:
 
   json5@2.2.3: {}
 
-  jspdf@4.1.0:
+  jspdf@4.2.1:
     dependencies:
       '@babel/runtime': 7.28.6
       fast-png: 6.4.0

@@ -3,6 +3,7 @@
 import { ReactNode } from 'react';
 import { ThemeProvider } from '@/components/theme-provider';
 import { AuthProvider } from '@/context/auth-context';
+import { ChildProvider } from '@/context/child-context';
 import { Toaster } from 'sonner';
 
 import { User } from '@supabase/supabase-js';
@@ -22,7 +23,7 @@ export function Providers({
       disableTransitionOnChange
     >
       <AuthProvider initialUser={initialUser} key={initialUser?.id}>
-        {children}
+        <ChildProvider>{children}</ChildProvider>
       </AuthProvider>
       <Toaster position="top-center" richColors />
     </ThemeProvider>
