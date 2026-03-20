@@ -71,32 +71,86 @@ export default function ChatClient({
     // 1. Guardar ficha en BD
     await saveWorksheet();
 
-    // 2. Abrir dialog de impresión
-    if (iframeRef.current && iframeRef.current.contentWindow) {
-      iframeRef.current.contentWindow.print();
-    }
+    // 2. Crear elemento temporal para impresión
+    if (!htmlContent) return;
+
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = htmlContent;
+    tempDiv.style.display = 'none';
+    document.body.appendChild(tempDiv);
+
+    // 3. Esperar a que se carguen las imágenes/estilos
+    setTimeout(() => {
+      window.print();
+      document.body.removeChild(tempDiv);
+    }, 500);
   };
 
   const handleDownloadPdf = async () => {
     // 1. Guardar ficha en BD
     await saveWorksheet();
 
-    // 2. Descargar PDF
-    if (iframeRef.current && iframeRef.current.contentDocument) {
-      const element = iframeRef.current.contentDocument.body;
-      const html2pdf = (await import('html2pdf.js')).default;
-      const opt = {
-        margin: 0.5,
-        filename: 'visualization.pdf',
-        image: { type: 'jpeg' as const, quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: {
-          unit: 'in',
-          format: 'letter',
-          orientation: 'portrait' as const,
-        },
-      };
-      html2pdf().set(opt).from(element).save();
+    // 2. Generar PDF usando html2canvas + jsPDF
+    if (!htmlContent) return;
+
+    try {
+      const html2canvas = (await import('html2canvas')).default;
+      const jsPDF = (await import('jspdf')).jsPDF;
+
+      // Crear contenedor temporal
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = htmlContent;
+      tempDiv.style.position = 'absolute';
+      tempDiv.style.left = '-9999px';
+      tempDiv.style.width = '1000px'; // Ancho fijo para consistencia
+      tempDiv.style.backgroundColor = 'white';
+      tempDiv.style.padding = '40px';
+      document.body.appendChild(tempDiv);
+
+      // Esperar a que se carguen recursos
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      // Convertir a canvas
+      const canvas = await html2canvas(tempDiv, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+      });
+
+      // Limpiar elemento temporal
+      document.body.removeChild(tempDiv);
+
+      // Crear PDF
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4',
+      });
+
+      const imgData = canvas.toDataURL('image/jpeg', 0.95);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+      let heightLeft = pdfHeight;
+      let position = 0;
+
+      // Agregar páginas si es necesario
+      pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
+      heightLeft -= pdf.internal.pageSize.getHeight();
+
+      while (heightLeft > 0) {
+        position = heightLeft - pdfHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
+        heightLeft -= pdf.internal.pageSize.getHeight();
+      }
+
+      // Descargar
+      pdf.save('ficha-educativa.pdf');
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert('Error al generar el PDF. Por favor, intenta de nuevo.');
     }
   };
 
