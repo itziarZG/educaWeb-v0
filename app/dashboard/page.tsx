@@ -1,5 +1,110 @@
 import { createClient } from '@utils/supabase/server';
 import Link from 'next/link';
+import {
+  calculateStreak,
+  calculateAverageRating,
+  calculatePoints,
+} from '@utils/dashboardStats';
+
+interface DashboardStats {
+  totalWorksheets: number;
+  avgRating: number;
+  streak: number;
+  points: number;
+}
+
+async function getDashboardStats(): Promise<DashboardStats> {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError || !user) {
+    return {
+      totalWorksheets: 0,
+      avgRating: 0,
+      streak: 0,
+      points: 0,
+    };
+  }
+
+  try {
+    // Fetch all children for the current user
+    const { data: children, error: childrenError } = await supabase
+      .from('children')
+      .select('id')
+      .eq('user_id', user.id);
+
+    if (childrenError || !children || children.length === 0) {
+      return {
+        totalWorksheets: 0,
+        avgRating: 0,
+        streak: 0,
+        points: 0,
+      };
+    }
+
+    const childIds = children.map((c) => c.id);
+
+    // Fetch all worksheets for all children
+    const { data: worksheets, error: worksheetsError } = await supabase
+      .from('worksheets')
+      .select('id, created_at')
+      .in('child_id', childIds)
+      .eq('user_id', user.id);
+
+    if (worksheetsError || !worksheets) {
+      return {
+        totalWorksheets: 0,
+        avgRating: 0,
+        streak: 0,
+        points: 0,
+      };
+    }
+
+    const totalWorksheets = worksheets.length;
+
+    // Fetch all feedback for the worksheets
+    const worksheetIds = worksheets.map((w) => w.id);
+
+    let avgRating = 0;
+    if (worksheetIds.length > 0) {
+      const { data: feedbacks, error: feedbackError } = await supabase
+        .from('worksheet_feedback')
+        .select('rating')
+        .in('worksheet_id', worksheetIds);
+
+      if (!feedbackError && feedbacks && feedbacks.length > 0) {
+        const ratings = feedbacks.map((f) => f.rating as number);
+        avgRating = calculateAverageRating(ratings);
+      }
+    }
+
+    // Calculate streak from worksheet creation dates
+    const createdDates = worksheets.map((w) => w.created_at as string);
+    const streak = calculateStreak(createdDates);
+
+    // Calculate points
+    const points = calculatePoints(totalWorksheets, avgRating);
+
+    return {
+      totalWorksheets,
+      avgRating,
+      streak,
+      points,
+    };
+  } catch (error) {
+    console.error('Error fetching dashboard stats:', error);
+    return {
+      totalWorksheets: 0,
+      avgRating: 0,
+      streak: 0,
+      points: 0,
+    };
+  }
+}
 
 export default async function Dashboard() {
   const supabase = await createClient();
@@ -7,9 +112,9 @@ export default async function Dashboard() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  await supabase.from('clients').select('*').single();
 
-  // Placeholder URLs adhering to the new design
+  const stats = await getDashboardStats();
+
   // Placeholder URLs adhering to the new design
 
   const familyUrl =
@@ -38,7 +143,7 @@ export default async function Dashboard() {
             </div>
             <div>
               <p className="text-[#111813] dark:text-white text-lg font-bold leading-none">
-                5
+                {stats.streak}
               </p>
               <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">
                 Racha
@@ -54,7 +159,7 @@ export default async function Dashboard() {
             </div>
             <div>
               <p className="text-[#111813] dark:text-white text-lg font-bold leading-none">
-                120
+                {stats.points}
               </p>
               <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">
                 Puntos
@@ -113,7 +218,9 @@ export default async function Dashboard() {
                 Tu Progreso de Hoy
               </h3>
               <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-bold">
-                2/3 Retos
+                {stats.totalWorksheets > 0
+                  ? `${stats.totalWorksheets} fichas`
+                  : '0 fichas'}
               </span>
             </div>
 
