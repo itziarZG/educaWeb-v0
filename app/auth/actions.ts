@@ -1,7 +1,6 @@
 'use server';
 
 import { createClient } from '@/utils/supabase/server';
-import { headers } from 'next/headers';
 
 export async function signup(formData: FormData) {
   const supabase = await createClient();
@@ -10,10 +9,11 @@ export async function signup(formData: FormData) {
   const password = formData.get('password') as string;
   const name = formData.get('name') as string;
 
-  const headersList = await headers();
-  const host = headersList.get('host');
-  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
-  const origin = headersList.get('origin') || `${protocol}://${host}`;
+  const origin =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000'
+      : 'https://tutoraiapp.es');
 
   const { data, error } = await supabase.auth.signUp({
     email,
