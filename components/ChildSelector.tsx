@@ -64,7 +64,7 @@ export default function ChildSelector({ initialChildren }: ChildSelectorProps) {
 
       fetchChildren();
     }
-  }, [initialChildren, supabase]);
+  }, [supabase]);
 
   const handleSelectChild = (child: Child) => {
     setSelectedChild(child);
