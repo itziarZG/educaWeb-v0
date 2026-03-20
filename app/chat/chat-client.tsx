@@ -52,9 +52,14 @@ export default function ChatClient({
     return () => window.removeEventListener('resize', checkIfMobile);
   }, []);
 
+  const handleVisualizeWithReset = () => {
+    setWorksheetId(null);
+    handleVisualize();
+  };
+
   const onVisualize = () => {
     setShowMobileViz(true);
-    handleVisualize();
+    handleVisualizeWithReset();
   };
 
   // Scroll to bottom
@@ -97,6 +102,9 @@ export default function ChatClient({
 
   const saveWorksheet = async (): Promise<string | null> => {
     if (!childInfo || !htmlContent) return null;
+
+    // Guard: si ya fue guardada esta visualización, devolver el ID existente
+    if (worksheetId) return worksheetId;
 
     try {
       const response = await fetch('/api/worksheets', {
@@ -193,7 +201,7 @@ export default function ChatClient({
             iframeRef={iframeRef}
             handlePrint={handlePrint}
             handleDownloadPdf={handleDownloadPdf}
-            handleVisualize={handleVisualize}
+            handleVisualize={handleVisualizeWithReset}
             setShowMobileViz={setShowMobileViz}
             isMobile={isMobile}
             worksheetId={worksheetId ?? undefined}
