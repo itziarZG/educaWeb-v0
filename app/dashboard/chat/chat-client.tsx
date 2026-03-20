@@ -71,19 +71,56 @@ export default function ChatClient({
     // 1. Guardar ficha en BD
     await saveWorksheet();
 
-    // 2. Crear elemento temporal para impresión
+    // 2. Crear una ventana nueva con el contenido para impresión
     if (!htmlContent) return;
 
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = htmlContent;
-    tempDiv.style.display = 'none';
-    document.body.appendChild(tempDiv);
+    try {
+      const printWindow = window.open('', '', 'width=800,height=600');
+      if (!printWindow) {
+        alert(
+          'Por favor, desactiva el bloqueador de ventanas emergentes para imprimir.'
+        );
+        return;
+      }
 
-    // 3. Esperar a que se carguen las imágenes/estilos
-    setTimeout(() => {
-      window.print();
-      document.body.removeChild(tempDiv);
-    }, 500);
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Imprimir Ficha</title>
+            <style>
+              body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                margin: 20px;
+                background: white;
+              }
+              @media print {
+                body {
+                  margin: 0;
+                  padding: 0;
+                }
+              }
+            </style>
+          </head>
+          <body>
+            ${htmlContent}
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
+
+      // Esperar a que se carguen recursos y luego imprimir
+      printWindow.onload = () => {
+        setTimeout(() => {
+          printWindow.print();
+        }, 500);
+      };
+    } catch (error) {
+      console.error('Error printing:', error);
+      alert('Error al imprimir. Por favor, intenta de nuevo.');
+    }
   };
 
   const handleDownloadPdf = async () => {
@@ -97,18 +134,21 @@ export default function ChatClient({
       const html2canvas = (await import('html2canvas')).default;
       const jsPDF = (await import('jspdf')).jsPDF;
 
-      // Crear contenedor temporal
+      // Crear contenedor visible (pero fuera de vista)
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = htmlContent;
-      tempDiv.style.position = 'absolute';
-      tempDiv.style.left = '-9999px';
-      tempDiv.style.width = '1000px'; // Ancho fijo para consistencia
+      tempDiv.style.position = 'fixed';
+      tempDiv.style.top = '-10000px';
+      tempDiv.style.left = '-10000px';
+      tempDiv.style.width = '1000px';
       tempDiv.style.backgroundColor = 'white';
       tempDiv.style.padding = '40px';
+      tempDiv.style.boxSizing = 'border-box';
+      tempDiv.style.zIndex = '-1';
       document.body.appendChild(tempDiv);
 
       // Esperar a que se carguen recursos
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Convertir a canvas
       const canvas = await html2canvas(tempDiv, {
@@ -116,6 +156,7 @@ export default function ChatClient({
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
+        logging: false,
       });
 
       // Limpiar elemento temporal
@@ -135,10 +176,11 @@ export default function ChatClient({
       let heightLeft = pdfHeight;
       let position = 0;
 
-      // Agregar páginas si es necesario
+      // Primera página
       pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);
       heightLeft -= pdf.internal.pageSize.getHeight();
 
+      // Páginas adicionales si es necesario
       while (heightLeft > 0) {
         position = heightLeft - pdfHeight;
         pdf.addPage();
