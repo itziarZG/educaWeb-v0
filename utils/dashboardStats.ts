@@ -1,4 +1,15 @@
 /**
+ * Devuelve la clave de fecha local en formato YYYY-MM-DD para una fecha dada.
+ * Usa componentes locales para evitar desfases de zona horaria que ocurren con toISOString().
+ */
+function toLocalDateKey(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+/**
  * Calculate consecutive days streak from worksheet creation dates
  * @param dates Array of ISO date strings
  * @returns Number of consecutive days from today going backwards
@@ -8,31 +19,25 @@ export function calculateStreak(dates: string[]): number {
 
   // Parse dates and convert to local dates (without time)
   const uniqueDates = new Set(
-    dates.map((date) => {
-      const d = new Date(date);
-      return d.toISOString().split('T')[0];
-    })
+    dates.map((date) => toLocalDateKey(new Date(date)))
   );
 
   // Sort dates in descending order
   const sortedDates = Array.from(uniqueDates).sort().reverse();
 
-  // Get today's date
-  const today = new Date();
-  const todayStr = today.toISOString().split('T')[0];
+  // Get today's local date
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
 
   let streak = 0;
-  // eslint-disable-next-line prefer-const
-  let currentDate = new Date(todayStr);
 
   for (const dateStr of sortedDates) {
-    const checkDate = dateStr;
-    const expectedDate = currentDate.toISOString().split('T')[0];
+    const expectedDate = toLocalDateKey(currentDate);
 
-    if (checkDate === expectedDate) {
+    if (dateStr === expectedDate) {
       streak++;
       currentDate.setDate(currentDate.getDate() - 1);
-    } else if (checkDate < expectedDate) {
+    } else if (dateStr < expectedDate) {
       // Gap found, break the streak
       break;
     }
