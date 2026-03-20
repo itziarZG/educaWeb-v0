@@ -92,10 +92,17 @@ export const useChatInfo = (
     setLoading(true);
     try {
       // 1. Creamos el array para la API empezando por el System Prompt
+      // Incluimos el topic en el prompt si está seleccionado
+      const basePrompt = systemPrompt || 'Eres un asistente educativo.';
+      const topicAddition =
+        topic && topic !== 'Sin especificar'
+          ? `\n\n**Temática de la ficha de hoy:** ${topic}. Asegúrate de que toda la ficha esté EXCLUSIVAMENTE enfocada en esta temática.`
+          : '';
+
       const messagesForApi = [
         {
           role: 'system',
-          content: systemPrompt || 'Eres un asistente educativo.', // Fallback por si llega vacío
+          content: basePrompt + topicAddition,
         },
         // 2. Añadimos el resto de mensajes (mapeados para quitar el timestamp)
         ...newMessages.map(({ role, content }) => ({

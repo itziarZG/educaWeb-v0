@@ -29,9 +29,10 @@ export default function WorksheetCard({
     : null;
 
   return (
-    <div
+    <button
+      type="button"
       onClick={onClick}
-      className="group cursor-pointer bg-white dark:bg-dark-surface rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-dark-border hover:shadow-lg dark:hover:shadow-primary/20 transition-all hover:border-primary/30 dark:hover:border-primary/30 hover:-translate-y-1"
+      className="relative group w-full text-left cursor-pointer bg-white dark:bg-dark-surface rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-dark-border hover:shadow-lg dark:hover:shadow-primary/20 transition-all hover:border-primary/30 dark:hover:border-primary/30 hover:-translate-y-1"
     >
       {/* Topic Badge */}
       <div className="mb-4">
@@ -89,6 +90,6 @@ export default function WorksheetCard({
 
       {/* Hover Indicator */}
       <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-primary/30 transition-colors pointer-events-none"></div>
-    </div>
+    </button>
   );
 }

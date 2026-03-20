@@ -72,7 +72,7 @@ export default async function RootLayout({
         <Providers initialUser={user}>
           <Header />
           <main className="w-full max-w-7xl mx-auto">{children}</main>
-          <footer className="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 py-6">
+          <footer className="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 py-2">
             <div className="max-w-7xl mx-auto px-2 flex flex-col md:flex-row justify-between items-center gap-8">
               <div className="flex items-center gap-2">
                 <Image

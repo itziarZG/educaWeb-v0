@@ -22,8 +22,7 @@ export function calculateStreak(dates: string[]): number {
   const todayStr = today.toISOString().split('T')[0];
 
   let streak = 0;
-  // eslint-disable-next-line prefer-const
-  let currentDate = new Date(todayStr);
+  const currentDate = new Date(todayStr);
 
   for (const dateStr of sortedDates) {
     const checkDate = dateStr;

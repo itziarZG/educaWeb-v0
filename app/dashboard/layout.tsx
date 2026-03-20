@@ -43,20 +43,6 @@ export default async function DashboardLayout({
     <div className="flex h-screen w-full bg-background-light dark:bg-background-dark font-display text-[#111813] dark:text-white transition-colors duration-200 overflow-hidden">
       {/* Sidebar (Desktop) */}
       <aside className="hidden lg:flex w-64 flex-col border-r border-gray-100 dark:border-gray-800 bg-white dark:bg-[#1a2e20] shadow-sm z-20">
-        {/* Brand */}
-        <div className="flex h-16 items-center px-6 border-b border-gray-100 dark:border-gray-800">
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <Image
-              src="/logo_tutorai.png"
-              alt="TUTOR_AI Logo"
-              width={32}
-              height={32}
-              className="object-contain mr-2"
-            />
-            <span className="text-xl font-bold tracking-tight">TUTOR_AI</span>
-          </Link>
-        </div>
-
         {/* Links */}
         <nav className="flex-1 flex flex-col gap-1 p-4 overflow-y-auto">
           <p className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
@@ -117,33 +103,13 @@ export default async function DashboardLayout({
         </nav>
 
         {/* User Footer */}
-        <div className="p-4 border-t border-gray-100 dark:border-gray-800 flex flex-col gap-4">
-          {/* Child Selector - Desktop */}
-          <div>
-            <p className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">
-              Cambiar Estudiante
-            </p>
-            <ChildSelector initialChildren={childrenList} />
-          </div>
 
-          {/* User Profile */}
-          <Link href="/dashboard/profile">
-            <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-[#102216] transition-colors cursor-pointer group">
-              <div
-                className="size-10 rounded-full bg-cover bg-center border-2 border-transparent group-hover:border-primary transition-all"
-                style={{ backgroundImage: `url("${avatarUrl}")` }}
-              ></div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold truncate">{userName}</p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                  {userEmail}
-                </p>
-              </div>
-              <span className="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors">
-                settings
-              </span>
-            </div>
-          </Link>
+        {/* Child Selector - Desktop */}
+        <div>
+          <p className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">
+            Cambiar Estudiante
+          </p>
+          <ChildSelector initialChildren={childrenList} />
         </div>
       </aside>
 
@@ -151,15 +117,6 @@ export default async function DashboardLayout({
       <div className="flex-1 flex flex-col h-full overflow-hidden relative">
         {/* Mobile Header (Visible on small screens) */}
         <header className="lg:hidden flex h-16 items-center justify-between px-4 bg-white dark:bg-[#1a2e20] border-b border-gray-100 dark:border-gray-800 z-10 shrink-0">
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <Image
-              src="/logo_tutorai.png"
-              alt="TUTOR_AI Logo"
-              width={32}
-              height={32}
-              className="object-contain mr-2"
-            />
-          </Link>
           <div className="flex items-center gap-2">
             <ChildSelector initialChildren={childrenList} />
             <Link href="/dashboard/profile">
