@@ -173,44 +173,6 @@ export default async function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column (Main Action & Progress) */}
         <div className="lg:col-span-2 flex flex-col gap-6">
-          {/* Hero Action Card */}
-          <div className="relative group w-full overflow-hidden rounded-3xl bg-linear-to-r from-primary to-emerald-400 p-1 shadow-lg shadow-primary/20">
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-            <div className="relative bg-white dark:bg-[#102216] rounded-[22px] p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 md:gap-10 h-full">
-              <div className="flex-1 text-center md:text-left z-10">
-                <h2 className="text-2xl md:text-3xl font-black text-[#111813] dark:text-white mb-2">
-                  ¡Continúa tu Misión!
-                </h2>
-                <p className="text-gray-600 dark:text-gray-300 mb-6">
-                  Tienes 2 desafíos pendientes para completar el objetivo
-                  diario. ¡Tú puedes!
-                </p>
-                <Link href="/dashboard/worksheet">
-                  <button className="bg-primary hover:bg-emerald-400 text-[#111813] font-bold text-lg py-3 px-8 rounded-xl shadow-lg shadow-primary/30 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2 mx-auto md:mx-0">
-                    <span
-                      className="material-symbols-outlined text-2xl"
-                      style={{ fontVariationSettings: "'FILL' 1" }}
-                    >
-                      rocket_launch
-                    </span>
-                    Empezar Sesión
-                  </button>
-                </Link>
-              </div>
-              {/* Decorative Illustration */}
-              <div className="hidden md:block w-48 h-48 relative shrink-0">
-                <div className="absolute inset-0 bg-primary/20 rounded-full blur-3xl"></div>
-                <div
-                  className="relative z-10 w-full h-full bg-contain bg-center bg-no-repeat"
-                  style={{
-                    backgroundImage:
-                      "url('https://cdn-icons-png.flaticon.com/512/7486/7486253.png')",
-                  }}
-                ></div>
-              </div>
-            </div>
-          </div>
-
           {/* Today's Progress Section */}
           <section className="bg-white dark:bg-[#1a2e20] rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
             <div className="flex justify-between items-center mb-6">

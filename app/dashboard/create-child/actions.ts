@@ -60,6 +60,6 @@ export async function addChild(formData: FormData) {
     return { error: 'Error al añadir el perfil del niño/a', success: false };
   }
 
-  revalidatePath('/select-profile');
+  revalidatePath('/dashboard/select-profile');
   return { success: true };
 }

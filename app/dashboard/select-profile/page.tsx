@@ -1,27 +1,45 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
+import { createClient } from '@utils/supabase/server';
+import { redirect } from 'next/navigation';
 
-export default function ProfileSelectionPage() {
+export default async function ProfileSelectionPage() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect('/login');
+  }
+
+  const { data: children, error } = await supabase
+    .from('children')
+    .select('id,name, age, grade, interests, observations')
+    .eq('user_id', user.id);
+
+  if (error) {
+    console.error('Error fetching children:', error);
+  }
+  if (!children || children.length === 0) {
+    redirect('/dashboard/create-child');
+  }
   const leoUrl =
     'https://lh3.googleusercontent.com/aida-public/AB6AXuDB0zIlaHUbAWN_lOj7jjhfik0xanQMOFO_knLHysvrIk8RrQXH_xoZtCuTVN0WlVC7pS2ONH9xAjqnjA2eryi3ET_r9QeuFo2_f1pZ0nb2fDrsQ4A8q3rEFYIo_qgx8vXqI2J1hM5gjIjqbXikNKGlT5Vi_Ek1DOgPICkaQrn5Tkyv3DIN2mWz79ciZwGjy6KCHhoeuwwy1IfgL0r68q0RaoDslAzN6pdI-iL_SF7OKy48lEjdNK0bResnklqBOeQSklcdLO_wBw0';
-  const saraUrl =
-    'https://lh3.googleusercontent.com/aida-public/AB6AXuAxXPGEDc25SdXBFYN6F-zGt2FmNaQYkzGuc7YxS7ydHnUqGPAqpOYTPjE1L9fKNcOEqw9sHT_GV_SM5FkH6ijxvy0v2ayw-vfDfiIiiE1F6JKB4SyEK_4PlbMbuYuRk2BGMUUgkxtDYWoM5SsY7T6E5gXTWTaYTzK9sw-Jq5bHMuixkWcEGw9Y_6j09fjfWwh-3tInKu7nwA0tWlQU0IXUSQA-lM2VHxnZ5Y_gDITsrsP5YdA-26sLYxPLiM4tZkONDBkjPHrtEr0';
 
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-background-dark font-display antialiased transition-colors duration-300">
       {/* TopAppBar */}
       <header className="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
         <div className="w-12"></div> {/* Spacer for centering */}
-        <h2 className="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
+        {/* <h2 className="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
           Selección de Perfil
-        </h2>
-        <div className="flex w-12 items-center justify-end">
+        </h2> */}
+        {/* <div className="flex w-12 items-center justify-end">
           <button className="text-primary text-base font-bold leading-normal tracking-[0.015em] hover:opacity-80 transition-opacity">
             Editar
           </button>
-        </div>
+        </div> */}
       </header>
 
       {/* Main Content Area */}
@@ -36,44 +54,37 @@ export default function ProfileSelectionPage() {
         {/* ImageGrid / Profile Selection */}
         <div className="w-full max-w-sm">
           <div className="grid grid-cols-2 gap-8 p-4">
-            {/* Profile 1: Leo */}
-            <Link href="/dashboard">
-              <button className="group flex flex-col items-center gap-4 text-center focus:outline-none w-full">
-                <div className="relative w-full aspect-square max-w-[140px]">
-                  <div
-                    className="w-full h-full bg-center bg-no-repeat bg-cover rounded-full border-4 border-transparent group-hover:border-primary group-active:scale-95 transition-all duration-200 shadow-md"
-                    style={{ backgroundImage: `url("${leoUrl}")` }}
-                    aria-label="Avatar de un niño sonriente llamado Leo"
-                  ></div>
-                </div>
-                <p className="text-slate-900 dark:text-slate-100 text-xl font-semibold leading-normal">
-                  Leo
-                </p>
-              </button>
-            </Link>
-
-            {/* Profile 2: Sara */}
-            <Link href="/dashboard">
-              <button className="group flex flex-col items-center gap-4 text-center focus:outline-none w-full">
-                <div className="relative w-full aspect-square max-w-[140px]">
-                  <div
-                    className="w-full h-full bg-center bg-no-repeat bg-cover rounded-full border-4 border-transparent group-hover:border-primary group-active:scale-95 transition-all duration-200 shadow-md"
-                    style={{ backgroundImage: `url("${saraUrl}")` }}
-                    aria-label="Avatar de una niña sonriente llamada Sara"
-                  ></div>
-                </div>
-                <p className="text-slate-900 dark:text-slate-100 text-xl font-semibold leading-normal">
-                  Sara
-                </p>
-              </button>
-            </Link>
+            {children &&
+              children.length > 0 &&
+              children.map((child) => (
+                <Link
+                  href={`/dashboard/chat?childId=${child.id}`}
+                  key={child.id}
+                  className="group flex flex-col items-center gap-4 text-center focus:outline-none w-full"
+                >
+                  <div className="relative w-full aspect-square max-w-[140px]">
+                    <div
+                      className="w-full h-full bg-center bg-no-repeat bg-cover rounded-full border-4 border-transparent group-hover:border-primary group-active:scale-95 transition-all duration-200 shadow-md"
+                      style={{
+                        backgroundImage: `url("${leoUrl}")`,
+                      }}
+                    ></div>
+                  </div>
+                  <p className="text-slate-900 dark:text-slate-100 text-xl font-semibold leading-normal">
+                    {child.name}
+                  </p>
+                </Link>
+              ))}
           </div>
         </div>
 
         {/* SingleButton (Add New Student) */}
         <div className="w-full max-w-sm mt-12 mb-10">
           <div className="flex px-4 py-3 justify-center">
-            <button className="flex min-w-[200px] w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 bg-primary/10 border-2 border-dashed border-primary/30 text-slate-900 dark:text-slate-100 gap-3 hover:bg-primary/20 transition-colors group">
+            <Link
+              href="/profile/create-child"
+              className="flex min-w-[200px] w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 bg-primary/10 border-2 border-dashed border-primary/30 text-slate-900 dark:text-slate-100 gap-3 hover:bg-primary/20 transition-colors group"
+            >
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-slate-900">
                 <span className="material-symbols-outlined text-[20px] font-bold">
                   add
@@ -82,13 +93,10 @@ export default function ProfileSelectionPage() {
               <span className="truncate text-base font-bold leading-normal tracking-[0.015em]">
                 Añadir Nuevo Estudiante
               </span>
-            </button>
+            </Link>
           </div>
         </div>
       </main>
-
-      {/* Footer / Bottom Spacer */}
-      <footer className="h-10 bg-transparent"></footer>
     </div>
   );
 }
