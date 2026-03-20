@@ -152,31 +152,9 @@ export default function WorksheetsPage() {
           Selecciona un estudiante
         </label>
 
-        {childrenLoading ? (
-          <div className="h-12 bg-gray-100 dark:bg-dark-highlight rounded-xl animate-pulse" />
-        ) : children.length > 0 ? (
-          <select
-            value={selectedChildId}
-            onChange={(e) => setSelectedChildId(e.target.value)}
-            className="w-full h-12 px-4 bg-white dark:bg-dark-highlight border border-gray-300 dark:border-dark-border rounded-xl text-[#111813] dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-dark-surface transition-all appearance-none cursor-pointer pr-10"
-            style={{
-              backgroundImage: `url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'right 1rem center',
-              paddingRight: '2.5rem',
-            }}
-          >
-            {children.map((child) => (
-              <option key={child.id} value={child.id}>
-                {child.name}
-              </option>
-            ))}
-          </select>
-        ) : (
-          <p className="text-gray-500 dark:text-gray-400 text-center py-4">
-            No hay estudiantes disponibles
-          </p>
-        )}
+        <p className="text-gray-500 dark:text-gray-400 text-sm">
+          Utiliza el selector de estudiante del panel principal para elegir a quién deseas ver.
+        </p>
       </div>
 
       {/* Worksheets Grid */}
