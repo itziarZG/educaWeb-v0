@@ -36,7 +36,6 @@ export default function CreditosBadge() {
               filter: `id=eq.${user.id}`,
             },
             (payload) => {
-              console.log('Cambio en créditos recibido:', payload);
               setCredits(payload.new.credits);
             }
           )

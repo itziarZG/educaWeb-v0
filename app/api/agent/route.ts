@@ -4,8 +4,6 @@ import { getLanguageModel } from '@/utils/ai/models';
 import { createClient } from '@/utils/supabase/server';
 
 export async function POST(req: NextRequest) {
-  console.log('DEBUG: Entrando en API/AGENT');
-
   const supabase = await createClient();
 
   // 1. Verificar Sesión (usamos getUser para validar la sesión en el servidor)
@@ -64,8 +62,6 @@ export async function POST(req: NextRequest) {
       model: getLanguageModel(),
       messages: messages, // Pasamos el array completo (System + Historial + User)
     });
-
-    console.log('DEBUG: Respuesta del agente', text);
 
     // 5. COBRAR EL CRÉDITO (Solo si es visualización y OpenAI funcionó bien)
     if (mode === 'visualization' && profile) {

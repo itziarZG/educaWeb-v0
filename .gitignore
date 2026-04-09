@@ -25,3 +25,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+test_results/
+playwright-report/
+stitch_student_dashboard/
+DS_Store
+.last-run.json
+.agent/

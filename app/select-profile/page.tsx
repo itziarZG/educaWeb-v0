@@ -82,7 +82,7 @@ export default async function ProfileSelectionPage() {
         <div className="w-full max-w-sm mt-12 mb-10">
           <div className="flex px-4 py-3 justify-center">
             <Link
-              href="/profile/create-child"
+              href="/create-child"
               className="flex min-w-[200px] w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 bg-primary/10 border-2 border-dashed border-primary/30 text-slate-900 dark:text-slate-100 gap-3 hover:bg-primary/20 transition-colors group"
             >
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-slate-900">

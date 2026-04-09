@@ -107,7 +107,7 @@ export default function FeedbackPage() {
           </Link>
           <button
             onClick={handleSave}
-            className="flex-[2] bg-primary hover:bg-emerald-400 text-[#102216] font-black py-4 rounded-xl shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2 text-lg"
+            className="flex-[2] bg-primary hover:bg-primary/90 text-[#102216] font-black py-4 rounded-xl shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2 text-lg"
           >
             <span>Guardar y Continuar</span>
             <span className="material-symbols-outlined">arrow_forward</span>

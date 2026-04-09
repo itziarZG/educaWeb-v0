@@ -31,7 +31,7 @@ export default function LoginForm() {
     <div className="flex flex-col items-center justify-center w-full">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-4 bg-white p-8 rounded-xl shadow-md border dark:bg-[#1a2e20] dark:border-gray-800"
+        className="flex flex-col gap-4 bg-white p-8 rounded-xl shadow-md border dark:bg-slate-900 dark:border-slate-700"
       >
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           Iniciar Sesión
@@ -41,19 +41,19 @@ export default function LoginForm() {
           type="email"
           placeholder="Email"
           required
-          className="p-2 border rounded dark:bg-gray-800 dark:text-white dark:border-gray-700"
+          className="p-2 border rounded dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700"
         />
         <input
           name="password"
           type="password"
           placeholder="Contraseña"
           required
-          className="p-2 border rounded dark:bg-gray-800 dark:text-white dark:border-gray-700"
+          className="p-2 border rounded dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700"
         />
         <button
           type="submit"
           disabled={loading}
-          className="bg-primary text-black font-bold py-2 rounded hover:bg-emerald-400 transition-colors disabled:opacity-50"
+          className="bg-primary text-black font-bold py-2 rounded hover:bg-primary/90 transition-colors disabled:opacity-50"
         >
           {loading ? 'Entrando...' : 'Entrar'}
         </button>

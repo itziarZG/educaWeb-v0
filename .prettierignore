@@ -33,3 +33,7 @@ next-env.d.ts
 .vscode
 .idea
 *.tsbuildinfo
+playwright-report
+stitch_student_dashboard
+DS_Store
+test_results/

@@ -178,7 +178,7 @@ export default function ProfileSettings() {
 
           {/* Save Button */}
           <div className="flex justify-end">
-            <button className="bg-primary hover:bg-emerald-400 text-[#102216] font-bold py-4 px-12 rounded-xl shadow-lg shadow-primary/20 flex items-center gap-2 transition-all hover:scale-105 active:scale-95">
+            <button className="bg-primary hover:bg-primary/90 text-[#102216] font-bold py-4 px-12 rounded-xl shadow-lg shadow-primary/20 flex items-center gap-2 transition-all hover:scale-105 active:scale-95">
               <span className="material-symbols-outlined">save</span>
               Guardar Cambios
             </button>

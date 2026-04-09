@@ -19,7 +19,7 @@ export default function AnalyticsPage() {
 
         {/* Date Range Picker (Visual) */}
         <div className="bg-white dark:bg-[#1a2e20] rounded-xl p-1 shadow-sm border border-gray-100 dark:border-gray-800 flex">
-          <button className="px-4 py-2 bg-primary text-[#102216] rounded-lg text-sm font-bold shadow-sm transition-all hover:bg-emerald-400">
+          <button className="px-4 py-2 bg-primary text-[#102216] rounded-lg text-sm font-bold shadow-sm transition-all hover:bg-primary/90">
             Últimas 10 Fichas
           </button>
           <button className="px-4 py-2 text-gray-500 hover:text-gray-900 dark:hover:text-white rounded-lg text-sm font-medium transition-all">

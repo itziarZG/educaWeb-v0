@@ -166,7 +166,7 @@ export default function ProfilePage() {
                 <button className="px-4 py-2 text-sm font-medium text-[#616f89] bg-white border border-[#e5e7eb] rounded-lg hover:bg-gray-50 dark:bg-[#2d3748] dark:border-[#4a5568] dark:text-white dark:hover:bg-[#4a5568] transition-colors">
                   Cancel
                 </button>
-                <button className="px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-blue-700 transition-colors shadow-sm shadow-blue-500/30">
+                <button className="px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors shadow-sm shadow-blue-500/30">
                   Save Changes
                 </button>
               </div>

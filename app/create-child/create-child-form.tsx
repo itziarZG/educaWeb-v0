@@ -186,7 +186,7 @@ export default function CreateChildForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-primary hover:bg-emerald-400 text-black font-bold py-3 px-6 rounded-xl shadow-lg shadow-primary/20 hover:shadow-primary/40 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-primary hover:bg-primary/90 text-black font-bold py-3 px-6 rounded-xl shadow-lg shadow-primary/20 hover:shadow-primary/40 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {loading ? (
                 <>

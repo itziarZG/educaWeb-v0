@@ -81,7 +81,7 @@ export default async function Dashboard() {
                   diario. ¡Tú puedes!
                 </p>
                 <Link href="/dashboard/worksheet">
-                  <button className="bg-primary hover:bg-emerald-400 text-[#111813] font-bold text-lg py-3 px-8 rounded-xl shadow-lg shadow-primary/30 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2 mx-auto md:mx-0">
+                  <button className="bg-primary hover:bg-primary/90 text-[#111813] font-bold text-lg py-3 px-8 rounded-xl shadow-lg shadow-primary/30 transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2 mx-auto md:mx-0">
                     <span
                       className="material-symbols-outlined text-2xl"
                       style={{ fontVariationSettings: "'FILL' 1" }}

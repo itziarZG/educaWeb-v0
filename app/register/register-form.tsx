@@ -25,7 +25,7 @@ export default function RegisterForm() {
     <div className="flex w-full flex-col items-center justify-center ">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-4 bg-white p-8 rounded-xl shadow-md border dark:bg-gray-800 dark:border-gray-800"
+        className="flex flex-col gap-4 bg-white p-8 rounded-xl shadow-md border dark:bg-slate-900 dark:border-slate-700"
       >
         <h1 className="text-2xl font-bold">Crear cuenta</h1>
         <input
@@ -33,25 +33,25 @@ export default function RegisterForm() {
           type="text"
           placeholder="Nombre"
           required
-          className="p-2 border rounded dark:bg-gray-800"
+          className="p-2 border rounded dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700"
         />
         <input
           name="email"
           type="email"
           placeholder="Email"
           required
-          className="p-2 border rounded dark:bg-gray-800"
+          className="p-2 border rounded dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700"
         />
         <input
           name="password"
           type="password"
           placeholder="Contraseña"
           required
-          className="p-2 border rounded dark:bg-gray-800"
+          className="p-2 border rounded dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700"
         />
         <button
           type="submit"
-          className="bg-primary text-black font-bold py-2 rounded hover:bg-emerald-400 transition-colors"
+          className="bg-primary text-black font-bold py-2 rounded hover:bg-primary/90 transition-colors"
         >
           Registrarse
         </button>
