@@ -30,15 +30,13 @@ export default async function DashboardLayout({
       .order('name');
 
     if (error) {
-      console.error('Error fetching children:', error);
+      // Error silencioso: no loguear en producción
+      console.debug('Error fetching children:', error);
     } else if (data) {
       childrenList = data as Child[];
-      console.log(
-        `✅ Loaded ${childrenList.length} children for user ${user.id}`
-      );
     }
   } else {
-    console.warn('No user found in layout');
+    // No user found - redirect should handle this in most cases
   }
 
   const userEmail = user?.email || 'usuario@tutoraiapp.es';
