@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { createClient } from '@utils/supabase/client';
+import { createClient } from '@/utils/supabase/client';
 import { useChild, Child } from '@/context/child-context';
 
 interface ChildSelectorProps {
