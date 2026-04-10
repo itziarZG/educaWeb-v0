@@ -6,6 +6,8 @@ import { Providers } from '@/app/providers';
 import Image from 'next/image';
 import Link from 'next/link';
 import Header from '@/components/Header';
+import CookieConsentBanner from '@/components/CookieConsentBanner';
+import WebVitals from '@/components/WebVitals';
 import { createClient } from '@/utils/supabase/server';
 const lexend = Lexend({
   subsets: ['latin'],
@@ -86,12 +88,24 @@ export default async function RootLayout({
                   TUTOR_AI
                 </span>
               </div>
-              <nav className="flex gap-8">
+              <nav className="flex flex-wrap gap-x-8 gap-y-2 justify-center">
+                <Link
+                  className="text-slate-500 hover:text-primary transition-colors text-sm"
+                  href="/aviso-legal"
+                >
+                  Aviso Legal
+                </Link>
                 <Link
                   className="text-slate-500 hover:text-primary transition-colors text-sm"
                   href="/privacidad"
                 >
                   Privacidad
+                </Link>
+                <Link
+                  className="text-slate-500 hover:text-primary transition-colors text-sm"
+                  href="/cookies"
+                >
+                  Cookies
                 </Link>
                 <Link
                   className="text-slate-500 hover:text-primary transition-colors text-sm"
@@ -111,6 +125,8 @@ export default async function RootLayout({
               </p>
             </div>
           </footer>
+          <CookieConsentBanner />
+          <WebVitals />
         </Providers>
       </body>
     </html>
