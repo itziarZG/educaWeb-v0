@@ -45,6 +45,7 @@ export default async function DashboardLayout({
       <aside className="hidden lg:flex w-64 flex-col border-r border-gray-100 dark:border-gray-800 bg-white dark:bg-dark-surface shadow-sm z-20">
         {/* Links */}
         <nav className="flex-1 flex flex-col gap-1 p-4 overflow-y-auto">
+          {/* PRINCIPAL */}
           <p className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
             Principal
           </p>
@@ -53,6 +54,47 @@ export default async function DashboardLayout({
 
           <div className="my-2 border-t border-gray-100 dark:border-gray-800 opacity-50"></div>
 
+          {/* CHAT Section with Profile Selector */}
+          <p className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+            Chat
+          </p>
+
+          {/* Profile list - only if children exist */}
+          {childrenList.length > 0 && (
+            <div className="space-y-1 px-2">
+              {childrenList.map((child) => (
+                <Link
+                  key={child.id}
+                  href={`/dashboard/chat?childId=${child.id}`}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-dark-highlight hover:text-primary dark:hover:text-primary transition-all text-sm ml-0"
+                >
+                  {child.avatar_url && (
+                    <img
+                      src={child.avatar_url}
+                      alt={child.name}
+                      className="w-6 h-6 rounded-full object-cover"
+                    />
+                  )}
+                  <span>{child.name}</span>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {/* Create child link - always visible now */}
+          <Link
+            href="/dashboard/create-child"
+            className="flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-dark-highlight hover:text-primary dark:hover:text-primary transition-all text-sm rounded-lg"
+          >
+            <span className="material-symbols-outlined text-[20px]">
+              person_add
+            </span>
+            <span>Crear Estudiante</span>
+          </Link>
+
+          <div className="my-2 border-t border-gray-100 dark:border-gray-800 opacity-50"></div>
+
+          {/* PROGRESO */}
           <p className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
             Progreso
           </p>
@@ -68,6 +110,8 @@ export default async function DashboardLayout({
           />
 
           <div className="my-2 border-t border-gray-100 dark:border-gray-800 opacity-50"></div>
+
+          {/* CUENTA */}
           <p className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
             Cuenta
           </p>
