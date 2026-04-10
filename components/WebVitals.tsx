@@ -122,26 +122,11 @@ function observeFCP() {
   }
 }
 
-function observeINP() {
-  try {
-    const observer = new PerformanceObserver((list) => {
-      for (const entry of list.getEntries()) {
-        const value = entry.duration;
-        reportMetric({ name: 'INP', value, rating: getRating('INP', value) });
-      }
-    });
-    observer.observe({ type: 'event', buffered: true });
-  } catch {
-    // PerformanceObserver no disponible
-  }
-}
-
 export default function WebVitals() {
   useEffect(() => {
     observeLCP();
     observeCLS();
     observeFCP();
-    observeINP();
 
     // TTFB
     try {

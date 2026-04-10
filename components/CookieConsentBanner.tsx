@@ -4,18 +4,26 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 const COOKIE_CONSENT_KEY = 'cookie-consent';
+const COOKIE_MAX_AGE = 365 * 24 * 60 * 60; // 1 año en segundos
 
 type ConsentValue = 'accepted' | 'rejected';
 
+function getCookieValue(name: string): string | null {
+  if (typeof document === 'undefined') return null;
+  const match = document.cookie.match(
+    new RegExp('(?:^|; )' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '=([^;]*)')
+  );
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
 function getConsent(): ConsentValue | null {
-  if (typeof window === 'undefined') return null;
-  const value = localStorage.getItem(COOKIE_CONSENT_KEY);
+  const value = getCookieValue(COOKIE_CONSENT_KEY);
   if (value === 'accepted' || value === 'rejected') return value;
   return null;
 }
 
 function setConsent(value: ConsentValue): void {
-  localStorage.setItem(COOKIE_CONSENT_KEY, value);
+  document.cookie = `${COOKIE_CONSENT_KEY}=${value}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax`;
 }
 
 export function useCookieConsent(): ConsentValue | null {
