@@ -5,6 +5,19 @@ import { createOllama } from 'ollama-ai-provider';
 import { LanguageModel } from 'ai';
 
 /**
+ * Valida que AI_API_KEY esté presente para proveedores que lo requieren
+ */
+function requireApiKey(provider: 'deepseek' | 'openrouter'): string {
+  const apiKey = process.env.AI_API_KEY;
+  if (!apiKey) {
+    throw new Error(
+      `AI_API_KEY es requerido cuando AI_PROVIDER es "${provider}".`
+    );
+  }
+  return apiKey;
+}
+
+/**
  * Obtiene el modelo de lenguaje para chat (generación de fichas)
  * Usa la configuración más potente para mejor razonamiento y creatividad
  */
@@ -36,8 +49,6 @@ function getModelForMode(mode: 'chat' | 'visualization'): LanguageModel {
         'gpt-4o-mini'
       : process.env.AI_MODEL || 'gpt-4o-mini';
 
-  const apiKey = process.env.AI_API_KEY;
-
   let model: unknown;
 
   switch (provider) {
@@ -51,7 +62,7 @@ function getModelForMode(mode: 'chat' | 'visualization'): LanguageModel {
 
     case 'deepseek': {
       const ds = createOpenAI({
-        apiKey: apiKey,
+        apiKey: requireApiKey('deepseek'),
         baseURL: 'https://api.deepseek.com/v1',
       });
       model = ds.chat(modelName);
@@ -60,7 +71,7 @@ function getModelForMode(mode: 'chat' | 'visualization'): LanguageModel {
 
     case 'openrouter': {
       const openrouter = createOpenAI({
-        apiKey: apiKey,
+        apiKey: requireApiKey('openrouter'),
         baseURL: 'https://openrouter.ai/api/v1',
         headers: {
           'HTTP-Referer':
