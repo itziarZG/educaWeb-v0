@@ -25,7 +25,7 @@ export default async function DashboardLayout({
   if (user) {
     const { data, error } = await supabase
       .from('children')
-      .select('id, name')
+      .select('id, name, avatar_url')
       .eq('user_id', user.id)
       .order('name');
 
