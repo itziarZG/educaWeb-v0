@@ -1,7 +1,7 @@
 'use server';
 
 import { createClient } from '@/utils/supabase/server';
-import { generateSystemPrompt } from '@services/agentService';
+import { generateSystemPrompt } from '@/services/agentService';
 import { ChildInfoAPI } from '@/types/agents';
 import { revalidatePath } from 'next/cache';
 
