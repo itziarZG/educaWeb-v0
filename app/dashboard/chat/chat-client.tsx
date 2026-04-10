@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import type { ChildInfo } from '@/types/agents';
 import type { WorksheetFeedback } from '@/types/worksheet';
 import { useChatInfo } from './hooks';
@@ -17,6 +18,7 @@ export default function ChatClient({
   initialChildInfo,
   systemPrompt,
 }: ChatClientProps) {
+  const router = useRouter();
   const {
     messages,
     input,
@@ -60,6 +62,10 @@ export default function ChatClient({
   const onVisualize = () => {
     setShowMobileViz(true);
     handleVisualizeWithReset();
+  };
+
+  const handleBackToSelector = () => {
+    router.push('/dashboard/chat');
   };
 
   // Scroll to bottom
@@ -252,6 +258,7 @@ export default function ChatClient({
             setTopic={setTopic}
             showTopicCustom={showTopicCustom}
             setShowTopicCustom={setShowTopicCustom}
+            onBackToSelector={handleBackToSelector}
           />
         </section>
 
