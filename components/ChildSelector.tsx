@@ -80,7 +80,7 @@ export default function ChildSelector({ initialChildren }: ChildSelectorProps) {
       {/* Trigger Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 dark:hover:bg-[#102216] transition-colors group cursor-pointer"
+        className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-gray-100 dark:hover:bg-dark-highlight transition-colors group cursor-pointer"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
@@ -111,13 +111,13 @@ export default function ChildSelector({ initialChildren }: ChildSelectorProps) {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-[#1a2e20] rounded-xl shadow-lg border border-gray-100 dark:border-gray-800 z-50 overflow-hidden">
+        <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-dark-surface rounded-xl shadow-lg border border-gray-100 dark:border-gray-800 z-50 overflow-hidden">
           <div className="py-2">
             {children.map((child) => (
               <button
                 key={child.id}
                 onClick={() => handleSelectChild(child)}
-                className={`w-full px-4 py-3 text-left flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-[#102216] transition-colors ${
+                className={`w-full px-4 py-3 text-left flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-dark-highlight transition-colors ${
                   selectedChild?.id === child.id
                     ? 'bg-primary/10 dark:bg-primary/20'
                     : ''

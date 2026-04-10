@@ -195,7 +195,7 @@ export default async function Dashboard() {
             {/* Challenge Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Card 1 */}
-              <div className="bg-background-light dark:bg-[#102216] p-4 rounded-2xl flex flex-col gap-3 group border border-transparent hover:border-primary/20 transition-all">
+              <div className="bg-background-light dark:bg-background-dark p-4 rounded-2xl flex flex-col gap-3 group border border-transparent hover:border-primary/20 transition-all">
                 <div className="flex justify-between items-start">
                   <div className="bg-white dark:bg-dark-surface p-2 rounded-xl shadow-sm text-primary">
                     <span className="material-symbols-outlined">calculate</span>
@@ -213,7 +213,7 @@ export default async function Dashboard() {
               </div>
 
               {/* Card 2 */}
-              <div className="bg-background-light dark:bg-[#102216] p-4 rounded-2xl flex flex-col gap-3 group border border-transparent hover:border-primary/20 transition-all">
+              <div className="bg-background-light dark:bg-background-dark p-4 rounded-2xl flex flex-col gap-3 group border border-transparent hover:border-primary/20 transition-all">
                 <div className="flex justify-between items-start">
                   <div className="bg-white dark:bg-dark-surface p-2 rounded-xl shadow-sm text-primary">
                     <span className="material-symbols-outlined">
@@ -233,7 +233,7 @@ export default async function Dashboard() {
               </div>
 
               {/* Card 3 (Incomplete) */}
-              <div className="bg-background-light dark:bg-[#102216] p-4 rounded-2xl flex flex-col gap-3 relative overflow-hidden border border-gray-200 dark:border-gray-700 opacity-80 hover:opacity-100 transition-all cursor-pointer">
+              <div className="bg-background-light dark:bg-background-dark p-4 rounded-2xl flex flex-col gap-3 relative overflow-hidden border border-gray-200 dark:border-gray-700 opacity-80 hover:opacity-100 transition-all cursor-pointer">
                 <div className="flex justify-between items-start">
                   <div className="bg-white dark:bg-dark-surface p-2 rounded-xl shadow-sm text-gray-400">
                     <span className="material-symbols-outlined">science</span>
@@ -285,7 +285,7 @@ export default async function Dashboard() {
               ></div>
             </div>
 
-            <div className="bg-background-light dark:bg-[#102216] p-3 rounded-xl">
+            <div className="bg-background-light dark:bg-background-dark p-3 rounded-xl">
               <p className="text-sm text-gray-600 dark:text-gray-300 text-center italic">
                 &quot;¡Gran trabajo en equipo! Leo ha estado muy tranquilo
                 hoy.&quot;
@@ -315,13 +315,13 @@ export default async function Dashboard() {
 
             <div className="space-y-3">
               <div className="flex gap-4 items-center group cursor-pointer">
-                <div className="flex-col items-center justify-center w-12 h-14 bg-gray-100 dark:bg-[#102216] rounded-xl hidden group-hover:flex transition-all">
+                <div className="flex-col items-center justify-center w-12 h-14 bg-gray-100 dark:bg-background-dark rounded-xl hidden group-hover:flex transition-all">
                   <span className="text-xs font-bold text-primary">OCT</span>
                   <span className="text-lg font-black text-[#111813] dark:text-white">
                     12
                   </span>
                 </div>
-                <div className="flex items-center justify-center w-12 h-14 bg-gray-50 dark:bg-[#102216]/50 rounded-xl group-hover:hidden text-gray-400">
+                <div className="flex items-center justify-center w-12 h-14 bg-gray-50 dark:bg-background-dark/50 rounded-xl group-hover:hidden text-gray-400">
                   <span className="material-symbols-outlined">
                     calendar_today
                   </span>
@@ -339,13 +339,13 @@ export default async function Dashboard() {
               <div className="w-full h-px bg-gray-100 dark:bg-gray-800"></div>
 
               <div className="flex gap-4 items-center group cursor-pointer">
-                <div className="flex-col items-center justify-center w-12 h-14 bg-gray-100 dark:bg-[#102216] rounded-xl hidden group-hover:flex transition-all">
+                <div className="flex-col items-center justify-center w-12 h-14 bg-gray-100 dark:bg-background-dark rounded-xl hidden group-hover:flex transition-all">
                   <span className="text-xs font-bold text-primary">OCT</span>
                   <span className="text-lg font-black text-[#111813] dark:text-white">
                     15
                   </span>
                 </div>
-                <div className="flex items-center justify-center w-12 h-14 bg-gray-50 dark:bg-[#102216]/50 rounded-xl group-hover:hidden text-gray-400">
+                <div className="flex items-center justify-center w-12 h-14 bg-gray-50 dark:bg-background-dark/50 rounded-xl group-hover:hidden text-gray-400">
                   <span className="material-symbols-outlined">
                     calendar_today
                   </span>
