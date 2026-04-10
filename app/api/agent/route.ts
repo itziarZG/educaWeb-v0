@@ -64,9 +64,19 @@ export async function POST(req: NextRequest) {
     const model =
       mode === 'visualization' ? getMaquetinModel() : getLanguageModel();
 
+    // Normalizamos los mensajes para asegurar que 'content' es siempre un string
+    // (algunos modelos pueden recibir arrays, pero OpenRouter los rechaza)
+    const normalizedMessages = messages.map((msg: Record<string, unknown>) => ({
+      role: msg.role as string,
+      content:
+        typeof msg.content === 'string'
+          ? msg.content
+          : JSON.stringify(msg.content),
+    }));
+
     const { text } = await generateText({
       model,
-      messages: messages, // Pasamos el array completo (System + Historial + User)
+      messages: normalizedMessages, // Pasamos el array normalizado
     });
 
     console.log('DEBUG: Respuesta del agente', text);
