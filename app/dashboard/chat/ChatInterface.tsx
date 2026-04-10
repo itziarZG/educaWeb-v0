@@ -18,6 +18,7 @@ interface ChatInterfaceProps {
   setTopic: (value: string) => void;
   showTopicCustom: boolean;
   setShowTopicCustom: (value: boolean) => void;
+  onBackToSelector: () => void; // New: callback para navegar de vuelta
 }
 
 export default function ChatInterface({
@@ -36,6 +37,7 @@ export default function ChatInterface({
   setTopic,
   showTopicCustom,
   setShowTopicCustom,
+  onBackToSelector,
 }: ChatInterfaceProps) {
   return (
     <>
@@ -77,11 +79,13 @@ export default function ChatInterface({
             </span>
           </div>
           <button
-            onClick={() => window.location.href = '/dashboard/chat'}
+            onClick={onBackToSelector}
             className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-dark-highlight transition-colors text-sm"
             title="Cambiar estudiante"
           >
-            <span className="material-symbols-outlined text-sm">arrow_back</span>
+            <span className="material-symbols-outlined text-sm">
+              arrow_back
+            </span>
             <span className="hidden sm:inline">Cambiar est.</span>
           </button>
         </div>

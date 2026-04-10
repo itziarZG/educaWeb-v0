@@ -1,7 +1,7 @@
 'use server';
 
 import { createClient } from '@/utils/supabase/server';
-import { generateSystemPrompt } from '@services/agentService';
+import { generateSystemPrompt } from '@/services/agentService';
 import { ChildInfoAPI } from '@/types/agents';
 import { revalidatePath } from 'next/cache';
 
@@ -60,6 +60,7 @@ export async function addChild(formData: FormData) {
     return { error: 'Error al añadir el perfil del niño/a', success: false };
   }
 
-  revalidatePath('/dashboard/select-profile');
+  revalidatePath('/dashboard');
+  revalidatePath('/dashboard/chat');
   return { success: true };
 }

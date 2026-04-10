@@ -23,7 +23,7 @@ export default function LoginForm() {
     } else {
       setLoading(false);
       router.refresh(); // Refresh to update server components/context
-      router.push('/dashboard/select-profile');
+      router.push('/dashboard/chat');
     }
   };
 

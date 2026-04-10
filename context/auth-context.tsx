@@ -8,7 +8,7 @@ import {
   ReactNode,
 } from 'react';
 import { User } from '@supabase/supabase-js';
-import { createClient } from '@utils/supabase/client';
+import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 
 interface AuthContextType {

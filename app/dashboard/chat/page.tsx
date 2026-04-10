@@ -26,27 +26,29 @@ export default async function ChatPage(props: { searchParams: SearchParams }) {
   // Fetch all children
   const { data: children, error } = await supabase
     .from('children')
-    .select('id, name, avatar_url')
+    .select('id, name')
     .eq('user_id', user.id)
     .order('name');
 
+  const childId = searchParams.childId;
+
+  // Si hay error en la query o no hay children, muestra mensaje
+  // (verifica esto ANTES de hacer llamadas adicionales)
   if (error || !children || children.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-4">
-        <p className="text-lg text-gray-600 dark:text-gray-400">
-          No tienes estudiantes registrados
+        <span className="material-symbols-outlined text-6xl text-gray-300 dark:text-gray-600">
+          smart_toy
+        </span>
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
+          Sin estudiantes
+        </h1>
+        <p className="text-gray-600 dark:text-gray-400">
+          Crea un estudiante desde la sección CUENTA para comenzar
         </p>
-        <Link
-          href="/dashboard/create-child"
-          className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90"
-        >
-          Crear estudiante
-        </Link>
       </div>
     );
   }
-
-  const childId = searchParams.childId;
 
   // Si hay un childId en la URL, obtén los datos completos y muestra el chat
   if (typeof childId === 'string') {
@@ -74,13 +76,11 @@ export default async function ChatPage(props: { searchParams: SearchParams }) {
             className="p-6 rounded-xl bg-white dark:bg-dark-surface border-2 border-gray-200 dark:border-dark-border hover:border-primary dark:hover:border-primary transition-colors cursor-pointer"
           >
             <div className="flex items-center gap-4">
-              {child.avatar_url && (
-                <img
-                  src={child.avatar_url}
-                  alt={child.name}
-                  className="w-16 h-16 rounded-full object-cover"
-                />
-              )}
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center">
+                <span className="material-symbols-outlined text-2xl text-primary">
+                  person
+                </span>
+              </div>
               <div>
                 <h2 className="text-lg font-bold">{child.name}</h2>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
