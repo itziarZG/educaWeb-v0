@@ -25,7 +25,7 @@ export default function DashboardLoading() {
           <Skeleton className="h-64 w-full rounded-3xl" />
 
           {/* Today's Progress Section Skeleton */}
-          <div className="bg-white dark:bg-[#1a2e20] rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+          <div className="bg-white dark:bg-dark-surface rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
             <div className="flex justify-between items-center mb-6">
               <Skeleton className="h-7 w-48" />
               <Skeleton className="h-6 w-24 rounded-full" />
@@ -44,7 +44,7 @@ export default function DashboardLoading() {
         {/* Right Column Skeleton */}
         <div className="flex flex-col gap-6">
           {/* Family Peace Card Skeleton */}
-          <div className="bg-white dark:bg-[#1a2e20] rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-4">
+          <div className="bg-white dark:bg-dark-surface rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-4">
             <div className="flex items-center gap-3 mb-2">
               <Skeleton className="h-10 w-10 rounded-lg" />
               <Skeleton className="h-6 w-32" />
@@ -58,7 +58,7 @@ export default function DashboardLoading() {
           </div>
 
           {/* Upcoming Events Skeleton */}
-          <div className="bg-white dark:bg-[#1a2e20] rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-4">
+          <div className="bg-white dark:bg-dark-surface rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-4">
             <div className="flex justify-between items-center mb-2">
               <Skeleton className="h-6 w-40" />
               <Skeleton className="h-4 w-16" />

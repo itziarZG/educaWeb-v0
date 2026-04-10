@@ -135,7 +135,7 @@ export default async function Dashboard() {
 
         {/* Quick Stats (Desktop) */}
         <div className="flex gap-4">
-          <div className="flex items-center gap-3 bg-white dark:bg-[#1a2e20] px-5 py-3 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+          <div className="flex items-center gap-3 bg-white dark:bg-dark-surface px-5 py-3 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
             <div className="bg-orange-100 dark:bg-orange-900/30 p-2 rounded-lg">
               <span className="material-symbols-outlined text-orange-500 text-xl">
                 local_fire_department
@@ -151,7 +151,7 @@ export default async function Dashboard() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 bg-white dark:bg-[#1a2e20] px-5 py-3 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+          <div className="flex items-center gap-3 bg-white dark:bg-dark-surface px-5 py-3 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
             <div className="bg-primary/20 p-2 rounded-lg">
               <span className="material-symbols-outlined text-primary text-xl">
                 database
@@ -174,7 +174,7 @@ export default async function Dashboard() {
         {/* Left Column (Main Action & Progress) */}
         <div className="lg:col-span-2 flex flex-col gap-6">
           {/* Today's Progress Section */}
-          <section className="bg-white dark:bg-[#1a2e20] rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+          <section className="bg-white dark:bg-dark-surface rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-xl font-bold text-[#111813] dark:text-white">
                 Tu Progreso de Hoy
@@ -197,7 +197,7 @@ export default async function Dashboard() {
               {/* Card 1 */}
               <div className="bg-background-light dark:bg-[#102216] p-4 rounded-2xl flex flex-col gap-3 group border border-transparent hover:border-primary/20 transition-all">
                 <div className="flex justify-between items-start">
-                  <div className="bg-white dark:bg-[#1a2e20] p-2 rounded-xl shadow-sm text-primary">
+                  <div className="bg-white dark:bg-dark-surface p-2 rounded-xl shadow-sm text-primary">
                     <span className="material-symbols-outlined">calculate</span>
                   </div>
                   <span className="material-symbols-outlined text-primary">
@@ -215,7 +215,7 @@ export default async function Dashboard() {
               {/* Card 2 */}
               <div className="bg-background-light dark:bg-[#102216] p-4 rounded-2xl flex flex-col gap-3 group border border-transparent hover:border-primary/20 transition-all">
                 <div className="flex justify-between items-start">
-                  <div className="bg-white dark:bg-[#1a2e20] p-2 rounded-xl shadow-sm text-primary">
+                  <div className="bg-white dark:bg-dark-surface p-2 rounded-xl shadow-sm text-primary">
                     <span className="material-symbols-outlined">
                       auto_stories
                     </span>
@@ -235,7 +235,7 @@ export default async function Dashboard() {
               {/* Card 3 (Incomplete) */}
               <div className="bg-background-light dark:bg-[#102216] p-4 rounded-2xl flex flex-col gap-3 relative overflow-hidden border border-gray-200 dark:border-gray-700 opacity-80 hover:opacity-100 transition-all cursor-pointer">
                 <div className="flex justify-between items-start">
-                  <div className="bg-white dark:bg-[#1a2e20] p-2 rounded-xl shadow-sm text-gray-400">
+                  <div className="bg-white dark:bg-dark-surface p-2 rounded-xl shadow-sm text-gray-400">
                     <span className="material-symbols-outlined">science</span>
                   </div>
                   <span className="material-symbols-outlined text-gray-300">
@@ -257,7 +257,7 @@ export default async function Dashboard() {
         {/* Right Column (Family Peace & Stats) */}
         <div className="flex flex-col gap-6">
           {/* Family Peace Card */}
-          <div className="bg-white dark:bg-[#1a2e20] rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-4">
+          <div className="bg-white dark:bg-dark-surface rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-4">
             <div className="flex items-center gap-3 mb-2">
               <div className="bg-emerald-100 dark:bg-emerald-900/50 p-2 rounded-lg text-emerald-600 dark:text-emerald-400">
                 <span
@@ -300,7 +300,7 @@ export default async function Dashboard() {
           </div>
 
           {/* Upcoming Events / Calendar Mini */}
-          <div className="bg-white dark:bg-[#1a2e20] rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-4 flex-1">
+          <div className="bg-white dark:bg-dark-surface rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-4 flex-1">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-lg font-bold text-[#111813] dark:text-white">
                 Próximos Retos

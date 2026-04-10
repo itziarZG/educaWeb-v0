@@ -42,28 +42,13 @@ export default async function DashboardLayout({
   return (
     <div className="flex h-screen w-full bg-background-light dark:bg-background-dark font-display text-[#111813] dark:text-white transition-colors duration-200 overflow-hidden">
       {/* Sidebar (Desktop) */}
-      <aside className="hidden lg:flex w-64 flex-col border-r border-gray-100 dark:border-gray-800 bg-white dark:bg-[#1a2e20] shadow-sm z-20">
+      <aside className="hidden lg:flex w-64 flex-col border-r border-gray-100 dark:border-gray-800 bg-white dark:bg-dark-surface shadow-sm z-20">
         {/* Links */}
         <nav className="flex-1 flex flex-col gap-1 p-4 overflow-y-auto">
           <p className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
             Principal
           </p>
           <NavLink href="/dashboard" icon="home" label="Inicio" />
-          <NavLink
-            href="/dashboard/library"
-            icon="library_books"
-            label="Librería"
-          />
-          <NavLink
-            href="/dashboard/virtual-world"
-            icon="workspace_premium"
-            label="Mundo Virtual"
-          />
-          <NavLink
-            href="/dashboard/calendar"
-            icon="calendar_today"
-            label="Calendario"
-          />
 
           <div className="my-2 border-t border-gray-100 dark:border-gray-800 opacity-50"></div>
 
@@ -76,30 +61,16 @@ export default async function DashboardLayout({
             label="Analíticas"
           />
           <NavLink
-            href="/dashboard/worksheet"
-            icon="assignment"
-            label="Fichas Activas"
-          />
-          <NavLink
             href="/dashboard/worksheets"
             icon="history"
-            label="Histórico de Fichas"
+            label="Worksheets"
           />
 
           <div className="my-2 border-t border-gray-100 dark:border-gray-800 opacity-50"></div>
           <p className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
-            Herramientas
+            Cuenta
           </p>
-          <NavLink
-            href="/dashboard/generator"
-            icon="auto_awesome"
-            label="Generador AI"
-          />
-          <NavLink
-            href="/dashboard/teacher"
-            icon="school"
-            label="Panel Profesor"
-          />
+          <NavLink href="/dashboard/profile" icon="person" label="Profile" />
         </nav>
 
         {/* User Footer */}
@@ -116,7 +87,7 @@ export default async function DashboardLayout({
       {/* Main Content Wrapper */}
       <div className="flex-1 flex flex-col h-full overflow-hidden relative">
         {/* Mobile Header (Visible on small screens) */}
-        <header className="lg:hidden flex h-16 items-center justify-between px-4 bg-white dark:bg-[#1a2e20] border-b border-gray-100 dark:border-gray-800 z-10 shrink-0">
+        <header className="lg:hidden flex h-16 items-center justify-between px-4 bg-white dark:bg-dark-surface border-b border-gray-100 dark:border-gray-800 z-10 shrink-0">
           <div className="flex items-center gap-2">
             <ChildSelector initialChildren={childrenList} />
             <Link href="/dashboard/profile">
@@ -152,7 +123,7 @@ function NavLink({
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-[#102216] hover:text-primary dark:hover:text-primary transition-all font-medium"
+      className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-dark-highlight hover:text-primary dark:hover:text-primary transition-all font-medium"
     >
       <span className="material-symbols-outlined text-[20px]">{icon}</span>
       <span className="text-sm">{label}</span>
