@@ -49,15 +49,16 @@ function getModelForMode(mode: 'chat' | 'visualization'): LanguageModel {
       model = google(modelName);
       break;
 
-    case 'deepseek':
+    case 'deepseek': {
       const ds = createOpenAI({
         apiKey: apiKey,
         baseURL: 'https://api.deepseek.com/v1',
       });
       model = ds.chat(modelName);
       break;
+    }
 
-    case 'openrouter':
+    case 'openrouter': {
       const openrouter = createOpenAI({
         apiKey: apiKey,
         baseURL: 'https://openrouter.ai/api/v1',
@@ -69,11 +70,13 @@ function getModelForMode(mode: 'chat' | 'visualization'): LanguageModel {
       });
       model = openrouter.chat(modelName);
       break;
+    }
 
-    case 'ollama':
+    case 'ollama': {
       const ollama = createOllama();
       model = ollama(modelName);
       break;
+    }
 
     default:
       model = openai('gpt-4o-mini');
