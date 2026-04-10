@@ -29,9 +29,16 @@ export default async function DashboardLayout({
       .eq('user_id', user.id)
       .order('name');
 
-    if (!error && data) {
+    if (error) {
+      console.error('Error fetching children:', error);
+    } else if (data) {
       childrenList = data as Child[];
+      console.log(
+        `✅ Loaded ${childrenList.length} children for user ${user.id}`
+      );
     }
+  } else {
+    console.warn('No user found in layout');
   }
 
   const userEmail = user?.email || 'usuario@tutoraiapp.es';
