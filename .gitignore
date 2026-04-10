@@ -31,3 +31,6 @@ next-env.d.ts
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# stitch generated files
+/stitch_student_dashboard/
