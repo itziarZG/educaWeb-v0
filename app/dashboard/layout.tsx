@@ -50,6 +50,51 @@ export default async function DashboardLayout({
           </p>
           <NavLink href="/dashboard" icon="home" label="Inicio" />
 
+          {/* Chat Section with Profile Selector */}
+          <div className="my-2">
+            <div className="flex items-center gap-3 px-4 py-3 text-gray-600 dark:text-gray-300 font-medium text-sm">
+              <span className="material-symbols-outlined text-[20px]">
+                smart_toy
+              </span>
+              <span>Chat</span>
+            </div>
+
+            {/* Profile list - only if children exist */}
+            {childrenList.length > 0 && (
+              <div className="space-y-1 px-2">
+                {childrenList.map((child) => (
+                  <Link
+                    key={child.id}
+                    href={`/dashboard/chat?childId=${child.id}`}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-dark-highlight hover:text-primary dark:hover:text-primary transition-all text-sm ml-4"
+                  >
+                    {child.avatar_url && (
+                      <img
+                        src={child.avatar_url}
+                        alt={child.name}
+                        className="w-6 h-6 rounded-full object-cover"
+                      />
+                    )}
+                    <span>{child.name}</span>
+                  </Link>
+                ))}
+              </div>
+            )}
+
+            {/* Show create child if no profiles */}
+            {childrenList.length === 0 && (
+              <Link
+                href="/dashboard/create-child"
+                className="flex items-center gap-2 px-4 py-2 ml-4 text-xs text-gray-500 dark:text-gray-400 hover:text-primary italic"
+              >
+                <span className="material-symbols-outlined text-[16px]">
+                  person_add
+                </span>
+                Crear estudiante
+              </Link>
+            )}
+          </div>
+
           <div className="my-2 border-t border-gray-100 dark:border-gray-800 opacity-50"></div>
 
           <p className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">

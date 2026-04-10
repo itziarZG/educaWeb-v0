@@ -11,7 +11,7 @@ export default async function HomePage() {
 
   // Si está logueado, redirigir al dashboard
   if (user) {
-    redirect('/dashboard/select-profile');
+    redirect('/dashboard/chat');
   }
 
   return (
