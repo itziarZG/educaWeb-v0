@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { generateText } from 'ai';
-import { getLanguageModel } from '@/utils/ai/models';
+import { getLanguageModel, getMaquetinModel } from '@/utils/ai/models';
 import { createClient } from '@/utils/supabase/server';
 
 export async function POST(req: NextRequest) {
@@ -60,8 +60,12 @@ export async function POST(req: NextRequest) {
 
   try {
     // 4. Usamos la función generateText de la librería 'ai' (Vercel AI SDK)
+    // Seleccionamos el modelo según el modo: chat usa el modelo potente, visualization usa uno más económico
+    const model =
+      mode === 'visualization' ? getMaquetinModel() : getLanguageModel();
+
     const { text } = await generateText({
-      model: getLanguageModel(),
+      model,
       messages: messages, // Pasamos el array completo (System + Historial + User)
     });
 
