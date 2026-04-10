@@ -1,10 +1,10 @@
-import { createClient } from '@utils/supabase/server';
+import { createClient } from '@/utils/supabase/server';
 import Link from 'next/link';
 import {
   calculateStreak,
   calculateAverageRating,
   calculatePoints,
-} from '@utils/dashboardStats';
+} from '@/utils/dashboardStats';
 
 interface DashboardStats {
   totalWorksheets: number;
