@@ -25,7 +25,7 @@ export default function CreateChildForm() {
     } else {
       setLoading(false);
       toast.success('¡Perfil de estudiante creado con éxito!');
-      router.push('/dashboard/select-profile');
+      router.push('/dashboard/chat');
     }
   };
 

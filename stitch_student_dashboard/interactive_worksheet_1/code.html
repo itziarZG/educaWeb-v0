@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Worksheet Generator &amp; Preview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f8faf9",
+                        "background-dark": "#0f1712",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Lexend', sans-serif;
+            @apply bg-background-light text-[#111813];
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tdah-mode {
+            @apply contrast-125 grayscale-[0.2];
+        }
+        .tdah-mode p, .tdah-mode h1, .tdah-mode h2 {
+            @apply tracking-wide leading-relaxed;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen flex flex-col">
+<header class="bg-white border-b border-gray-100 sticky top-0 z-20 px-4 py-3 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="bg-primary/20 p-2 rounded-lg">
+<span class="material-symbols-outlined text-emerald-700">auto_awesome</span>
+</div>
+<h1 class="font-bold text-lg">Generador AI</h1>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-full border border-gray-100">
+<span class="text-[10px] font-bold uppercase tracking-wider text-gray-400">TDAH</span>
+<button class="w-8 h-4 bg-gray-200 rounded-full relative transition-colors" id="tdahToggle">
+<div class="absolute left-0.5 top-0.5 w-3 h-3 bg-white rounded-full shadow-sm"></div>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto pb-32">
+<section class="p-4 space-y-6">
+<div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+<h2 class="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-4">Parámetros de Generación</h2>
+<div class="space-y-4">
+<div class="space-y-1.5">
+<label class="text-sm font-medium text-gray-700 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">psychology</span>
+                        Tema de Interés
+                    </label>
+<textarea class="w-full rounded-xl border-gray-200 focus:ring-primary focus:border-primary text-sm p-3 min-h-[80px]" placeholder="Ej: Historia de la arquitectura romana, cultivo de orquídeas para principiantes..."></textarea>
+<p class="text-[11px] text-gray-400">La IA personalizará los ejemplos basándose en este interés.</p>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<div class="space-y-1.5">
+<label class="text-sm font-medium text-gray-700 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">school</span>
+                            Asignatura
+                        </label>
+<select class="w-full rounded-xl border-gray-200 focus:ring-primary focus:border-primary text-sm h-11">
+<option>Matemáticas</option>
+<option>Comprensión Lectora</option>
+<option>Ciencias Naturales</option>
+<option>Historia</option>
+<option>Habilidades Blandas</option>
+</select>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-medium text-gray-700 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">target</span>
+                            Objetivo Pedagógico
+                        </label>
+<input class="w-full rounded-xl border-gray-200 focus:ring-primary focus:border-primary text-sm h-11" placeholder="Ej: Resolución de problemas de lógica" type="text"/>
+</div>
+</div>
+<button class="w-full bg-background-dark text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 active:scale-[0.98] transition-all">
+<span>Generar Ficha</span>
+<span class="material-symbols-outlined">bolt</span>
+</button>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between px-1">
+<h3 class="font-bold text-lg">Vista Previa</h3>
+<span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded font-medium">Draft v1.0</span>
+</div>
+<div class="bg-white border-2 border-dashed border-gray-200 rounded-3xl p-6 shadow-inner min-h-[400px] relative overflow-hidden">
+<div class="space-y-6">
+<div class="border-b-2 border-gray-800 pb-4">
+<div class="h-4 w-32 bg-gray-100 rounded mb-2"></div>
+<h1 class="text-2xl font-black text-gray-900 leading-tight">La Geometría en los Acueductos</h1>
+<p class="text-sm text-gray-500 mt-1">Personalizado para: Arquitectura Romana</p>
+</div>
+<div class="space-y-4">
+<div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+<p class="text-sm leading-relaxed text-gray-700">
+<span class="font-bold">Ejercicio 1:</span> Los arcos de medio punto romanos se basan en la circunferencia. Si un arco tiene un radio de 3 metros, ¿cuál es el área del semicírculo que forma?
+                            </p>
+</div>
+<div class="border-2 border-gray-100 rounded-xl h-24 flex items-center justify-center text-gray-300 italic text-sm">
+                            Espacio para resolución...
+                        </div>
+</div>
+<div class="space-y-4">
+<div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+<p class="text-sm leading-relaxed text-gray-700">
+<span class="font-bold">Ejercicio 2:</span> Imagina que estás construyendo el acueducto de Segovia. Necesitas 150 bloques por cada 10 metros...
+                            </p>
+</div>
+</div>
+</div>
+<div class="absolute bottom-4 right-4 opacity-10">
+<span class="material-symbols-outlined text-8xl">description</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-gray-100 p-4 pb-8 z-30">
+<div class="max-w-xl mx-auto flex gap-3">
+<button class="flex-1 bg-white border-2 border-gray-200 text-gray-700 font-bold py-4 px-4 rounded-2xl flex items-center justify-center gap-2 active:scale-95 transition-all">
+<span class="material-symbols-outlined">edit</span>
+<span>Refinar</span>
+</button>
+<button class="flex-[2] bg-primary text-background-dark font-black py-4 px-6 rounded-2xl shadow-lg shadow-primary/30 flex items-center justify-center gap-2 active:scale-95 transition-all">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+<span>Descargar PDF</span>
+</button>
+</div>
+</footer>
+
+</body></html>

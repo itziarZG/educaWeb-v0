@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .ios-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 5px;
+            outline: none;
+        }
+        .dark .ios-slider {
+            background: #1f2937;
+        }
+        .ios-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            background: #ffffff;
+            border: 0.5px solid rgba(0,0,0,0.1);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#111813] dark:text-white min-h-screen flex flex-col">
+<div class="flex items-center bg-white dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-10 p-4 border-b border-gray-100 dark:border-gray-800 justify-between w-full">
+<div class="text-[#111813] dark:text-white flex size-10 shrink-0 items-center justify-start">
+<span class="material-symbols-outlined">chevron_left</span>
+</div>
+<h2 class="text-[#111813] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Añadir Feedback</h2>
+<div class="size-10"></div>
+</div>
+<main class="flex-1 px-5 py-6 space-y-8 max-w-md mx-auto w-full">
+<div class="flex items-center gap-4 bg-white dark:bg-gray-900 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="size-12 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div>
+<p class="text-xs font-semibold text-primary uppercase tracking-wider">Ficha completada</p>
+<h3 class="font-bold text-lg leading-tight">Lógica y Seriación 1</h3>
+</div>
+</div>
+<div class="space-y-8">
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<label class="font-bold text-lg">Grado de autonomía</label>
+<span class="text-xs text-gray-500 font-medium">¿Cómo lo hizo?</span>
+</div>
+<div class="space-y-4">
+<input class="ios-slider" max="5" min="1" type="range" value="3"/>
+<div class="flex justify-between px-1">
+<div class="flex flex-col items-center gap-1 opacity-60">
+<span class="material-symbols-outlined text-xl">help</span>
+<span class="text-[10px] font-medium">Ayuda total</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-xl text-primary" style="font-variation-settings: 'FILL' 1">bolt</span>
+<span class="text-[10px] font-medium text-primary">Autónomo</span>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<label class="font-bold text-lg">Nivel de motivación</label>
+<span class="text-xs text-gray-500 font-medium">¿Le gustó?</span>
+</div>
+<div class="flex justify-between items-center gap-2">
+<button class="flex-1 aspect-square rounded-2xl border-2 border-gray-100 dark:border-gray-800 flex flex-col items-center justify-center gap-1 active:bg-gray-50 dark:active:bg-gray-800 transition-colors">
+<span class="text-3xl">😞</span>
+<span class="text-[10px] font-medium">Poco</span>
+</button>
+<button class="flex-1 aspect-square rounded-2xl border-2 border-gray-100 dark:border-gray-800 flex flex-col items-center justify-center gap-1 active:bg-gray-50 dark:active:bg-gray-800 transition-colors">
+<span class="text-3xl">😐</span>
+<span class="text-[10px] font-medium">Normal</span>
+</button>
+<button class="flex-1 aspect-square rounded-2xl border-2 border-primary bg-primary/5 flex flex-col items-center justify-center gap-1">
+<span class="text-3xl">🤩</span>
+<span class="text-[10px] font-medium font-bold text-primary">¡Mucho!</span>
+</button>
+</div>
+</div>
+<div class="space-y-4">
+<label class="font-bold text-lg block">Observaciones</label>
+<div class="relative">
+<textarea class="w-full rounded-2xl border-gray-200 dark:border-gray-800 dark:bg-gray-900 focus:ring-primary focus:border-primary p-4 text-sm" placeholder="¿Qué le costó más? (Opcional)" rows="4"></textarea>
+<div class="absolute bottom-3 right-3 text-gray-400">
+<span class="material-symbols-outlined text-lg">auto_awesome</span>
+</div>
+</div>
+<p class="text-[11px] text-gray-400 leading-tight">
+                    La IA utilizará esta información para calibrar la dificultad y temática de la siguiente ficha.
+                </p>
+</div>
+</div>
+</main>
+<footer class="p-6 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-t border-gray-100 dark:border-gray-800">
+<div class="max-w-md mx-auto space-y-4">
+<button class="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 bg-primary text-[#111813] text-lg font-bold leading-normal tracking-wide shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform">
+<span class="truncate">Guardar y Calibrar</span>
+<span class="material-symbols-outlined ml-2">check</span>
+</button>
+<button class="w-full h-10 text-gray-500 dark:text-gray-400 text-sm font-medium">
+                Omitir por ahora
+            </button>
+</div>
+</footer>
+
+</body></html>

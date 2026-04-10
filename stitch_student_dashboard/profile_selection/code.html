@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profile Selection - EduApp</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Lexend -->
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased transition-colors duration-300">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10">
+<div class="w-12"></div> <!-- Spacer for centering -->
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">
+                Profile Selection
+            </h2>
+<div class="flex w-12 items-center justify-end">
+<button class="text-primary text-base font-bold leading-normal tracking-[0.015em] hover:opacity-80 transition-opacity">
+                    Edit
+                </button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col items-center justify-center px-4">
+<!-- HeadlineText -->
+<div class="w-full max-w-md">
+<h2 class="text-slate-900 dark:text-slate-100 tracking-tight text-[32px] font-bold leading-tight px-4 text-center pb-8 pt-5">
+                    Who is studying today?
+                </h2>
+</div>
+<!-- ImageGrid / Profile Selection -->
+<div class="w-full max-w-sm">
+<div class="grid grid-cols-2 gap-8 p-4">
+<!-- Profile 1: Leo -->
+<button class="group flex flex-col items-center gap-4 text-center focus:outline-none">
+<div class="relative w-full aspect-square max-w-[140px]">
+<div class="w-full h-full bg-center bg-no-repeat bg-cover rounded-full border-4 border-transparent group-hover:border-primary group-active:scale-95 transition-all duration-200 shadow-md" data-alt="Illustration of a happy young boy named Leo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDB0zIlaHUbAWN_lOj7jjhfik0xanQMOFO_knLHysvrIk8RrQXH_xoZtCuTVN0WlVC7pS2ONH9xAjqnjA2eryi3ET_r9QeuFo2_f1pZ0nb2fDrsQ4A8q3rEFYIo_qgx8vXqI2J1hM5gjIjqbXikNKGlT5Vi_Ek1DOgPICkaQrn5Tkyv3DIN2mWz79ciZwGjy6KCHhoeuwwy1IfgL0r68q0RaoDslAzN6pdI-iL_SF7OKy48lEjdNK0bResnklqBOeQSklcdLO_wBw0");'>
+</div>
+</div>
+<p class="text-slate-900 dark:text-slate-100 text-xl font-semibold leading-normal">Leo</p>
+</button>
+<!-- Profile 2: Sara -->
+<button class="group flex flex-col items-center gap-4 text-center focus:outline-none">
+<div class="relative w-full aspect-square max-w-[140px]">
+<div class="w-full h-full bg-center bg-no-repeat bg-cover rounded-full border-4 border-transparent group-hover:border-primary group-active:scale-95 transition-all duration-200 shadow-md" data-alt="Illustration of a smiling young girl named Sara" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAxXPGEDc25SdXBFYN6F-zGt2FmNaQYkzGuc7YxS7ydHnUqGPAqpOYTPjE1L9fKNcOEqw9sHT_GV_SM5FkH6ijxvy0v2ayw-vfDfiIiiE1F6JKB4SyEK_4PlbMbuYuRk2BGMUUgkxtDYWoM5SsY7T6E5gXTWTaYTzK9sw-Jq5bHMuixkWcEGw9Y_6j09fjfWwh-3tInKu7nwA0tWlQU0IXUSQA-lM2VHxnZ5Y_gDITsrsP5YdA-26sLYxPLiM4tZkONDBkjPHrtEr0");'>
+</div>
+</div>
+<p class="text-slate-900 dark:text-slate-100 text-xl font-semibold leading-normal">Sara</p>
+</button>
+</div>
+</div>
+<!-- SingleButton (Add New Student) -->
+<div class="w-full max-w-sm mt-12 mb-10">
+<div class="flex px-4 py-3 justify-center">
+<button class="flex min-w-[200px] w-full max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 bg-primary/10 border-2 border-dashed border-primary/30 text-slate-900 dark:text-slate-100 gap-3 hover:bg-primary/20 transition-colors group">
+<div class="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-slate-900">
+<span class="material-symbols-outlined text-[20px] font-bold">add</span>
+</div>
+<span class="truncate text-base font-bold leading-normal tracking-[0.015em]">Add New Student</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Footer / Bottom Spacer -->
+<footer class="h-10 bg-transparent"></footer>
+</div>
+</body></html>

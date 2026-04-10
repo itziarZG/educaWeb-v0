@@ -49,6 +49,7 @@ export default async function DashboardLayout({
             Principal
           </p>
           <NavLink href="/dashboard" icon="home" label="Inicio" />
+          <NavLink href="/dashboard/chat" icon="smart_toy" label="Chat" />
 
           <div className="my-2 border-t border-gray-100 dark:border-gray-800 opacity-50"></div>
 

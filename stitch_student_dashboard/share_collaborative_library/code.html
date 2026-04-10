@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Compartir &amp; Comunidad</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111813] dark:text-white transition-colors duration-300">
+<!-- iOS Modal Bottom Sheet Wrapper -->
+<div class="relative flex min-h-screen w-full flex-col max-w-[430px] mx-auto bg-white dark:bg-[#0a140d] shadow-2xl rounded-t-[40px] mt-4 overflow-hidden">
+<!-- BottomSheetHandle -->
+<div class="flex flex-col items-stretch bg-white dark:bg-[#0a140d] pt-3">
+<button class="flex h-5 w-full items-center justify-center">
+<div class="h-1.5 w-12 rounded-full bg-[#dbe6df] dark:bg-[#2a3a30]"></div>
+</button>
+</div>
+<!-- TopAppBar -->
+<div class="flex items-center bg-white dark:bg-[#0a140d] px-4 pb-2 justify-between">
+<div class="text-[#111813] dark:text-white flex size-12 shrink-0 items-center justify-start">
+<span class="material-symbols-outlined cursor-pointer">close</span>
+</div>
+<h2 class="text-[#111813] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Compartir</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-[#111813] dark:text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+</div>
+</div>
+<!-- Main Scrollable Content -->
+<div class="flex-1 overflow-y-auto pb-10">
+<!-- Private Sharing Section -->
+<h2 class="text-[#111813] dark:text-white text-[20px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Opciones de envío</h2>
+<div class="space-y-1">
+<!-- ListItem: Enviar a Docente -->
+<div class="flex items-center gap-4 bg-white dark:bg-transparent px-4 min-h-[72px] py-2 justify-between hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="text-[#111813] dark:text-primary flex items-center justify-center rounded-xl bg-[#f0f4f2] dark:bg-primary/10 shrink-0 size-12">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111813] dark:text-white text-base font-medium leading-normal line-clamp-1">Enviar a Docente</p>
+<p class="text-[#61896f] dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Por email o enlace directo</p>
+</div>
+</div>
+<div class="shrink-0">
+<span class="material-symbols-outlined text-[#111813] dark:text-white">chevron_right</span>
+</div>
+</div>
+<!-- ListItem: Guardar en Carpeta -->
+<div class="flex items-center gap-4 bg-white dark:bg-transparent px-4 min-h-[72px] py-2 justify-between hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="text-[#111813] dark:text-primary flex items-center justify-center rounded-xl bg-[#f0f4f2] dark:bg-primary/10 shrink-0 size-12">
+<span class="material-symbols-outlined">folder_shared</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111813] dark:text-white text-base font-medium leading-normal line-clamp-1">Carpeta Compartida</p>
+<p class="text-[#61896f] dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Acceso grupal con tu equipo</p>
+</div>
+</div>
+<div class="shrink-0">
+<span class="material-symbols-outlined text-[#111813] dark:text-white">chevron_right</span>
+</div>
+</div>
+<!-- ListItem: Publicar en la Comunidad (Toggle) -->
+<div class="flex items-center gap-4 bg-white dark:bg-transparent px-4 min-h-[72px] py-2 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-[#111813] dark:text-primary flex items-center justify-center rounded-xl bg-[#f0f4f2] dark:bg-primary/10 shrink-0 size-12">
+<span class="material-symbols-outlined">public</span>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111813] dark:text-white text-base font-medium leading-normal line-clamp-1">Publicar en la Comunidad</p>
+<p class="text-[#61896f] dark:text-gray-400 text-sm font-normal leading-normal line-clamp-2">Compartir de forma anónima</p>
+</div>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#f0f4f2] dark:bg-[#1a2e20] p-0.5 has-[:checked]:justify-end has-[:checked]:bg-[#13ec5b]">
+<div class="h-full w-[27px] rounded-full bg-white" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px, rgba(0, 0, 0, 0.06) 0px 3px 1px;"></div>
+<input checked="" class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+</div>
+<!-- Community Chest Section -->
+<div class="mt-8">
+<div class="flex items-center justify-between px-4 pb-3">
+<h2 class="text-[#111813] dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em]">Cofre de la Comunidad</h2>
+<span class="text-primary text-sm font-semibold">Ver todo</span>
+</div>
+<p class="px-4 text-[#61896f] dark:text-gray-400 text-sm mb-4">Inspiración de otros usuarios con alto rendimiento.</p>
+<!-- Horizontal Scrollable Cards -->
+<div class="flex gap-4 overflow-x-auto px-4 no-scrollbar">
+<!-- Card 1 -->
+<div class="min-w-[280px] bg-[#f0f4f2] dark:bg-[#1a2e20] rounded-2xl p-4 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div class="bg-primary/20 text-[#102216] dark:text-primary px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Matemáticas</div>
+<div class="flex text-yellow-500">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="text-xs font-bold ml-0.5">4.9</span>
+</div>
+</div>
+<h3 class="font-bold text-lg text-[#111813] dark:text-white leading-snug">Álgebra para Adultos: Nivel Intermedio</h3>
+<div class="flex items-center gap-2 text-[#61896f] dark:text-gray-400 text-xs">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Ayer</span>
+<span class="material-symbols-outlined text-sm ml-2">visibility</span>
+<span>1.2k</span>
+</div>
+<button class="mt-2 w-full bg-primary text-[#102216] py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">content_copy</span>
+                            Adaptar Worksheet
+                        </button>
+</div>
+<!-- Card 2 -->
+<div class="min-w-[280px] bg-[#f0f4f2] dark:bg-[#1a2e20] rounded-2xl p-4 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div class="bg-primary/20 text-[#102216] dark:text-primary px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Historia</div>
+<div class="flex text-yellow-500">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="text-xs font-bold ml-0.5">4.8</span>
+</div>
+</div>
+<h3 class="font-bold text-lg text-[#111813] dark:text-white leading-snug">Siglo XX: El fin de las fronteras</h3>
+<div class="flex items-center gap-2 text-[#61896f] dark:text-gray-400 text-xs">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>2 días</span>
+<span class="material-symbols-outlined text-sm ml-2">visibility</span>
+<span>843</span>
+</div>
+<button class="mt-2 w-full bg-primary text-[#102216] py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">content_copy</span>
+                            Adaptar Worksheet
+                        </button>
+</div>
+<!-- Card 3 -->
+<div class="min-w-[280px] bg-[#f0f4f2] dark:bg-[#1a2e20] rounded-2xl p-4 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div class="bg-primary/20 text-[#102216] dark:text-primary px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Idiomas</div>
+<div class="flex text-yellow-500">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="text-xs font-bold ml-0.5">5.0</span>
+</div>
+</div>
+<h3 class="font-bold text-lg text-[#111813] dark:text-white leading-snug">Inglés Técnico para Negocios</h3>
+<div class="flex items-center gap-2 text-[#61896f] dark:text-gray-400 text-xs">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>1 sem</span>
+<span class="material-symbols-outlined text-sm ml-2">visibility</span>
+<span>2.5k</span>
+</div>
+<button class="mt-2 w-full bg-primary text-[#102216] py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">content_copy</span>
+                            Adaptar Worksheet
+                        </button>
+</div>
+</div>
+</div>
+<!-- Privacy Footer Note -->
+<div class="px-4 mt-8 flex items-start gap-3 opacity-60">
+<span class="material-symbols-outlined text-sm mt-0.5">lock_open</span>
+<p class="text-xs leading-relaxed">
+                    Al publicar en la comunidad, los datos personales del creador se anonimizan. Solo se comparte el contenido pedagógico para fomentar la colaboración global.
+                </p>
+</div>
+</div>
+<!-- Sticky Bottom CTA -->
+<div class="p-4 bg-white dark:bg-[#0a140d] border-t border-gray-100 dark:border-white/10">
+<button class="w-full bg-[#111813] dark:bg-white text-white dark:text-[#111813] h-14 rounded-2xl font-bold text-lg flex items-center justify-center gap-2">
+                Listo
+            </button>
+</div>
+</div>
+</body></html>
