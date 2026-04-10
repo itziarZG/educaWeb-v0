@@ -81,16 +81,12 @@ export default async function DashboardLayout({
             </div>
           )}
 
-          {/* Create child link - always visible now */}
-          <Link
-            href="/dashboard/create-child"
-            className="flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-dark-highlight hover:text-primary dark:hover:text-primary transition-all text-sm rounded-lg"
-          >
-            <span className="material-symbols-outlined text-[20px]">
-              person_add
-            </span>
-            <span>Crear Estudiante</span>
-          </Link>
+          {/* Show message if no children */}
+          {childrenList.length === 0 && (
+            <p className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400 italic">
+              Sin estudiantes aún
+            </p>
+          )}
 
           <div className="my-2 border-t border-gray-100 dark:border-gray-800 opacity-50"></div>
 
@@ -116,6 +112,15 @@ export default async function DashboardLayout({
             Cuenta
           </p>
           <NavLink href="/dashboard/profile" icon="person" label="Profile" />
+          <Link
+            href="/dashboard/create-child"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-dark-highlight hover:text-primary dark:hover:text-primary transition-all font-medium"
+          >
+            <span className="material-symbols-outlined text-[20px]">
+              person_add
+            </span>
+            <span className="text-sm">Crear Estudiante</span>
+          </Link>
         </nav>
 
         {/* User Footer */}
