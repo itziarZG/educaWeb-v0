@@ -67,7 +67,7 @@ function getModelForMode(mode: 'chat' | 'visualization'): LanguageModel {
           'X-Title': 'EducaWeb',
         },
       });
-      model = openrouter(modelName);
+      model = openrouter.chat(modelName);
       break;
 
     case 'ollama':

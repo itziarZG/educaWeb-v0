@@ -74,6 +74,11 @@ export async function POST(req: NextRequest) {
           : JSON.stringify(msg.content),
     }));
 
+    console.log(
+      'DEBUG: Mensajes normalizados enviados a generateText:',
+      JSON.stringify(normalizedMessages, null, 2)
+    );
+
     const { text } = await generateText({
       model,
       messages: normalizedMessages, // Pasamos el array normalizado
