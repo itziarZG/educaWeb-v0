@@ -1,8 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import { Star } from 'lucide-react';
-import { toast } from 'sonner';
+import { useFeedbackForm } from '@/hooks/use-feedback-form';
 import type { WorksheetFeedback } from '@/types/worksheet';
 
 interface FeedbackFormProps {
@@ -16,61 +15,18 @@ export default function FeedbackForm({
   onFeedbackSubmitted,
   initialFeedback,
 }: FeedbackFormProps) {
-  const [rating, setRating] = useState<1 | 2 | 3 | 4 | 5 | 0>(
-    initialFeedback?.rating || 0
-  );
-  const [comments, setComments] = useState(initialFeedback?.comments || '');
-  const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(!!initialFeedback);
-  const [error, setError] = useState<string | null>(null);
-  const [hoverRating, setHoverRating] = useState(0);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!rating) {
-      setError('Por favor selecciona una calificación');
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await fetch('/api/feedback', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          worksheetId,
-          rating,
-          comments: comments.trim() || null,
-        }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-
-        if (response.status === 409) {
-          toast.error('Ya existe feedback para esta ficha');
-          setError('Ya existe feedback para esta ficha');
-          return;
-        }
-
-        throw new Error(data.error || 'Error al guardar feedback');
-      }
-
-      toast.success('Gracias por tu feedback. Tu opinión nos ayuda a mejorar.');
-      setSubmitted(true);
-      onFeedbackSubmitted?.();
-    } catch (err) {
-      const message =
-        err instanceof Error ? err.message : 'Error al guardar feedback';
-      setError(message);
-      toast.error(message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const {
+    rating,
+    setRating,
+    hoverRating,
+    setHoverRating,
+    comments,
+    setComments,
+    loading,
+    error,
+    submitted,
+    onSubmit,
+  } = useFeedbackForm(worksheetId, initialFeedback, onFeedbackSubmitted);
 
   // Si ya existe feedback, mostrar read-only
   if (submitted) {
@@ -117,7 +73,7 @@ export default function FeedbackForm({
   // Formulario activo
   return (
     <div className="mt-6 p-4 md:p-6 bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border rounded-lg shadow-sm">
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={onSubmit} className="space-y-4">
         <h3 className="font-semibold text-gray-900 dark:text-gray-100">
           ¿Qué te pareció esta ficha?
         </h3>

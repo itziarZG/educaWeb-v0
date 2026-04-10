@@ -14,10 +14,13 @@ describe('useIsMobile', () => {
     });
     removeEventListenerSpy = vi.fn();
 
-    vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({
-      addEventListener: addEventListenerSpy,
-      removeEventListener: removeEventListenerSpy,
-    }));
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn().mockReturnValue({
+        addEventListener: addEventListenerSpy,
+        removeEventListener: removeEventListenerSpy,
+      })
+    );
   });
 
   afterEach(() => {
@@ -25,7 +28,10 @@ describe('useIsMobile', () => {
   });
 
   it('returns false when window width is >= 768', () => {
-    Object.defineProperty(window, 'innerWidth', { value: 1024, writable: true });
+    Object.defineProperty(window, 'innerWidth', {
+      value: 1024,
+      writable: true,
+    });
     const { result } = renderHook(() => useIsMobile());
     expect(result.current).toBe(false);
   });
@@ -37,13 +43,19 @@ describe('useIsMobile', () => {
   });
 
   it('updates when window is resized', () => {
-    Object.defineProperty(window, 'innerWidth', { value: 1024, writable: true });
+    Object.defineProperty(window, 'innerWidth', {
+      value: 1024,
+      writable: true,
+    });
     const { result } = renderHook(() => useIsMobile());
     expect(result.current).toBe(false);
 
     // Simulate resize to mobile
     act(() => {
-      Object.defineProperty(window, 'innerWidth', { value: 500, writable: true });
+      Object.defineProperty(window, 'innerWidth', {
+        value: 500,
+        writable: true,
+      });
       listeners.forEach((cb) => cb());
     });
 
@@ -53,6 +65,9 @@ describe('useIsMobile', () => {
   it('cleans up event listener on unmount', () => {
     const { unmount } = renderHook(() => useIsMobile());
     unmount();
-    expect(removeEventListenerSpy).toHaveBeenCalledWith('change', expect.any(Function));
+    expect(removeEventListenerSpy).toHaveBeenCalledWith(
+      'change',
+      expect.any(Function)
+    );
   });
 });
