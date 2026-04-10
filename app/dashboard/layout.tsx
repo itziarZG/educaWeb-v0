@@ -58,42 +58,6 @@ export default async function DashboardLayout({
 
           <div className="my-2 border-t border-gray-100 dark:border-gray-800 opacity-50"></div>
 
-          {/* CHAT Section with Profile Selector */}
-          <p className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
-            Chat
-          </p>
-
-          {/* Profile list - only if children exist */}
-          {childrenList.length > 0 && (
-            <div className="space-y-1 px-2">
-              {childrenList.map((child) => (
-                <Link
-                  key={child.id}
-                  href={`/dashboard/chat?childId=${child.id}`}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-dark-highlight hover:text-primary dark:hover:text-primary transition-all text-sm ml-0"
-                >
-                  {child.avatar_url && (
-                    <img
-                      src={child.avatar_url}
-                      alt={child.name}
-                      className="w-6 h-6 rounded-full object-cover"
-                    />
-                  )}
-                  <span>{child.name}</span>
-                </Link>
-              ))}
-            </div>
-          )}
-
-          {/* Show message if no children */}
-          {childrenList.length === 0 && (
-            <p className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400 italic">
-              Sin estudiantes aún
-            </p>
-          )}
-
-          <div className="my-2 border-t border-gray-100 dark:border-gray-800 opacity-50"></div>
-
           {/* PROGRESO */}
           <p className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
             Progreso
