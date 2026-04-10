@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { createClient } from '@utils/supabase/server';
+import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 
 export default async function ProfileSelectionPage() {
@@ -22,7 +22,7 @@ export default async function ProfileSelectionPage() {
     console.error('Error fetching children:', error);
   }
   if (!children || children.length === 0) {
-    redirect('/create-child');
+    redirect('/dashboard/create-child');
   }
   const leoUrl =
     'https://lh3.googleusercontent.com/aida-public/AB6AXuDB0zIlaHUbAWN_lOj7jjhfik0xanQMOFO_knLHysvrIk8RrQXH_xoZtCuTVN0WlVC7pS2ONH9xAjqnjA2eryi3ET_r9QeuFo2_f1pZ0nb2fDrsQ4A8q3rEFYIo_qgx8vXqI2J1hM5gjIjqbXikNKGlT5Vi_Ek1DOgPICkaQrn5Tkyv3DIN2mWz79ciZwGjy6KCHhoeuwwy1IfgL0r68q0RaoDslAzN6pdI-iL_SF7OKy48lEjdNK0bResnklqBOeQSklcdLO_wBw0';
@@ -58,7 +58,7 @@ export default async function ProfileSelectionPage() {
               children.length > 0 &&
               children.map((child) => (
                 <Link
-                  href={`/chat?childId=${child.id}`}
+                  href={`/dashboard/chat?childId=${child.id}`}
                   key={child.id}
                   className="group flex flex-col items-center gap-4 text-center focus:outline-none w-full"
                 >

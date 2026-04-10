@@ -1,3 +1,10 @@
+node_modules
+.next
+dist
+coverage
+build
+.git
+
 # Dependency directories
 node_modules
 .pnpm-store
@@ -33,3 +40,11 @@ next-env.d.ts
 .vscode
 .idea
 *.tsbuildinfo
+
+# Playwright test reports
+/test-results/
+/playwright-report/
+/blob-report/
+
+# Stitch generated files
+/stitch_student_dashboard/

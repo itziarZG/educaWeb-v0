@@ -14,11 +14,11 @@ const config: Config = {
       colors: {
         primary: '#13ec5b',
         'background-light': '#f6f8f6',
-        'background-dark': '#102216',
+        'background-dark': '#0F1419',
         'home-dark': '#101622',
-        'dark-surface': '#1a2e20',
-        'dark-highlight': '#2a3a30',
-        'dark-border': '#2a3a30',
+        'dark-surface': '#1A1F2E',
+        'dark-highlight': '#2A3139',
+        'dark-border': '#2A3139',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -98,9 +98,6 @@ const config: Config = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-      },
-      screens: {
-        xxs: '375px',
       },
     },
   },

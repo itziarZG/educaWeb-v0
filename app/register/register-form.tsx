@@ -18,7 +18,7 @@ export default function RegisterForm() {
     } else {
       setError(null);
       toast.success('Usuario creado. ¡Tienes 3 créditos de prueba!');
-      router.push('/create-child');
+      router.push('/dashboard/create-child');
     }
   };
   return (

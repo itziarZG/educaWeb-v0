@@ -13,5 +13,5 @@ export async function GET(request: Request) {
   }
 
   // Una vez logueado, lo enviamos al panel principal de la app
-  return NextResponse.redirect(new URL('/select-profile', request.url));
+  return NextResponse.redirect(new URL('/dashboard/chat', request.url));
 }

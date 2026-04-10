@@ -48,4 +48,5 @@ export interface ChildInfo {
   userId: string;
   systemPrompt: string;
   region: string;
+  topic?: string;
 }

@@ -23,7 +23,7 @@ export default function LoginForm() {
     } else {
       setLoading(false);
       router.refresh(); // Refresh to update server components/context
-      router.push('/select-profile');
+      router.push('/dashboard/chat');
     }
   };
 
@@ -31,7 +31,7 @@ export default function LoginForm() {
     <div className="flex flex-col items-center justify-center w-full">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-4 bg-white p-8 rounded-xl shadow-md border dark:bg-[#1a2e20] dark:border-gray-800"
+        className="flex flex-col gap-4 bg-white p-8 rounded-xl shadow-md border dark:bg-dark-surface dark:border-gray-800"
       >
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           Iniciar Sesión

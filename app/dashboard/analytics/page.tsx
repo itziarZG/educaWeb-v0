@@ -18,7 +18,7 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Date Range Picker (Visual) */}
-        <div className="bg-white dark:bg-[#1a2e20] rounded-xl p-1 shadow-sm border border-gray-100 dark:border-gray-800 flex">
+        <div className="bg-white dark:bg-dark-surface rounded-xl p-1 shadow-sm border border-gray-100 dark:border-gray-800 flex">
           <button className="px-4 py-2 bg-primary text-[#102216] rounded-lg text-sm font-bold shadow-sm transition-all hover:bg-emerald-400">
             Últimas 10 Fichas
           </button>
@@ -34,7 +34,7 @@ export default function AnalyticsPage() {
       {/* Main Stats Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Chart Card */}
-        <div className="lg:col-span-2 bg-white dark:bg-[#1a2e20] rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-6">
+        <div className="lg:col-span-2 bg-white dark:bg-dark-surface rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-6">
           <div className="flex justify-between items-center">
             <h3 className="text-xl font-bold text-[#111813] dark:text-white">
               Curva de Aprendizaje
@@ -182,7 +182,7 @@ export default function AnalyticsPage() {
         {/* Side Stats Column */}
         <div className="flex flex-col gap-6">
           {/* Family Peace Score */}
-          <div className="bg-white dark:bg-[#1a2e20] rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-4">
+          <div className="bg-white dark:bg-dark-surface rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-4">
             <div className="flex items-center gap-3">
               <div className="bg-primary/20 p-2 rounded-lg text-emerald-700 dark:text-emerald-400">
                 <span className="material-symbols-outlined">
@@ -244,7 +244,7 @@ export default function AnalyticsPage() {
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Milestone 1 */}
-        <div className="bg-white dark:bg-[#1a2e20] p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 flex items-start gap-4">
+        <div className="bg-white dark:bg-dark-surface p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 flex items-start gap-4">
           <div className="bg-emerald-100 dark:bg-emerald-900/50 p-3 rounded-full text-emerald-600 dark:text-emerald-400">
             <span className="material-symbols-outlined">auto_stories</span>
           </div>
@@ -263,7 +263,7 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Milestone 2 */}
-        <div className="bg-white dark:bg-[#1a2e20] p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 flex items-start gap-4">
+        <div className="bg-white dark:bg-dark-surface p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 flex items-start gap-4">
           <div className="bg-blue-100 dark:bg-blue-900/50 p-3 rounded-full text-blue-600 dark:text-blue-400">
             <span className="material-symbols-outlined">timer</span>
           </div>
@@ -284,7 +284,7 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Milestone 3 */}
-        <div className="bg-white dark:bg-[#1a2e20] p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 flex items-start gap-4 opacity-75">
+        <div className="bg-white dark:bg-dark-surface p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 flex items-start gap-4 opacity-75">
           <div className="bg-gray-100 dark:bg-gray-800 p-3 rounded-full text-gray-400">
             <span className="material-symbols-outlined">psychology</span>
           </div>

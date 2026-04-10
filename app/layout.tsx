@@ -4,6 +4,7 @@ import { Lexend } from 'next/font/google';
 import './globals.css';
 import { Providers } from '@/app/providers';
 import Image from 'next/image';
+import Link from 'next/link';
 import Header from '@/components/Header';
 import { createClient } from '@/utils/supabase/server';
 const lexend = Lexend({
@@ -71,7 +72,7 @@ export default async function RootLayout({
         <Providers initialUser={user}>
           <Header />
           <main className="w-full max-w-7xl mx-auto">{children}</main>
-          <footer className="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 py-6">
+          <footer className="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 py-2">
             <div className="max-w-7xl mx-auto px-2 flex flex-col md:flex-row justify-between items-center gap-8">
               <div className="flex items-center gap-2">
                 <Image
@@ -86,24 +87,24 @@ export default async function RootLayout({
                 </span>
               </div>
               <nav className="flex gap-8">
-                <a
+                <Link
                   className="text-slate-500 hover:text-primary transition-colors text-sm"
-                  href="#"
+                  href="/privacidad"
                 >
                   Privacidad
-                </a>
-                <a
+                </Link>
+                <Link
                   className="text-slate-500 hover:text-primary transition-colors text-sm"
-                  href="#"
+                  href="/terminos"
                 >
                   Términos
-                </a>
-                <a
+                </Link>
+                <Link
                   className="text-slate-500 hover:text-primary transition-colors text-sm"
-                  href="mailto:contact@tutoraiapp.es"
+                  href="/contacto"
                 >
                   Contacto
-                </a>
+                </Link>
               </nav>
               <p className="text-slate-400 text-sm">
                 © 2026 TUTOR_AI. Hecho con ❤️ para familias.
