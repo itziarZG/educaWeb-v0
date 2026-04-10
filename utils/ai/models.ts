@@ -28,6 +28,19 @@ export function getLanguageModel(): LanguageModel {
       model = ds.chat(modelName);
       break;
 
+    case 'openrouter':
+      const openrouter = createOpenAI({
+        apiKey: apiKey,
+        baseURL: 'https://openrouter.ai/api/v1',
+        headers: {
+          'HTTP-Referer':
+            process.env.OPENROUTER_REFERER || 'https://educaweb.com',
+          'X-Title': 'EducaWeb',
+        },
+      });
+      model = openrouter(modelName);
+      break;
+
     case 'ollama':
       const ollama = createOllama();
       model = ollama(modelName);
