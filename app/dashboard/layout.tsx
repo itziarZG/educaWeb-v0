@@ -90,16 +90,6 @@ export default async function DashboardLayout({
             <span className="text-sm">Crear Estudiante</span>
           </Link>
         </nav>
-
-        {/* User Footer */}
-
-        {/* Child Selector - Desktop */}
-        <div>
-          <p className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">
-            Cambiar Estudiante
-          </p>
-          <ChildSelector initialChildren={childrenList} />
-        </div>
       </aside>
 
       {/* Main Content Wrapper */}
