@@ -32,15 +32,8 @@ export default async function ChatPage(props: { searchParams: SearchParams }) {
 
   const childId = searchParams.childId;
 
-  // Si hay un childId en la URL, obtén los datos completos y muestra el chat
-  if (typeof childId === 'string') {
-    const initialChildInfo = await getChildById(childId);
-    if (initialChildInfo) {
-      return <ChatClient initialChildInfo={initialChildInfo} />;
-    }
-  }
-
-  // Si no hay childId y no hay children, muestra mensaje
+  // Si hay error en la query o no hay children, muestra mensaje
+  // (verifica esto ANTES de hacer llamadas adicionales)
   if (error || !children || children.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-4">
@@ -55,6 +48,14 @@ export default async function ChatPage(props: { searchParams: SearchParams }) {
         </p>
       </div>
     );
+  }
+
+  // Si hay un childId en la URL, obtén los datos completos y muestra el chat
+  if (typeof childId === 'string') {
+    const initialChildInfo = await getChildById(childId);
+    if (initialChildInfo) {
+      return <ChatClient initialChildInfo={initialChildInfo} />;
+    }
   }
 
   // Si no, muestra grid de selección de perfiles
