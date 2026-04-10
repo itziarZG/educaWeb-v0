@@ -34,3 +34,7 @@ next-env.d.ts
 
 # stitch generated files
 /stitch_student_dashboard/
+
+# AI tools (OpenCode, Claude)
+.agents/
+.claude/
