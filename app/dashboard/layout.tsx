@@ -58,7 +58,8 @@ export default async function DashboardLayout({
 
           <div className="my-2 border-t border-gray-100 dark:border-gray-800 opacity-50"></div>
 
-          {/* PROGRESO */}
+          {/* PROGRESO - COMENTADO TEMPORALMENTE HASTA CORRECCIONES */}
+          {/* 
           <p className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
             Progreso
           </p>
@@ -74,6 +75,7 @@ export default async function DashboardLayout({
           />
 
           <div className="my-2 border-t border-gray-100 dark:border-gray-800 opacity-50"></div>
+          */}
 
           {/* CUENTA */}
           <p className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
