@@ -1,4 +1,4 @@
-import { RefObject } from 'react';
+import { RefObject, useState, useEffect } from 'react';
 import type { WorksheetFeedback } from '@/types/worksheet';
 import FeedbackForm from '@/components/FeedbackForm';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -34,6 +34,52 @@ export default function VisualizationInterface({
   feedback,
   onFeedbackSubmitted,
 }: VisualizationInterfaceProps) {
+  const [iframeHeight, setIframeHeight] = useState<number>(800);
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (
+        event.data?.type === 'setHeight' &&
+        typeof event.data.height === 'number'
+      ) {
+        // Añadimos un pequeño padding extra para evitar scrollbars traicioneros
+        setIframeHeight(event.data.height + 40);
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
+
+  // Inyectamos un script para que el iframe reporte su altura
+  const contentWithAutoResize = htmlContent
+    ? `
+    ${htmlContent}
+    <script>
+      (function() {
+        const sendHeight = () => {
+          const height = document.documentElement.scrollHeight || document.body.scrollHeight;
+          window.parent.postMessage({ type: 'setHeight', height: height }, '*');
+        };
+        
+        // Ejecutar en carga y cambios de tamaño
+        window.addEventListener('load', sendHeight);
+        window.addEventListener('resize', sendHeight);
+        
+        // Observer para cambios dinámicos en el contenido
+        if (window.ResizeObserver) {
+          const ro = new ResizeObserver(sendHeight);
+          ro.observe(document.body);
+        }
+        
+        // Un último intento por las dudas
+        setTimeout(sendHeight, 500);
+        setTimeout(sendHeight, 1500);
+      })();
+    </script>
+  `
+    : '';
+
   return (
     <>
       <div className="h-16 shrink-0 bg-white dark:bg-dark-surface border-b border-[#f0f2f4] dark:border-dark-border flex items-center justify-between px-6 lg:px-8">
@@ -120,11 +166,12 @@ export default function VisualizationInterface({
               </div>
             </div>
           ) : htmlContent ? (
-            <div className="space-y-6">
+            <div className="h-full">
               <iframe
                 ref={iframeRef}
-                srcDoc={htmlContent}
-                className="w-full h-full border-0 rounded-xl"
+                srcDoc={contentWithAutoResize}
+                style={{ height: iframeHeight, minHeight: '500px' }}
+                className="w-full border-0 rounded-xl"
                 title="Visualization"
                 sandbox="allow-scripts allow-popups allow-forms allow-same-origin allow-modals"
               />
