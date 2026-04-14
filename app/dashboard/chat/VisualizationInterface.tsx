@@ -6,6 +6,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 interface VisualizationInterfaceProps {
   htmlContent: string;
   htmlLoading: boolean;
+  htmlError: string | null;
+  setHtmlError: (error: string | null) => void;
   iframeRef: RefObject<HTMLIFrameElement | null>;
   handlePrint: () => void;
   handleDownloadPdf: () => void;
@@ -20,6 +22,8 @@ interface VisualizationInterfaceProps {
 export default function VisualizationInterface({
   htmlContent,
   htmlLoading,
+  htmlError,
+  setHtmlError,
   iframeRef,
   handlePrint,
   handleDownloadPdf,
@@ -96,8 +100,8 @@ export default function VisualizationInterface({
         )}
       </div>
 
-      <div className="flex-1 overflow-y-auto p-8 lg:p-12 scroll-smooth">
-        <div className="max-w-4xl mx-auto bg-white dark:bg-dark-surface rounded-xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] dark:shadow-none border border-gray-200 dark:border-dark-border min-h-[800px] p-10 md:p-16 relative transition-all">
+      <div className="flex-1 overflow-auto scroll-smooth">
+        <div className="max-w-4xl mx-auto bg-white dark:bg-dark-surface rounded-xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] dark:shadow-none border border-gray-200 dark:border-dark-border min-h-screen p-6 md:p-10 relative transition-all">
           {htmlLoading ? (
             <div className="flex flex-col gap-8 h-full">
               <div className="flex justify-between items-center">
@@ -120,7 +124,7 @@ export default function VisualizationInterface({
               <iframe
                 ref={iframeRef}
                 srcDoc={htmlContent}
-                className="w-full h-full min-h-[800px] border-0 rounded-xl"
+                className="w-full h-full border-0 rounded-xl"
                 title="Visualization"
                 sandbox="allow-scripts allow-popups allow-forms allow-same-origin allow-modals"
               />
@@ -133,6 +137,24 @@ export default function VisualizationInterface({
                   onFeedbackSubmitted={onFeedbackSubmitted}
                 />
               )}
+            </div>
+          ) : htmlError ? (
+            <div className="flex flex-col items-center justify-center h-full min-h-screen text-red-600 dark:text-red-400 p-6">
+              <span className="material-symbols-outlined text-8xl mb-4 opacity-70">
+                error_outline
+              </span>
+              <p className="text-lg font-medium mb-2">
+                Error al generar la visualización
+              </p>
+              <p className="text-sm text-center max-w-md opacity-90">
+                {htmlError}
+              </p>
+              <button
+                onClick={handleVisualize}
+                className="mt-6 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+              >
+                Reintentar
+              </button>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center h-full min-h-[400px] text-gray-300 dark:text-gray-400">

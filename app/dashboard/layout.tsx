@@ -46,7 +46,7 @@ export default async function DashboardLayout({
   return (
     <div className="flex h-screen w-full bg-background-light dark:bg-background-dark font-display text-[#111813] dark:text-white transition-colors duration-200 overflow-hidden">
       {/* Sidebar (Desktop) */}
-      <aside className="hidden lg:flex w-64 flex-col border-r border-gray-100 dark:border-gray-800 bg-white dark:bg-dark-surface shadow-sm z-20">
+      <aside className="hidden lg:flex w-56 flex-col border-r border-gray-100 dark:border-gray-800 bg-white dark:bg-dark-surface shadow-sm z-20">
         {/* Links */}
         <nav className="flex-1 flex flex-col gap-1 p-4 overflow-y-auto">
           {/* PRINCIPAL */}
@@ -113,7 +113,7 @@ export default async function DashboardLayout({
         </header>
 
         {/* Scrollable Content Area */}
-        <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-6 lg:p-8 relative">
+        <main className="flex-1 overflow-hidden p-0 relative">
           <div className="max-w-7xl mx-auto w-full h-full">{children}</div>
         </main>
       </div>
