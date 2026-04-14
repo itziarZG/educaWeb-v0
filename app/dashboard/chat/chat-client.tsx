@@ -26,6 +26,8 @@ export default function ChatClient({
     loading,
     htmlContent,
     htmlLoading,
+    htmlError,
+    setHtmlError,
     childInfo,
     topic,
     setTopic,
@@ -297,6 +299,8 @@ export default function ChatClient({
           <VisualizationInterface
             htmlContent={htmlContent}
             htmlLoading={htmlLoading}
+            htmlError={htmlError}
+            setHtmlError={setHtmlError}
             iframeRef={iframeRef}
             handlePrint={handlePrint}
             handleDownloadPdf={handleDownloadPdf}
