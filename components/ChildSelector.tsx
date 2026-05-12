@@ -64,6 +64,7 @@ export default function ChildSelector({ initialChildren }: ChildSelectorProps) {
 
       fetchChildren();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [supabase]);
 
   const handleSelectChild = (child: Child) => {

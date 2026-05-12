@@ -4,12 +4,6 @@ import ChatClient from './chat-client';
 import Link from 'next/link';
 import { getChildById } from './actions';
 
-interface Child {
-  id: string;
-  name: string;
-  avatar_url?: string;
-}
-
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 export default async function ChatPage(props: { searchParams: SearchParams }) {

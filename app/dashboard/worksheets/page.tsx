@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { Worksheet } from '@/types/worksheet';
 import WorksheetCard from '@/components/WorksheetCard';
@@ -12,7 +12,7 @@ interface Child {
 }
 
 export default function WorksheetsPage() {
-  const [children, setChildren] = useState<Child[]>([]);
+  const [, setChildren] = useState<Child[]>([]);
   const [selectedChildId, setSelectedChildId] = useState<string>('');
   const [worksheets, setWorksheets] = useState<Worksheet[]>([]);
   const [selectedWorksheet, setSelectedWorksheet] = useState<Worksheet | null>(
@@ -22,9 +22,9 @@ export default function WorksheetsPage() {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
-  const [childrenLoading, setChildrenLoading] = useState(true);
+  const [, setChildrenLoading] = useState(true);
 
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
   // Fetch children on mount
   useEffect(() => {
@@ -63,7 +63,7 @@ export default function WorksheetsPage() {
     };
 
     fetchChildren();
-  }, []);
+  }, [supabase]);
 
   // Fetch worksheets when child is selected
   useEffect(() => {

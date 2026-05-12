@@ -76,7 +76,7 @@ export default function WorksheetCard({
         {/* Feedback Snippet */}
         {feedbackSnippet ? (
           <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-2 italic">
-            "{feedbackSnippet}"
+            &ldquo;{feedbackSnippet}&rdquo;
             {worksheet.feedback?.comments &&
               worksheet.feedback.comments.length > 60 &&
               '...'}

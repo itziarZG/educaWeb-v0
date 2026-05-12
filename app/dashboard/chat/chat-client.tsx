@@ -41,7 +41,7 @@ export default function ChatClient({
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showMobileViz, setShowMobileViz] = useState(false);
   const [worksheetId, setWorksheetId] = useState<string | null>(null);
-  const [feedback, setFeedback] = useState<WorksheetFeedback | undefined>();
+  const [feedback] = useState<WorksheetFeedback | undefined>();
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);

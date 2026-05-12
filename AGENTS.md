@@ -39,3 +39,77 @@ Cuando crees o modifiques un flujo agéntico (archivos `.md` en `.github/workflo
 3. **Incluye los archivos generados** (`.github/aw/` y `.lock.yml`) en el commit.
 
 > ⚠️ Un flujo agéntico NO funciona hasta que se compile. No olvides este paso.
+
+---
+
+## 5. Comandos de desarrollo
+
+```bash
+pnpm dev         # Servidor de desarrollo (Next.js + Turbopack)
+pnpm build       # Build de producción
+pnpm start       # Production server
+pnpm tscheck     # TypeScript check
+pnpm lint        # ESLint
+pnpm format      # Prettier write
+pnpm format:check
+pnpm test        # Vitest unit tests
+pnpm test:watch  # Vitest watch mode
+pnpm test:e2e    # Playwright e2e
+```
+
+## 6. Flujo de verificación local
+
+Antes de hacer commit, ejecutar en orden:
+
+```bash
+pnpm tscheck → pnpm lint → pnpm format:check
+```
+
+(pre-commit ya lo hace automáticamente)
+
+## 7. Path aliases
+
+El proyecto usa TypeScript path aliases:
+
+- `@/*` → raíz del proyecto
+- `@utils/*` → `./utils/*`
+- `@services/*` → `./services/*`
+- `@hooks/*` → `./hooks/*`
+
+## 8. Skills disponibles
+
+Skills preconfigurados en `.agents/skills/`:
+
+- **vercel-react-best-practices** — React 19 + Next.js performance
+- **vercel-composition-patterns** — Compound components, evitar boolean props
+- **react-hook-form** — Forms con RHF + Zod
+- **zod** — Validación de esquemas
+- **ai-sdk** — Vercel AI SDK (generateText, streamText, tools)
+- **vitest** — Unit tests
+- **playwright-best-practices** — E2E tests
+
+## 9. Estructura del proyecto
+
+```
+app/           # Next.js App Router (pages, layouts, API routes)
+components/    # Componentes UI reutilizables
+context/       # React Context (Auth, Theme)
+hooks/         # Custom hooks
+services/      # Supabase, AI providers
+utils/         # Helpers, constantes
+types/         # TypeScript definitions
+styles/        # CSS + Tailwind config
+e2e/           # Playwright e2e tests
+__tests__/     # Vitest unit tests
+```
+
+## 10. Dependencias actualizadas
+
+Actualizado en esta sesión:
+
+- prettier → 3.8.3
+- vitest → 4.1.6
+- tailwindcss → 4.3.0
+- tailwind-merge → 3.6.0
+
+⚠️ No actualizar: ESLint (incompatible con plugins), Zod 4 (incompatible con ollama-ai-provider)
