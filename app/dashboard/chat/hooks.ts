@@ -29,6 +29,7 @@ export const useChatInfo = (
   const [showTopicCustom, setShowTopicCustom] = useState(false); // Para mostrar input cuando es "Otros"
 
   const [noCreditsModalOpen, setNoCreditsModalOpen] = useState(false);
+  const [htmlError, setHtmlError] = useState<string | null>(null);
 
   // Sync state with prop
   useEffect(() => {
@@ -157,18 +158,25 @@ export const useChatInfo = (
     if (!lastAgentMsg) return;
 
     // Check for credits
-    // Check for credits
     const hasCredits = await checkCredits();
     if (!hasCredits) return;
 
     setHtmlLoading(true);
+    setHtmlError(null);
     try {
       const res = await sendMessageToMaquetin([
         { role: 'user', content: lastAgentMsg.content },
       ]);
       setHtmlContent(cleanHtmlResponse(res.message));
-    } catch (e) {
-      console.error(e);
+      setHtmlError(null);
+    } catch (error) {
+      console.error('Error en visualización:', error);
+      const errorMessage =
+        error instanceof Error ? error.message : 'Error desconocido';
+      setHtmlError(
+        `Hubo un error al generar la visualización: ${errorMessage}. Por favor, intenta de nuevo.`
+      );
+      setHtmlContent('');
     } finally {
       setHtmlLoading(false);
     }
@@ -182,6 +190,8 @@ export const useChatInfo = (
     htmlContent,
     setHtmlContent,
     htmlLoading,
+    htmlError,
+    setHtmlError,
     childInfo,
     topic,
     setTopic,
