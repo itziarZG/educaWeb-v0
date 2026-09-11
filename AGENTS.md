@@ -4,12 +4,14 @@
 
 Cada vez que te pida implementar algo, cambiar código o hacer cualquier modificación:
 
-1. **Crea una rama nueva** desde `main` con un nombre descriptivo (ej: `feature/descripcion-corta`, `fix/descripcion-corta`).
+1. **Crea una rama nueva** desde `develop` con un nombre descriptivo (ej: `feature/descripcion-corta`, `fix/descripcion-corta`).
 2. **Haz commits claros y descriptivos** conforme avances.
-3. **Abre un Pull Request** para que pueda revisar tu código antes de fusionarlo.
-4. **NUNCA hagas push directo a `main`.**
+3. **Abre un Pull Request** hacia `develop` para que pueda revisar tu código antes de fusionarlo.
+4. **NUNCA hagas push directo a `main` ni a `develop`.**
 
 > ⚠️ No empieces a modificar archivos sin haber creado la rama primero.
+>
+> ⚠️ La rama base es `develop` (no `main`). `develop` es la rama de integración y contiene los cambios más recientes; `main` solo recibe merges estables desde `develop`.
 
 ## 2. Navegador integrado — SIEMPRE
 
