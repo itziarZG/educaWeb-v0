@@ -126,7 +126,7 @@ export default function VisualizationInterface({
                 srcDoc={htmlContent}
                 className="w-full h-full border-0 rounded-xl"
                 title="Visualization"
-                sandbox="allow-scripts allow-popups allow-forms allow-same-origin allow-modals"
+                sandbox="allow-same-origin"
               />
 
               {/* FeedbackForm Component */}

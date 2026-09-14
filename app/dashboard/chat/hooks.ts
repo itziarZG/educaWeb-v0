@@ -7,6 +7,7 @@ import {
   sendMessageToMaquetin,
 } from '@/services/agentService';
 import { createClient } from '@/utils/supabase/client';
+import { SAFETY_SUFFIX } from '@/utils/ai/safety';
 import type { ChatMessage, ChildInfo } from '@/types/agents';
 
 export const useChatInfo = (
@@ -94,7 +95,7 @@ export const useChatInfo = (
     try {
       // 1. Creamos el array para la API empezando por el System Prompt
       // Incluimos el topic en el prompt si está seleccionado
-      const basePrompt = systemPrompt || 'Eres un asistente educativo.';
+      const basePrompt = `${systemPrompt || 'Eres un asistente educativo.'}${SAFETY_SUFFIX}`;
       const topicAddition =
         topic && topic !== 'Sin especificar'
           ? `\n\n**Temática de la ficha de hoy:** ${topic}. Asegúrate de que toda la ficha esté EXCLUSIVAMENTE enfocada en esta temática.`
