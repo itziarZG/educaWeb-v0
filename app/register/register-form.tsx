@@ -4,13 +4,21 @@ import { signup } from '../auth/actions';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import Link from 'next/link';
 
 export default function RegisterForm() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const [acceptedPrivacy, setAcceptedPrivacy] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!acceptedPrivacy) {
+      setError(
+        'Debes aceptar la Política de Privacidad y los Términos para continuar.'
+      );
+      return;
+    }
     const formData = new FormData(e.currentTarget);
     const result = await signup(formData);
     if (result.error) {
@@ -49,6 +57,33 @@ export default function RegisterForm() {
           required
           className="p-2 border rounded dark:bg-gray-800"
         />
+        <label className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={acceptedPrivacy}
+            onChange={(e) => setAcceptedPrivacy(e.target.checked)}
+            className="mt-1 h-4 w-4 accent-primary shrink-0"
+          />
+          <span>
+            He leído y acepto la{' '}
+            <Link
+              href="/privacidad"
+              target="_blank"
+              className="text-primary hover:underline"
+            >
+              Política de Privacidad
+            </Link>{' '}
+            y los{' '}
+            <Link
+              href="/terminos"
+              target="_blank"
+              className="text-primary hover:underline"
+            >
+              Términos y Condiciones
+            </Link>
+            .
+          </span>
+        </label>
         <button
           type="submit"
           className="bg-primary text-black font-bold py-2 rounded hover:bg-emerald-400 transition-colors"
