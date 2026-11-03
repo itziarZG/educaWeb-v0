@@ -23,7 +23,6 @@ export default function VisualizationInterface({
   htmlContent,
   htmlLoading,
   htmlError,
-  setHtmlError,
   iframeRef,
   handlePrint,
   handleDownloadPdf,

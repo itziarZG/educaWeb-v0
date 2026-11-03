@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 
 const COOKIE_CONSENT_KEY = 'cookie-consent';
@@ -28,34 +28,25 @@ function setConsent(value: ConsentValue): void {
   document.cookie = `${COOKIE_CONSENT_KEY}=${value}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax`;
 }
 
+const subscribeToNothing = () => () => {};
+
 export function useCookieConsent(): ConsentValue | null {
-  const [consent, setConsentState] = useState<ConsentValue | null>(null);
-
-  useEffect(() => {
-    setConsentState(getConsent());
-  }, []);
-
-  return consent;
+  return useSyncExternalStore(subscribeToNothing, getConsent, () => null);
 }
 
 export default function CookieConsentBanner() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const stored = getConsent();
-    if (!stored) {
-      setVisible(true);
-    }
-  }, []);
+  const storedConsent = useCookieConsent();
+  const [answered, setAnswered] = useState(false);
+  const visible = storedConsent === null && !answered;
 
   const handleAccept = () => {
     setConsent('accepted');
-    setVisible(false);
+    setAnswered(true);
   };
 
   const handleReject = () => {
     setConsent('rejected');
-    setVisible(false);
+    setAnswered(true);
   };
 
   if (!visible) return null;

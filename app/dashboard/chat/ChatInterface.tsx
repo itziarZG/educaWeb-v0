@@ -27,17 +27,12 @@ export default function ChatInterface({
   input,
   setInput,
   handleSubmit,
-  childInfo,
-  toggleSidebar,
   messagesEndRef,
-  onVisualize,
-  htmlLoading,
   isMobile,
   topic,
   setTopic,
   showTopicCustom,
   setShowTopicCustom,
-  onBackToSelector,
 }: ChatInterfaceProps) {
   return (
     <div className="flex flex-col h-full overflow-hidden">
