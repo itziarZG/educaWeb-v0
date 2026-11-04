@@ -44,6 +44,15 @@ Variables en `.env` / `.env.local` (ambos ignorados por git). Las que usa el có
 
 `next.config.mjs` tiene `typescript.ignoreBuildErrors: true`: `pnpm build` no falla por errores de tipos. Usa `pnpm tscheck` para comprobarlos.
 
+## Despliegues
+
+- `main` es producción. Solo recibe merges desde `develop` ya probados en stage.
+- `develop` es stage y rama de integración. Los PR se abren contra ella.
+- Vercel despliega cada rama automáticamente: `main` está configurada como _Production Branch_ y el resto genera previews.
+- Las variables de entorno (Supabase, proveedores de IA, `NEXT_PUBLIC_SITE_URL`) se configuran en Vercel por entorno. `.env.local` no se usa en Vercel.
+- **Aviso:** stage y producción comparten hoy el proyecto de Supabase. Cualquier prueba en `develop` escribe en los datos reales. Hasta que se separen, no hagas pruebas destructivas en stage.
+- El esquema de Supabase no está versionado en el repo.
+
 ## Arquitectura
 
 TutorAI genera **fichas** (worksheets) imprimibles para niños, personalizadas según curso e intereses. Next.js 16 App Router + React 19, Supabase (auth y base de datos) y Vercel AI SDK (`ai`) para generar contenido.
