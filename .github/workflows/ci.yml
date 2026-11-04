@@ -17,12 +17,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      # El build de Next.js necesita estas variables. Si el repo no tiene
-      # secrets (PR desde un fork, por ejemplo), se usan valores de ejemplo:
-      # el build compila, pero no se conecta a Supabase.
-      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://example.supabase.co' }}
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'clave-de-ejemplo' }}
-      NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000' }}
+      # El build de Next.js solo verifica que compila. Estos valores de
+      # ejemplo no se usan en ningún despliegue (Vercel tiene sus propias
+      # variables), así que no hace falta guardar secrets en GitHub.
+      NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: clave-de-ejemplo
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
 
     steps:
       - name: Descargar el código
