@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  verificar:
+    name: Comprobaciones (tscheck, lint, format, tests, build)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      # El build de Next.js solo verifica que compila. Estos valores de
+      # ejemplo no se usan en ningún despliegue (Vercel tiene sus propias
+      # variables), así que no hace falta guardar secrets en GitHub.
+      NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: clave-de-ejemplo
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Instalar pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Leer la versión de Node de .nvmrc
+        id: nvm
+        run: echo "version=$(cat .nvmrc)" >> "$GITHUB_OUTPUT"
+
+      - name: Instalar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.nvm.outputs.version }}
+          cache: pnpm
+
+      - name: Instalar dependencias (lockfile congelado)
+        run: pnpm install --frozen-lockfile
+
+      - name: TypeScript (tscheck)
+        run: pnpm tscheck
+
+      - name: ESLint (lint)
+        run: pnpm lint
+
+      - name: Formato (format:check)
+        run: pnpm format:check
+
+      - name: Tests unitarios
+        run: pnpm test
+
+      - name: Build de producción
+        run: pnpm build
