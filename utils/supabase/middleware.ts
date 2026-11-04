@@ -2,7 +2,8 @@ import { createServerClient } from '@supabase/ssr';
 import { type NextRequest, NextResponse } from 'next/server';
 import { supabaseConfig } from './config';
 
-export async function middleware(request: NextRequest) {
+// Refresca la sesión de Supabase en cada petición (ver proxy.ts en la raíz).
+export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
     request: { headers: request.headers },
   });
