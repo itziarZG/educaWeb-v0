@@ -48,3 +48,6 @@ next-env.d.ts
 
 # Stitch generated files
 /stitch_student_dashboard/
+
+# Estado local del CLI de Supabase
+supabase/.temp

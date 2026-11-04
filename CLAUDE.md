@@ -51,7 +51,21 @@ Variables en `.env` / `.env.local` (ambos ignorados por git). Las que usa el có
 - Vercel despliega cada rama automáticamente: `main` está configurada como _Production Branch_ y el resto genera previews.
 - Las variables de entorno (Supabase, proveedores de IA, `NEXT_PUBLIC_SITE_URL`) se configuran en Vercel por entorno. `.env.local` no se usa en Vercel.
 - **Aviso:** stage y producción comparten hoy el proyecto de Supabase. Cualquier prueba en `develop` escribe en los datos reales. Hasta que se separen, no hagas pruebas destructivas en stage.
-- El esquema de Supabase no está versionado en el repo.
+
+### Cambios en la base de datos (migraciones)
+
+El esquema de Supabase se versiona en `supabase/migrations/`. Stage y producción son proyectos de Supabase distintos y los cambios de esquema se aplican a los dos desde el repo, **siempre primero en stage**. No hace falta Docker para estos comandos.
+
+1. Rama desde `develop` y migración nueva: `supabase migration new descripcion_corta`. Escribe el SQL en el archivo generado.
+2. Aplícala en stage y pruébala: `supabase link --project-ref <ref-stage>` y `supabase db push`.
+3. Abre el PR contra `develop`. Se revisa el SQL antes de fusionar.
+4. Cuando el cambio llega a `main`, aplícalo en producción: `supabase link --project-ref <ref-produccion>` y `supabase db push`.
+
+- **Cuidado:** `supabase db push` actúa sobre el proyecto enlazado en ese momento. Comprueba a cuál apunta (`supabase projects list` marca el enlazado) antes de ejecutarlo.
+- No cambies el esquema a mano desde el SQL Editor de Supabase: stage y producción se desincronizan. Si hay que hacerlo con urgencia, crea después la migración equivalente.
+- Una migración debe ser idempotente cuando sea posible (`IF NOT EXISTS`, `CREATE OR REPLACE`).
+- `pg_dump --schema=public` no incluye lo que vive fuera de `public`, como el trigger `on_auth_user_created` sobre `auth.users`. Si exportas el esquema, añade esas piezas a mano.
+- Nunca copies datos de producción a stage: son datos de menores (RGPD).
 
 ## Arquitectura
 
@@ -75,7 +89,7 @@ Toda la selección de proveedor/modelo está en `utils/ai/models.ts`. Añadir un
 
 - Cliente Supabase: `utils/supabase/client.ts` (navegador), `server.ts` (Server Components, route handlers y server actions) y `config.ts` (lee las variables).
 - Login con Google o email: `app/auth/actions.ts` y `app/auth/callback/route.ts`.
-- Las tablas en uso son `clients` (perfil y `credits`), `children` (perfiles de niños: `system_prompt`, `interests`, `observations`, `region`), `worksheets` y `worksheet_feedback`. No hay migraciones en el repo: el esquema vive en Supabase.
+- Las tablas en uso son `clients` (perfil y `credits`), `children` (perfiles de niños: `system_prompt`, `interests`, `observations`, `region`), `worksheets` y `worksheet_feedback`. El esquema está versionado en `supabase/migrations/` (ver "Cambios en la base de datos").
 - **El refresco de sesión no está activo.** `utils/supabase/middleware.ts` existe, pero no hay `middleware.ts` en la raíz que lo invoque. Si tocas auth, ten en cuenta que la sesión solo se refresca en los puntos donde se llama a `getUser()`.
 
 ### Rutas y contexto de la UI
