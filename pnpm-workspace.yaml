@@ -3,3 +3,19 @@ allowBuilds:
   esbuild: false
   sharp: false
   unrs-resolver: false
+
+# Versiones mínimas de dependencias transitivas con avisos de seguridad (#113).
+overrides:
+  dompurify: '>=3.4.17'
+  browserslist: '>=4.28.7'
+  nanoid: '>=3.3.18'
+  source-map-js: '>=1.2.2'
+  ws: '>=8.21.0'
+  fflate: '>=0.8.3'
+  baseline-browser-mapping: '>=2.11.0'
+  '@babel/core': '>=7.29.6'
+  # Datos de navegadores usados por browserslist. La última versión es de hoy
+  # y la política de edad mínima de pnpm la rechaza; se fija una anterior.
+  electron-to-chromium: '1.5.473'
+  # eslint-config-next 16.1.6 arrastra react-hooks 7.1.1, cuyas reglas nuevas marcan código existente.
+  eslint-plugin-react-hooks: '7.0.1'

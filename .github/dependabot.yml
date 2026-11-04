@@ -1,0 +1,25 @@
+version: 2
+
+updates:
+  # Dependencias npm: los PR van contra develop, la rama de integración.
+  - package-ecosystem: npm
+    directory: /
+    target-branch: develop
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      produccion:
+        dependency-type: production
+      desarrollo:
+        dependency-type: development
+
+  # Acciones de GitHub usadas en .github/workflows.
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: develop
+    schedule:
+      interval: weekly
+    groups:
+      acciones:
+        patterns: ['*']
