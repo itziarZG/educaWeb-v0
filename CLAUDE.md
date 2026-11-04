@@ -50,7 +50,7 @@ Variables en `.env` / `.env.local` (ambos ignorados por git). Las que usa el có
 - `develop` es stage y rama de integración. Los PR se abren contra ella.
 - Vercel despliega cada rama automáticamente: `main` está configurada como _Production Branch_ y el resto genera previews.
 - Las variables de entorno (Supabase, proveedores de IA, `NEXT_PUBLIC_SITE_URL`) se configuran en Vercel por entorno. `.env.local` no se usa en Vercel.
-- **Aviso:** stage y producción comparten hoy el proyecto de Supabase. Cualquier prueba en `develop` escribe en los datos reales. Hasta que se separen, no hagas pruebas destructivas en stage.
+- Stage y producción usan **proyectos de Supabase distintos** (`TutorAI Stage` y `TutorAI`), cada uno con su base de datos, sus usuarios y sus claves. Las variables de Supabase de stage están en Vercel solo para la rama `develop`. Nunca copies datos de producción a stage: son datos de menores.
 
 ### Cambios en la base de datos (migraciones)
 
