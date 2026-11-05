@@ -41,6 +41,9 @@ importers:
       clsx:
         specifier: 2.1.1
         version: 2.1.1
+      dompurify:
+        specifier: '>=3.4.17'
+        version: 3.4.17
       html2canvas:
         specifier: ^1.4.1
         version: 1.4.1
