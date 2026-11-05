@@ -11,13 +11,9 @@ import VisualizationInterface from './VisualizationInterface';
 
 interface ChatClientProps {
   initialChildInfo?: ChildInfo | null;
-  systemPrompt?: string;
 }
 
-export default function ChatClient({
-  initialChildInfo,
-  systemPrompt,
-}: ChatClientProps) {
+export default function ChatClient({ initialChildInfo }: ChatClientProps) {
   const router = useRouter();
   const {
     messages,
@@ -37,7 +33,7 @@ export default function ChatClient({
     handleVisualize,
     noCreditsModalOpen,
     setNoCreditsModalOpen,
-  } = useChatInfo(initialChildInfo, systemPrompt);
+  } = useChatInfo(initialChildInfo);
 
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);

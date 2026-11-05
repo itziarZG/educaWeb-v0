@@ -7,13 +7,9 @@ import {
   sendMessageToMaquetin,
 } from '@/services/agentService';
 import { createClient } from '@/utils/supabase/client';
-import { SAFETY_SUFFIX } from '@/utils/ai/safety';
 import type { ChatMessage, ChildInfo } from '@/types/agents';
 
-export const useChatInfo = (
-  initialChildInfo?: ChildInfo | null,
-  systemPrompt?: string
-) => {
+export const useChatInfo = (initialChildInfo?: ChildInfo | null) => {
   const { user } = useAuth();
   const searchParams = useSearchParams();
   const childId = searchParams.get('childId');
@@ -80,7 +76,7 @@ export const useChatInfo = (
   // Handle Send Message
   const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault();
-    if (!input.trim() || loading) return;
+    if (!input.trim() || loading || !childInfo) return;
 
     const userMsg: ChatMessage = {
       role: 'user',
@@ -93,28 +89,17 @@ export const useChatInfo = (
     setInput('');
     setLoading(true);
     try {
-      // 1. Creamos el array para la API empezando por el System Prompt
-      // Incluimos el topic en el prompt si está seleccionado
-      const basePrompt = `${systemPrompt || 'Eres un asistente educativo.'}${SAFETY_SUFFIX}`;
-      const topicAddition =
-        topic && topic !== 'Sin especificar'
-          ? `\n\n**Temática de la ficha de hoy:** ${topic}. Asegúrate de que toda la ficha esté EXCLUSIVAMENTE enfocada en esta temática.`
-          : '';
+      // El system prompt lo compone el servidor a partir del niño y el tema
+      const messagesForApi = newMessages.map(({ role, content }) => ({
+        role,
+        content,
+      }));
 
-      const messagesForApi = [
-        {
-          role: 'system',
-          content: basePrompt + topicAddition,
-        },
-        // 2. Añadimos el resto de mensajes (mapeados para quitar el timestamp)
-        ...newMessages.map(({ role, content }) => ({
-          role,
-          content,
-        })),
-      ];
-
-      // 3. Enviamos el array que ya incluye el system prompt al inicio
-      const response = await sendMessageToAgent(messagesForApi, childInfo);
+      const response = await sendMessageToAgent(
+        messagesForApi,
+        childInfo.id,
+        topic
+      );
 
       if (response.error) throw new Error(response.error);
 
@@ -165,9 +150,8 @@ export const useChatInfo = (
     setHtmlLoading(true);
     setHtmlError(null);
     try {
-      const res = await sendMessageToMaquetin([
-        { role: 'user', content: lastAgentMsg.content },
-      ]);
+      const res = await sendMessageToMaquetin(lastAgentMsg.content);
+      if (res.error) throw new Error(res.error);
       setHtmlContent(cleanHtmlResponse(res.message));
       setHtmlError(null);
     } catch (error) {

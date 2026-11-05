@@ -1,29 +1,18 @@
 import { AgentMessage, AgentResponse } from '@/types/agents';
-import prompts from '@/utils/prompts.json';
 
 export async function sendMessageToAgent(
   messages: { role: string; content: string }[],
-  childInfoOrAgent?: unknown,
-  userEmail?: string,
-  childInfoArg?: unknown
+  childId: string,
+  topic?: string
 ): Promise<AgentResponse> {
-  let childInfo = childInfoOrAgent;
-  let agentName: string | undefined;
-
-  if (typeof childInfoOrAgent === 'string') {
-    agentName = childInfoOrAgent;
-    childInfo = childInfoArg;
-  }
-
   try {
     const response = await fetch('/api/agent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         messages,
-        childInfo,
-        agentName,
-        userEmail,
+        childId,
+        topic,
         mode: 'chat',
       }),
     });
@@ -44,26 +33,14 @@ export async function sendMessageToAgent(
   }
 }
 export async function sendMessageToMaquetin(
-  messages: { role: string; content: string }[]
+  content: string
 ): Promise<AgentResponse> {
-  const systemPrompt = prompts.maquetin;
-  const lastUserMessage = messages[messages.length - 1];
-
-  if (!lastUserMessage) {
-    throw new Error('No messages provided to sendMessageToMaquetin');
-  }
-
-  const maquetinMessages = [
-    { role: 'system', content: systemPrompt },
-    { role: 'user', content: lastUserMessage.content },
-  ];
-
   try {
     const response = await fetch('/api/agent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        messages: maquetinMessages,
+        content,
         mode: 'visualization',
       }),
     });
