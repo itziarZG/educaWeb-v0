@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
 import { getFeedbackSummary } from '@/services/promptRegeneration';
 import { regenerateSystemPrompt } from '@/services/promptRegeneration';
+import { consumeAgentQuota } from '@/utils/ai/quota';
+
+const MAX_COMMENT_CHARS = 2_000;
 
 // POST /api/feedback - Guardar feedback y regenerar prompt
 export async function POST(req: NextRequest) {
@@ -41,6 +44,17 @@ export async function POST(req: NextRequest) {
     if (typeof rating !== 'number' || rating < 1 || rating > 5) {
       return NextResponse.json(
         { error: 'rating must be a number between 1 and 5' },
+        { status: 400 }
+      );
+    }
+
+    if (
+      comments !== undefined &&
+      comments !== null &&
+      (typeof comments !== 'string' || comments.length > MAX_COMMENT_CHARS)
+    ) {
+      return NextResponse.json(
+        { error: 'comments must be a string of up to 2000 characters' },
         { status: 400 }
       );
     }
@@ -103,21 +117,24 @@ export async function POST(req: NextRequest) {
 
     // 6. Regenerar system prompt (no bloquear si falla)
     try {
-      const newPrompt = await regenerateSystemPrompt(
-        childId,
-        feedbackSummary,
-        supabase
-      );
+      // Sin cuota no se llama a la IA; el feedback ya está guardado
+      if ((await consumeAgentQuota(supabase)) === 'allowed') {
+        const newPrompt = await regenerateSystemPrompt(
+          childId,
+          feedbackSummary,
+          supabase
+        );
 
-      // 7. Actualizar system_prompt en tabla children
-      const { error: updateError } = await supabase
-        .from('children')
-        .update({ system_prompt: newPrompt })
-        .eq('id', childId);
+        // 7. Actualizar system_prompt en tabla children
+        const { error: updateError } = await supabase
+          .from('children')
+          .update({ system_prompt: newPrompt })
+          .eq('id', childId);
 
-      if (updateError) {
-        console.error('Error updating system_prompt:', updateError);
-        // No retornamos error aquí - el feedback ya se guardó correctamente
+        if (updateError) {
+          console.error('Error updating system_prompt:', updateError);
+          // No retornamos error aquí - el feedback ya se guardó correctamente
+        }
       }
     } catch (regenerateError) {
       // Log del error pero no interrumpimos la respuesta
