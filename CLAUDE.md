@@ -38,7 +38,8 @@ Pre-commit (`.pre-commit-config.yaml`) ejecuta `tscheck`, `lint` y `format:check
 Variables en `.env` / `.env.local` (ambos ignorados por git). Las que usa el código:
 
 - `NEXT_PUBLIC_SUPABASE_URL`, y la clave anónima de Supabase. Ojo: `utils/supabase/config.ts` lee `NEXT_PUBLIC_SUPABASE_ANON_KEY`, pero el `.env` de ejemplo usa `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY`. Hay que alinear los dos nombres.
-- `AI_PROVIDER` (`openai` por defecto, `gemini`, `deepseek`, `ollama`), `AI_API_KEY`, `AI_MODEL`, `AI_MODEL_VISUALIZATION` (modelo más barato para maquetación HTML).
+- `AI_PROVIDER` (`openrouter` por defecto, `gemini`, `deepseek`, `ollama`; `openai` ya no se usa), `AI_API_KEY` (obligatoria para `openrouter` y `deepseek`), `AI_MODEL` (chat; por defecto `anthropic/claude-haiku-5.5` en OpenRouter), `AI_MODEL_VISUALIZATION` (maquetación HTML; por defecto `deepseek/deepseek-v4-flash` en OpenRouter). Un proveedor desconocido lanza error al arrancar el agente.
+- Los modelos `:free` de OpenRouter pueden dejar de estar disponibles sin aviso (pasó en stage con `AI_MODEL`). Si el chat falla con «El asistente no está disponible», revisa primero el modelo configurado en el entorno correspondiente (Vercel, por entorno).
 - `DEBUG_AGENT=true` activa logs de mensajes enviados a la IA.
 - `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_DEEPSEEK_API_URL`.
 

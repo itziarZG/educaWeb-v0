@@ -33,21 +33,39 @@ export function getMaquetinModel(): LanguageModel {
   return getModelForMode('visualization');
 }
 
+// Valores por defecto si no hay variables de entorno (OpenRouter).
+const DEFAULT_PROVIDER = 'openrouter';
+const DEFAULT_CHAT_MODEL = 'anthropic/claude-haiku-5.5';
+const DEFAULT_VISUALIZATION_MODEL = 'deepseek/deepseek-v4-flash';
+
+/**
+ * Nombre del proveedor configurado (sin claves). Sirve para los logs.
+ */
+export function getProviderName(): string {
+  return process.env.AI_PROVIDER || DEFAULT_PROVIDER;
+}
+
+/**
+ * Nombre del modelo que se usará según el modo (sin claves). Sirve para los logs.
+ * @param mode 'chat' para generación de fichas, 'visualization' para maquetación
+ */
+export function getModelName(mode: 'chat' | 'visualization'): string {
+  // Para chat: usar el modelo configurado
+  // Para visualization: usar el modelo optimizado (más barato)
+  return mode === 'visualization'
+    ? process.env.AI_MODEL_VISUALIZATION ||
+        process.env.AI_MODEL ||
+        DEFAULT_VISUALIZATION_MODEL
+    : process.env.AI_MODEL || DEFAULT_CHAT_MODEL;
+}
+
 /**
  * Obtiene el modelo apropiado según el modo
  * @param mode 'chat' para generación de fichas, 'visualization' para maquetación
  */
 function getModelForMode(mode: 'chat' | 'visualization'): LanguageModel {
-  const provider = process.env.AI_PROVIDER || 'openai';
-
-  // Para chat: usar el modelo configurado
-  // Para visualization: usar el modelo optimizado (más barato)
-  const modelName =
-    mode === 'visualization'
-      ? process.env.AI_MODEL_VISUALIZATION ||
-        process.env.AI_MODEL ||
-        'gpt-4o-mini'
-      : process.env.AI_MODEL || 'gpt-4o-mini';
+  const provider = getProviderName();
+  const modelName = getModelName(mode);
 
   let model: unknown;
 
@@ -90,8 +108,8 @@ function getModelForMode(mode: 'chat' | 'visualization'): LanguageModel {
     }
 
     default:
-      model = openai('gpt-4o-mini');
-      break;
+      // Mejor fallar en claro que usar en silencio un proveedor no previsto
+      throw new Error(`AI_PROVIDER "${provider}" no está soportado.`);
   }
 
   return model as unknown as LanguageModel;

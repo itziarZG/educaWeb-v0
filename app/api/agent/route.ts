@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { generateText, type ModelMessage } from 'ai';
-import { getLanguageModel, getMaquetinModel } from '@/utils/ai/models';
+import {
+  getLanguageModel,
+  getMaquetinModel,
+  getModelName,
+  getProviderName,
+} from '@/utils/ai/models';
 import {
   buildChatSystemPrompt,
   MAX_OUTPUT_TOKENS,
@@ -158,12 +163,16 @@ export async function POST(req: NextRequest) {
       htmlContent: text, // O la lógica que uses para extraer lo que hay entre '----'
     });
   } catch (error: unknown) {
-    const errorMessage =
-      error instanceof Error ? error.message : 'Unknown error';
-    console.error('ERROR CRÍTICO EN API/AGENT:', error);
-    // IMPORTANTE: Si OpenAI falla, NO descontamos el crédito.
+    // El detalle (puede incluir datos del proveedor) solo va al log del servidor.
+    console.error('Error del agente de IA:', {
+      mode: request.mode,
+      provider: getProviderName(),
+      model: getModelName(request.mode),
+      error,
+    });
+    // IMPORTANTE: Si el proveedor falla, NO descontamos el crédito.
     return NextResponse.json(
-      { error: 'Error interno', details: errorMessage },
+      { error: 'Servicio de IA no disponible' },
       { status: 500 }
     );
   }
