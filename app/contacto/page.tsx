@@ -1,3 +1,4 @@
+import { CONTACTO_EMAIL } from '@/utils/contacto';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -34,10 +35,10 @@ export default function ContactoPage() {
             Para consultas generales, soporte técnico o cualquier otra cosa.
           </p>
           <a
-            href="mailto:contact@tutoraiapp.es"
+            href={`mailto:${CONTACTO_EMAIL}`}
             className="inline-block text-primary font-semibold hover:underline text-sm"
           >
-            contact@tutoraiapp.es
+            {CONTACTO_EMAIL}
           </a>
         </div>
 
@@ -104,10 +105,10 @@ export default function ContactoPage() {
               En cualquier momento puedes solicitar la eliminación de tu cuenta
               y todos tus datos escribiéndonos a{' '}
               <a
-                href="mailto:contact@tutoraiapp.es"
+                href={`mailto:${CONTACTO_EMAIL}`}
                 className="text-primary hover:underline"
               >
-                contact@tutoraiapp.es
+                {CONTACTO_EMAIL}
               </a>
               . Procesaremos tu solicitud en un máximo de 30 días.
             </p>
@@ -125,10 +126,10 @@ export default function ContactoPage() {
               docente o representas a un centro educativo y tienes interés en
               usarlo, escríbenos a{' '}
               <a
-                href="mailto:contact@tutoraiapp.es"
+                href={`mailto:${CONTACTO_EMAIL}`}
                 className="text-primary hover:underline"
               >
-                contact@tutoraiapp.es
+                {CONTACTO_EMAIL}
               </a>{' '}
               y estudiaremos cómo podemos ayudarte.
             </p>
@@ -149,7 +150,7 @@ export default function ContactoPage() {
           mejorar. ¡Gracias por ser parte de esta aventura!
         </p>
         <a
-          href="mailto:contact@tutoraiapp.es"
+          href={`mailto:${CONTACTO_EMAIL}`}
           className="inline-flex items-center gap-2 bg-primary text-white font-bold px-6 py-3 rounded-xl hover:bg-primary/90 transition-colors text-sm"
         >
           <span className="material-symbols-outlined text-base">mail</span>

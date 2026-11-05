@@ -1,3 +1,4 @@
+import { CONTACTO_EMAIL } from '@/utils/contacto';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -209,10 +210,10 @@ export default function TerminosPage() {
         <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
           Si tienes preguntas sobre estos términos, puedes escribirnos a{' '}
           <a
-            href="mailto:contact@tutoraiapp.es"
+            href={`mailto:${CONTACTO_EMAIL}`}
             className="text-primary hover:underline"
           >
-            contact@tutoraiapp.es
+            {CONTACTO_EMAIL}
           </a>
           .
         </p>
