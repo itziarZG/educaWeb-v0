@@ -11,9 +11,12 @@ import {
   MAX_OUTPUT_TOKENS,
   parseAgentRequest,
 } from '@/utils/ai/agentRequest';
-import { consumeAgentQuota } from '@/utils/ai/quota';
+import { consumeAgentQuota, consumeCredit } from '@/utils/ai/quota';
 import prompts from '@/utils/prompts.json';
 import { createClient } from '@/utils/supabase/server';
+
+const NO_CREDITS_MESSAGE =
+  'Sin créditos. Por favor, contacta con soporte o espera al lanzamiento oficial.';
 
 export async function POST(req: NextRequest) {
   console.log('DEBUG: Entrando en API/AGENT');
@@ -50,31 +53,27 @@ export async function POST(req: NextRequest) {
   // 3. Preparamos el prompt en el servidor según el modo
   let systemPrompt: string;
   let messages: ModelMessage[];
-  let profile: { credits: number | null } | null = null;
 
   if (request.mode === 'visualization') {
-    // VERIFICAR CRÉDITOS (Solo si es visualización)
-    const { data, error: profileError } = await supabase
+    // Comprobación previa para no gastar IA sin créditos. El cobro real es el
+    // paso 6: esta lectura no protege frente a peticiones simultáneas.
+    const { data: profile, error: profileError } = await supabase
       .from('clients')
       .select('credits')
       .eq('id', userId)
       .single();
 
-    if (profileError || !data) {
+    if (profileError || !profile) {
       console.error('Error al leer perfil:', profileError);
       return NextResponse.json(
         { error: 'Error al leer perfil' },
         { status: 500 }
       );
     }
-    profile = data;
 
     if ((profile.credits || 0) < 1) {
       return NextResponse.json(
-        {
-          error:
-            'Sin créditos. Por favor, contacta con soporte o espera al lanzamiento oficial.',
-        },
+        { error: NO_CREDITS_MESSAGE },
         { status: 402 } // 402 = Payment Required
       );
     }
@@ -145,16 +144,22 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // 6. COBRAR EL CRÉDITO (Solo si es visualización y OpenAI funcionó bien)
-    if (profile) {
-      const { error: updateError } = await supabase
-        .from('clients')
-        .update({ credits: (profile.credits || 0) - 1 })
-        .eq('id', userId);
+    // 6. Cobramos tras generar la ficha: si la IA falla, no se gasta el crédito.
+    // Sin cobro confirmado no se entrega la ficha.
+    if (request.mode === 'visualization') {
+      const charge = await consumeCredit(supabase);
 
-      if (updateError) {
-        console.error('Error al descontar crédito', updateError);
-        // Opcional: Podrías alertarte a ti mismo, pero dejamos pasar al usuario por hoy.
+      if (charge === 'no_credits') {
+        return NextResponse.json(
+          { error: NO_CREDITS_MESSAGE },
+          { status: 402 }
+        );
+      }
+      if (charge === 'unavailable') {
+        return NextResponse.json(
+          { error: 'No se ha podido descontar el crédito.' },
+          { status: 503 }
+        );
       }
     }
 
