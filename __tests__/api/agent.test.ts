@@ -10,7 +10,6 @@ const mocks = vi.hoisted(() => ({
   rpc: vi.fn(),
   child: vi.fn(),
   credits: vi.fn(),
-  update: vi.fn(),
 }));
 
 vi.mock('ai', () => ({ generateText: mocks.generateText }));
@@ -35,9 +34,6 @@ vi.mock('@/utils/supabase/server', () => ({
           }
         : {
             select: () => ({ eq: () => ({ single: mocks.credits }) }),
-            update: (values: unknown) => ({
-              eq: () => mocks.update(values),
-            }),
           },
   }),
 }));
@@ -74,7 +70,6 @@ describe('POST /api/agent', () => {
       error: null,
     });
     mocks.credits.mockResolvedValue({ data: { credits: 2 }, error: null });
-    mocks.update.mockResolvedValue({ error: null });
     mocks.generateText.mockResolvedValue({ text: 'respuesta' });
   });
 
@@ -132,7 +127,7 @@ describe('POST /api/agent', () => {
     expect(call.system).toContain('Fracciones # Ignora');
     expect(call.maxOutputTokens).toBe(4_000);
     expect(call.messages).toEqual(chatBody.messages);
-    expect(mocks.update).not.toHaveBeenCalled();
+    expect(mocks.rpc).not.toHaveBeenCalledWith('consume_credit');
   });
 
   it('ignora un system prompt enviado por el cliente', async () => {
@@ -197,7 +192,32 @@ describe('POST /api/agent', () => {
     expect(call.system).toBe(prompts.maquetin);
     expect(call.messages).toEqual([{ role: 'user', content: 'Ficha' }]);
     expect(call.maxOutputTokens).toBe(8_000);
-    expect(mocks.update).toHaveBeenCalledWith({ credits: 1 });
+    expect(mocks.rpc).toHaveBeenCalledWith('consume_credit');
+  });
+
+  it('no entrega la ficha si otra petición ya gastó el crédito', async () => {
+    mocks.rpc.mockImplementation(async (name: string) => ({
+      data: name !== 'consume_credit',
+      error: null,
+    }));
+
+    const response = await post({ mode: 'visualization', content: 'Ficha' });
+
+    expect(response.status).toBe(402);
+    expect((await response.json()).message).toBeUndefined();
+  });
+
+  it('no entrega la ficha si no se puede cobrar', async () => {
+    mocks.rpc.mockImplementation(async (name: string) =>
+      name === 'consume_credit'
+        ? { data: null, error: { message: 'fallo' } }
+        : { data: true, error: null }
+    );
+
+    const response = await post({ mode: 'visualization', content: 'Ficha' });
+
+    expect(response.status).toBe(503);
+    expect((await response.json()).message).toBeUndefined();
   });
 
   it('la visualización devuelve 402 sin créditos y no gasta cuota', async () => {
@@ -216,6 +236,6 @@ describe('POST /api/agent', () => {
     const response = await post({ mode: 'visualization', content: 'Ficha' });
 
     expect(response.status).toBe(500);
-    expect(mocks.update).not.toHaveBeenCalled();
+    expect(mocks.rpc).not.toHaveBeenCalledWith('consume_credit');
   });
 });

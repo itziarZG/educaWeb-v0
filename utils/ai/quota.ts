@@ -19,3 +19,22 @@ export async function consumeAgentQuota(
 
   return data === true ? 'allowed' : 'exceeded';
 }
+
+export type CreditChargeResult = 'charged' | 'no_credits' | 'unavailable';
+
+/**
+ * Descuenta un crédito al usuario de la sesión en una sola operación.
+ * Quien llama no debe entregar la ficha si el resultado no es 'charged'.
+ */
+export async function consumeCredit(
+  supabase: SupabaseClient
+): Promise<CreditChargeResult> {
+  const { data, error } = await supabase.rpc('consume_credit');
+
+  if (error) {
+    console.error('Error al descontar crédito:', error);
+    return 'unavailable';
+  }
+
+  return data === true ? 'charged' : 'no_credits';
+}
