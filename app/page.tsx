@@ -74,7 +74,7 @@ export default async function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex flex-col gap-2">
                 <span className="text-xs font-bold text-orange-300 bg-white/10 px-3 py-1 rounded-full w-fit">
-                  🔥 Acceso Beta Gratuito (Plazas Limitadas)
+                  🔥 Acceso Beta Gratuito
                 </span>
                 <LinkButton href="/register" variant="big">
                   Empieza gratis ahora
@@ -247,7 +247,7 @@ export default async function HomePage() {
               <div className="flex flex-col items-center gap-4">
                 <LinkButton href="/register">Probar gratis</LinkButton>
                 <p className="text-slate-500 text-sm">
-                  Sin compromiso. Cancela en cualquier momento.
+                  Sin compromiso. Gratis durante la fase beta.
                 </p>
               </div>
             </div>

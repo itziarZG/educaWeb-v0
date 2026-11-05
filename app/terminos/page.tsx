@@ -14,7 +14,7 @@ export default function TerminosPage() {
           Términos y Condiciones
         </h1>
         <p className="text-sm text-slate-400">
-          Última actualización: marzo de 2026
+          Última actualización: noviembre de 2026
         </p>
       </header>
 
@@ -54,8 +54,8 @@ export default function TerminosPage() {
           3. Acceso beta y disponibilidad
         </h2>
         <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-          El servicio se encuentra actualmente en versión beta con plazas
-          limitadas. Durante esta fase:
+          El servicio se encuentra actualmente en versión beta. Durante esta
+          fase:
         </p>
         <ul className="list-disc list-inside space-y-2 text-slate-600 dark:text-slate-400">
           <li>
