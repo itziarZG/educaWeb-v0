@@ -1,4 +1,8 @@
-import { CONTACTO_EMAIL } from '@/utils/contacto';
+import {
+  CONTACTO_EMAIL,
+  RESPONSABLE_DOMICILIO,
+  RESPONSABLE_NOMBRE,
+} from '@/utils/contacto';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -30,8 +34,14 @@ export default function AvisoLegalPage() {
         </p>
         <ul className="list-disc list-inside space-y-2 text-slate-600 dark:text-slate-400">
           <li>
-            <strong>Titular:</strong> TUTOR_AI (proyecto personal).
+            <strong>Titular:</strong>{' '}
+            {RESPONSABLE_NOMBRE || 'TUTOR_AI (proyecto personal)'}
           </li>
+          {RESPONSABLE_DOMICILIO && (
+            <li>
+              <strong>Domicilio:</strong> {RESPONSABLE_DOMICILIO}
+            </li>
+          )}
           <li>
             <strong>Correo electrónico de contacto:</strong>{' '}
             <a

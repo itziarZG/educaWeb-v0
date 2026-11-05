@@ -1,5 +1,9 @@
-import { CONTACTO_EMAIL } from '@/utils/contacto';
 import type { Metadata } from 'next';
+import {
+  CONTACTO_EMAIL,
+  RESPONSABLE_DOMICILIO,
+  RESPONSABLE_NOMBRE,
+} from '@/utils/contacto';
 
 export const metadata: Metadata = {
   title: 'Política de Privacidad — TUTOR_AI',
@@ -25,8 +29,12 @@ export default function PrivacidadPage() {
         </h2>
         <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
           El responsable del tratamiento de los datos personales recogidos a
-          través de este sitio web es el titular del proyecto TUTOR_AI,
-          contactable en{' '}
+          través de este sitio web es{' '}
+          {RESPONSABLE_NOMBRE || 'el titular del proyecto TUTOR_AI'}
+          {RESPONSABLE_DOMICILIO
+            ? `, con domicilio en ${RESPONSABLE_DOMICILIO}`
+            : ''}
+          , contactable en{' '}
           <a
             href={`mailto:${CONTACTO_EMAIL}`}
             className="text-primary hover:underline"
