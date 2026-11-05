@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { createClient } from '@/utils/supabase/server';
 import ChildSelector from '@/components/ChildSelector';
 
@@ -19,23 +20,24 @@ export default async function DashboardLayout({
     data: { user },
   } = await supabase.auth.getUser();
 
+  // Sin sesión no se muestra ninguna ruta de /dashboard
+  if (!user) {
+    redirect('/login');
+  }
+
   // Fetch children for the child selector
   let childrenList: Child[] = [];
-  if (user) {
-    const { data, error } = await supabase
-      .from('children')
-      .select('id, name')
-      .eq('user_id', user.id)
-      .order('name');
+  const { data, error } = await supabase
+    .from('children')
+    .select('id, name')
+    .eq('user_id', user.id)
+    .order('name');
 
-    if (error) {
-      // Error silencioso: no loguear en producción
-      console.debug('Error fetching children:', error);
-    } else if (data) {
-      childrenList = data as Child[];
-    }
-  } else {
-    // No user found - redirect should handle this in most cases
+  if (error) {
+    // Error silencioso: no loguear en producción
+    console.debug('Error fetching children:', error);
+  } else if (data) {
+    childrenList = data as Child[];
   }
 
   const avatarUrl =
