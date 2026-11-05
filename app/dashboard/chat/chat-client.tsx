@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import type { ChildInfo } from '@/types/agents';
 import type { WorksheetFeedback } from '@/types/worksheet';
+import { sanitizeWorksheetHtml } from '@/utils/sanitizeWorksheetHtml';
 import { useChatInfo } from './hooks';
 import NoCreditsModal from './NoCreditsModal';
 import ChatInterface from './ChatInterface';
@@ -82,7 +83,7 @@ export default function ChatClient({ initialChildInfo }: ChatClientProps) {
       // Crear contenedor con la ficha
       const printDiv = document.createElement('div');
       printDiv.id = '__print-worksheet__';
-      printDiv.innerHTML = htmlContent;
+      printDiv.innerHTML = sanitizeWorksheetHtml(htmlContent);
       document.body.appendChild(printDiv);
 
       // Inyectar estilos para ocultar todo excepto la ficha durante impresión
@@ -136,7 +137,7 @@ export default function ChatClient({ initialChildInfo }: ChatClientProps) {
 
       // Crear contenedor visible (pero fuera de vista)
       const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = htmlContent;
+      tempDiv.innerHTML = sanitizeWorksheetHtml(htmlContent);
       tempDiv.style.position = 'fixed';
       tempDiv.style.top = '-10000px';
       tempDiv.style.left = '-10000px';

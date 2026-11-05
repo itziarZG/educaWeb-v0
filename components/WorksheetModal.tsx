@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Worksheet } from '@/types/worksheet';
+import { sanitizeWorksheetHtml } from '@/utils/sanitizeWorksheetHtml';
 import FeedbackForm from './FeedbackForm';
 
 interface WorksheetModalProps {
@@ -70,7 +71,9 @@ export default function WorksheetModal({
             <div className="prose dark:prose-invert max-w-none">
               <div
                 className="text-gray-800 dark:text-gray-200 text-sm"
-                dangerouslySetInnerHTML={{ __html: worksheet.html_content }}
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeWorksheetHtml(worksheet.html_content),
+                }}
               />
             </div>
           </div>
