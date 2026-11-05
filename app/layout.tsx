@@ -1,6 +1,11 @@
 import type React from 'react';
 import type { Metadata } from 'next';
-import { Lexend } from 'next/font/google';
+import '@fontsource/lexend/latin-400.css';
+import '@fontsource/lexend/latin-500.css';
+import '@fontsource/lexend/latin-600.css';
+import '@fontsource/lexend/latin-700.css';
+import '@fontsource/lexend/latin-900.css';
+import '@fontsource/material-symbols-outlined/400.css';
 import './globals.css';
 import { Providers } from '@/app/providers';
 import Image from 'next/image';
@@ -9,11 +14,6 @@ import Header from '@/components/Header';
 import CookieConsentBanner from '@/components/CookieConsentBanner';
 import WebVitals from '@/components/WebVitals';
 import { createClient } from '@/utils/supabase/server';
-const lexend = Lexend({
-  subsets: ['latin'],
-  variable: '--font-lexend',
-});
-
 export const metadata: Metadata = {
   metadataBase: new URL('https://tutoraiapp.es'),
   title: 'TUTOR_AI - Educación Personalizada',
@@ -61,14 +61,9 @@ export default async function RootLayout({
         <link rel="manifest" href="/favicon/site.webmanifest" />
 
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
-        />
       </head>
       <body
-        className={`${lexend.variable} font-display bg-background-light dark:bg-background-dark dark:bg-opacity-10 text-slate-900 dark:text-slate-100 selection:bg-primary/30 antialiased`}
+        className={`font-display bg-background-light dark:bg-background-dark dark:bg-opacity-10 text-slate-900 dark:text-slate-100 selection:bg-primary/30 antialiased`}
         suppressHydrationWarning
       >
         <Providers initialUser={user}>
