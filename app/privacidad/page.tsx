@@ -14,7 +14,7 @@ export default function PrivacidadPage() {
           Política de Privacidad
         </h1>
         <p className="text-sm text-slate-400">
-          Última actualización: marzo de 2026
+          Última actualización: noviembre de 2026
         </p>
       </header>
 
@@ -46,13 +46,13 @@ export default function PrivacidadPage() {
         <ul className="list-disc list-inside space-y-2 text-slate-600 dark:text-slate-400">
           <li>Nombre y dirección de correo electrónico.</li>
           <li>
-            Información del perfil de tus hijos (nombre, edad, curso y
-            aficiones) que tú introduces voluntariamente para personalizar las
-            actividades.
+            Información del perfil de tus hijos (nombre, edad, curso, intereses,
+            comunidad autónoma y observaciones) que tú introduces
+            voluntariamente para personalizar las actividades.
           </li>
           <li>
-            Datos de uso del servicio (fichas generadas, materias consultadas,
-            etc.) con fines de mejora de la plataforma.
+            Contenido de las conversaciones con el asistente de IA y las fichas
+            generadas, así como el feedback que nos envíes sobre ellas.
           </li>
           <li>
             Información técnica del dispositivo y navegador (dirección IP,
@@ -115,8 +115,18 @@ export default function PrivacidadPage() {
           servicios en la nube (como Supabase para la base de datos y Vercel
           para el alojamiento). Estos proveedores actúan como encargados del
           tratamiento y están sujetos a los acuerdos de procesamiento de datos
-          exigidos por el RGPD. No vendemos ni cedemos tus datos a terceros con
-          fines comerciales.
+          exigidos por el RGPD.
+        </p>
+        <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+          Para generar las fichas, los datos del perfil de tu hijo y el
+          contenido de las conversaciones con el asistente se envían a un
+          proveedor de modelos de inteligencia artificial. En la configuración
+          actual el proveedor es OpenRouter, que dirige cada petición a un
+          modelo de una empresa tercera. Según el modelo utilizado, estos datos
+          pueden tratarse fuera del Espacio Económico Europeo.
+        </p>
+        <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+          No vendemos ni cedemos tus datos a terceros con fines comerciales.
         </p>
       </section>
 
