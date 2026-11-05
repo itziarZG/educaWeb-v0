@@ -9,6 +9,24 @@ import {
 import { createClient } from '@/utils/supabase/client';
 import type { ChatMessage, ChildInfo } from '@/types/agents';
 
+/**
+ * Traduce el error del agente a un mensaje para el usuario.
+ * Los mensajes de límite y de servicio ya llegan en español desde el servidor;
+ * el resto (detalles del proveedor, errores de red) se sustituye por uno genérico.
+ */
+const mensajeDeErrorAgente = (errorMessage: string): string => {
+  if (errorMessage === 'Unauthorized') {
+    return 'Tu sesión ha caducado. Vuelve a iniciar sesión para seguir.';
+  }
+  if (
+    errorMessage.includes('límite de uso') ||
+    errorMessage.includes('no está disponible en este momento')
+  ) {
+    return errorMessage;
+  }
+  return 'El asistente no está disponible ahora. Inténtalo más tarde.';
+};
+
 export const useChatInfo = (initialChildInfo?: ChildInfo | null) => {
   const { user } = useAuth();
   const searchParams = useSearchParams();
@@ -126,7 +144,7 @@ export const useChatInfo = (initialChildInfo?: ChildInfo | null) => {
           ...prev,
           {
             role: 'assistant',
-            content: 'Error al conectar con el agente. ' + errorMessage,
+            content: mensajeDeErrorAgente(errorMessage),
             timestamp: Date.now(),
           },
         ]);

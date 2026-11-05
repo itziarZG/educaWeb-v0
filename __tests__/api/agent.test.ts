@@ -18,6 +18,8 @@ vi.mock('ai', () => ({ generateText: mocks.generateText }));
 vi.mock('@/utils/ai/models', () => ({
   getLanguageModel: () => 'chat-model',
   getMaquetinModel: () => 'visualization-model',
+  getProviderName: () => 'openrouter',
+  getModelName: () => 'test-model',
 }));
 
 vi.mock('@/utils/supabase/server', () => ({
