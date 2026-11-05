@@ -1,3 +1,4 @@
+import { CONTACTO_EMAIL } from '@/utils/contacto';
 import Button from '@/components/Button';
 
 interface NoCreditsModalProps {
@@ -49,13 +50,13 @@ export default function NoCreditsModal({
             </p>
             <div className="flex flex-col gap-2 mt-4">
               <a
-                href="mailto:contact@tutoraiapp.es"
+                href={`mailto:${CONTACTO_EMAIL}`}
                 className="flex items-center justify-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-opacity"
               >
                 <span className="material-symbols-outlined text-[18px]">
                   mail
                 </span>
-                contact@tutoraiapp.es
+                {CONTACTO_EMAIL}
               </a>
               {/* <a
                 href="https://wa.me/34600000000"

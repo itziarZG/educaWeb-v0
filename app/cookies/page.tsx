@@ -1,3 +1,4 @@
+import { CONTACTO_EMAIL } from '@/utils/contacto';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -207,10 +208,10 @@ export default function CookiesPage() {
           Si tienes preguntas sobre nuestra Política de Cookies, contacta con
           nosotros en{' '}
           <a
-            href="mailto:contact@tutoraiapp.es"
+            href={`mailto:${CONTACTO_EMAIL}`}
             className="text-primary hover:underline"
           >
-            contact@tutoraiapp.es
+            {CONTACTO_EMAIL}
           </a>
           .
         </p>

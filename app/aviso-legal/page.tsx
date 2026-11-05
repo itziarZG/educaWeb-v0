@@ -1,3 +1,4 @@
+import { CONTACTO_EMAIL } from '@/utils/contacto';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -34,10 +35,10 @@ export default function AvisoLegalPage() {
           <li>
             <strong>Correo electrónico de contacto:</strong>{' '}
             <a
-              href="mailto:contact@tutoraiapp.es"
+              href={`mailto:${CONTACTO_EMAIL}`}
               className="text-primary hover:underline"
             >
-              contact@tutoraiapp.es
+              {CONTACTO_EMAIL}
             </a>
           </li>
           <li>
@@ -163,10 +164,10 @@ export default function AvisoLegalPage() {
           Para cualquier consulta relativa a este Aviso Legal, puedes
           contactarnos en{' '}
           <a
-            href="mailto:contact@tutoraiapp.es"
+            href={`mailto:${CONTACTO_EMAIL}`}
             className="text-primary hover:underline"
           >
-            contact@tutoraiapp.es
+            {CONTACTO_EMAIL}
           </a>
           .
         </p>

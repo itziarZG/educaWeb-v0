@@ -1,3 +1,4 @@
+import { CONTACTO_EMAIL } from '@/utils/contacto';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -27,10 +28,10 @@ export default function PrivacidadPage() {
           través de este sitio web es el titular del proyecto TUTOR_AI,
           contactable en{' '}
           <a
-            href="mailto:contact@tutoraiapp.es"
+            href={`mailto:${CONTACTO_EMAIL}`}
             className="text-primary hover:underline"
           >
-            contact@tutoraiapp.es
+            {CONTACTO_EMAIL}
           </a>
           .
         </p>
@@ -161,10 +162,10 @@ export default function PrivacidadPage() {
         <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
           Para ejercer cualquiera de estos derechos, escríbenos a{' '}
           <a
-            href="mailto:contact@tutoraiapp.es"
+            href={`mailto:${CONTACTO_EMAIL}`}
             className="text-primary hover:underline"
           >
-            contact@tutoraiapp.es
+            {CONTACTO_EMAIL}
           </a>
           . También tienes derecho a presentar una reclamación ante la Agencia
           Española de Protección de Datos (
@@ -213,10 +214,10 @@ export default function PrivacidadPage() {
         <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
           Si tienes alguna duda sobre esta política, puedes contactarnos en{' '}
           <a
-            href="mailto:contact@tutoraiapp.es"
+            href={`mailto:${CONTACTO_EMAIL}`}
             className="text-primary hover:underline"
           >
-            contact@tutoraiapp.es
+            {CONTACTO_EMAIL}
           </a>
           .
         </p>
